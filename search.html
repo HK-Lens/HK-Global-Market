@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Search Cars | AutoMarket Global</title>
+
+  <meta
+    name="description"
+    content="Search cars by country, brand, price, year, fuel type, and mileage on AutoMarket Global."
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    :root {
+      --primary: #f58220;
+      --primary-dark: #d96f12;
+      --primary-soft: rgba(245, 130, 32, 0.12);
+      --dark: #0f172a;
+      --text: #1e293b;
+      --muted: #64748b;
+      --light: #f8fafc;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --danger: #dc2626;
+      --shadow-sm: 0 8px 20px rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.14);
+      --shadow-lg: 0 24px 65px rgba(15, 23, 42, 0.18);
+      --radius-md: 18px;
+      --radius-lg: 28px;
+      --container: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .site-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      min-height: 70px;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .site-topbar-inner {
+      width: min(var(--container), calc(100% - 28px));
+      min-height: 70px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .topbar-left,
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      color: var(--dark);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .menu-toggle:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .logo {
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--dark);
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    .country-select {
+      height:
