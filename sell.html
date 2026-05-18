@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Sell a Car | AutoMarket Global</title>
+  <title>Post an ad | HK Global Market & Services</title>
 
   <meta
     name="description"
-    content="Publish your car listing on AutoMarket Global and sell your car by country."
+    content="Publish a product, property, vehicle, business, or service ad on HK Global Market & Services."
   />
 
   <link rel="stylesheet" href="assets/css/style.css" />
@@ -17,10 +17,489 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
+
+  <style>
+    .sell-page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.12), transparent 35%),
+        radial-gradient(circle at top right, rgba(28, 98, 255, 0.08), transparent 35%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+    }
+
+    .sell-hero {
+      padding: 120px 5vw 42px;
+    }
+
+    .sell-hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .sell-title-box {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(16, 24, 40, 0.08);
+      box-shadow: 0 24px 70px rgba(16, 24, 40, 0.08);
+      border-radius: 32px;
+      padding: 34px;
+      backdrop-filter: blur(18px);
+    }
+
+    .sell-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 139, 38, 0.1);
+      color: #d46b09;
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .sell-title-box h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 6vw, 72px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      color: #111827;
+    }
+
+    .sell-title-box h1 span {
+      color: #ff8b26;
+    }
+
+    .sell-title-box p {
+      margin: 0;
+      color: #667085;
+      font-size: 17px;
+      line-height: 1.8;
+      max-width: 720px;
+    }
+
+    .sell-info-card {
+      background: #111827;
+      color: #ffffff;
+      border-radius: 32px;
+      padding: 30px;
+      box-shadow: 0 30px 90px rgba(17, 24, 39, 0.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sell-info-card::before {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: -80px;
+      top: -80px;
+      background: rgba(255, 139, 38, 0.22);
+      border-radius: 50%;
+      filter: blur(8px);
+    }
+
+    .sell-info-card h2 {
+      position: relative;
+      margin: 0 0 14px;
+      font-size: 24px;
+    }
+
+    .sell-info-card ul {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .sell-info-card li {
+      display: flex;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.6;
+    }
+
+    .sell-info-card i {
+      color: #ffad5f;
+      margin-top: 4px;
+    }
+
+    .sell-layout {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 5vw 80px;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .sell-sidebar-card {
+      position: sticky;
+      top: 92px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(16, 24, 40, 0.08);
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: 0 20px 60px rgba(16, 24, 40, 0.08);
+      backdrop-filter: blur(16px);
+    }
+
+    .sell-sidebar-card h3 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      color: #111827;
+    }
+
+    .sell-progress-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: #667085;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .progress-item span {
+      width: 30px;
+      height: 30px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #fff4ea;
+      color: #ff8b26;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .sell-form-shell {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(16, 24, 40, 0.08);
+      border-radius: 34px;
+      box-shadow: 0 30px 90px rgba(16, 24, 40, 0.1);
+      overflow: hidden;
+    }
+
+    .sell-form-header {
+      padding: 28px 30px;
+      border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      background: linear-gradient(135deg, #ffffff, #fff8f2);
+    }
+
+    .sell-form-header h2 {
+      margin: 0 0 6px;
+      color: #111827;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+    }
+
+    .sell-form-header p {
+      margin: 0;
+      color: #667085;
+      line-height: 1.6;
+    }
+
+    .selected-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 14px;
+      border-radius: 999px;
+      background: #111827;
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .sell-form {
+      padding: 30px;
+      display: grid;
+      gap: 28px;
+    }
+
+    .form-section {
+      border: 1px solid rgba(16, 24, 40, 0.08);
+      border-radius: 26px;
+      padding: 24px;
+      background: #ffffff;
+    }
+
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .form-section-title i {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: #fff4ea;
+      color: #ff8b26;
+      font-size: 18px;
+    }
+
+    .form-section-title h3 {
+      margin: 0;
+      color: #111827;
+      font-size: 20px;
+    }
+
+    .form-section-title p {
+      margin: 4px 0 0;
+      color: #667085;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .form-grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .form-field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      color: #344054;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font-size: 15px;
+      outline: none;
+      background: #ffffff;
+      color: #111827;
+      transition: 0.2s ease;
+    }
+
+    .form-field textarea {
+      min-height: 130px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: #ff8b26;
+      box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
+    }
+
+    .field-hint {
+      color: #98a2b3;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .dynamic-note {
+      margin-bottom: 18px;
+      padding: 15px 16px;
+      border-radius: 18px;
+      background: #f8fafc;
+      color: #475467;
+      line-height: 1.7;
+      border: 1px dashed rgba(16, 24, 40, 0.14);
+    }
+
+    .media-upload {
+      border: 2px dashed rgba(255, 139, 38, 0.35);
+      border-radius: 24px;
+      padding: 24px;
+      background: #fffaf5;
+      display: grid;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .media-upload i {
+      font-size: 34px;
+      color: #ff8b26;
+    }
+
+    .media-upload strong {
+      color: #111827;
+    }
+
+    .media-upload p {
+      margin: 0;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .preview-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid rgba(16, 24, 40, 0.08);
+    }
+
+    .form-message {
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .form-message.success {
+      background: #ecfdf3;
+      color: #027a48;
+      border: 1px solid #abefc6;
+    }
+
+    .form-message.error {
+      background: #fef3f2;
+      color: #b42318;
+      border: 1px solid #fecdca;
+    }
+
+    .submit-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 24px;
+      border-radius: 24px;
+      background: #111827;
+      color: white;
+    }
+
+    .submit-bar p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .sell-submit-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 20px;
+      background: #ff8b26;
+      color: white;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: 0 16px 40px rgba(255, 139, 38, 0.35);
+      white-space: nowrap;
+    }
+
+    .sell-submit-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 920px) {
+      .sell-hero {
+        padding-top: 94px;
+      }
+
+      .sell-hero-inner,
+      .sell-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sell-sidebar-card {
+        position: static;
+      }
+
+      .form-grid,
+      .form-grid.three {
+        grid-template-columns: 1fr;
+      }
+
+      .sell-form-header,
+      .submit-bar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .preview-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .sell-hero {
+        padding: 86px 14px 24px;
+      }
+
+      .sell-layout {
+        padding: 0 14px 60px;
+      }
+
+      .sell-title-box,
+      .sell-info-card,
+      .sell-form,
+      .sell-form-header {
+        padding: 20px;
+      }
+
+      .form-section {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .selected-pill {
+        white-space: normal;
+      }
+    }
+  </style>
 </head>
 
-<body>
-  <!-- Header -->
+<body class="sell-page">
   <header class="site-topbar">
     <div class="site-topbar-inner">
       <div class="topbar-left">
@@ -35,8 +514,8 @@
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
-          AutoMarket <span>Global</span>
+        <a class="logo" href="index.html" aria-label="HK Global Market & Services home">
+          HK <span>Global</span>
         </a>
       </div>
 
@@ -44,28 +523,20 @@
         <select
           class="country-select"
           id="countrySelect"
+          name="country"
           aria-label="Choose country"
         ></select>
       </div>
     </div>
   </header>
 
-  <!-- Sidebar backdrop -->
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar" aria-label="Main menu">
     <div class="sidebar-header">
-      <div class="sidebar-title">
-        AutoMarket <span>Global</span>
-      </div>
+      <div class="sidebar-title">HK <span>Global</span></div>
 
-      <button
-        class="sidebar-close"
-        id="sidebarClose"
-        type="button"
-        aria-label="Close menu"
-      >
+      <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
@@ -73,214 +544,880 @@
     <nav class="sidebar-nav" aria-label="Main navigation">
       <a class="sidebar-link" href="index.html">
         <i class="fa-solid fa-house"></i>
-        <span data-i18n="home">Home</span>
+        <span>Home</span>
       </a>
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
+        <span>Search listings</span>
       </a>
 
       <a class="sidebar-link active" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
+        <span>Post an ad</span>
       </a>
 
       <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
-        <span data-i18n="account">My account</span>
+        <span>My account</span>
       </a>
 
       <a class="sidebar-link" href="favorites.html">
         <i class="fa-solid fa-heart"></i>
-        <span data-i18n="favorites">Favorites</span>
+        <span>Favorites</span>
       </a>
 
       <a class="sidebar-link" href="messages.html">
         <i class="fa-solid fa-envelope"></i>
-        <span data-i18n="messages">Messages</span>
+        <span>Messages</span>
       </a>
 
       <a class="sidebar-link" href="dashboard.html">
         <i class="fa-solid fa-chart-line"></i>
-        <span data-i18n="dashboard">Dashboard</span>
+        <span>Dashboard</span>
       </a>
 
       <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="terms.html">
         <i class="fa-solid fa-shield-halved"></i>
-        <span data-i18n="terms">Terms</span>
+        <span>Terms</span>
       </a>
 
       <a class="sidebar-link" href="login.html">
         <i class="fa-solid fa-right-to-bracket"></i>
-        <span data-i18n="login">Login</span>
+        <span>Login</span>
       </a>
 
       <a class="sidebar-link" href="register.html">
         <i class="fa-solid fa-user-plus"></i>
-        <span data-i18n="register">Create account</span>
+        <span>Create account</span>
       </a>
     </nav>
 
     <div class="sidebar-footer">
-      AutoMarket Global · 2026
+      HK Global Market & Services · 2026
     </div>
   </aside>
 
-  <!-- Main page -->
-  <main class="page">
-    <section class="page-header">
-      <p class="eyebrow">
-        <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
-      </p>
+  <main>
+    <section class="sell-hero">
+      <div class="sell-hero-inner">
+        <div class="sell-title-box">
+          <div class="sell-badge">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Smart publishing form</span>
+          </div>
 
-      <h1 data-i18n="sellTitle">Publish your car listing</h1>
+          <h1>
+            Post a precise ad <span>for every category</span>
+          </h1>
 
-      <p class="subtitle" data-i18n="sellSubtitle">
-        Fill in the car information. This demo saves the listing in your browser.
-      </p>
+          <p>
+            Choose the country and category. The form will change automatically,
+            so a vehicle ad, real estate ad, product ad, business ad, or service ad
+            gets the correct details.
+          </p>
+        </div>
+
+        <div class="sell-info-card">
+          <h2>Why this form is different</h2>
+
+          <ul>
+            <li>
+              <i class="fa-solid fa-check"></i>
+              <span>Vehicle ads include model, year, mileage, fuel, transmission, and condition.</span>
+            </li>
+
+            <li>
+              <i class="fa-solid fa-check"></i>
+              <span>Real estate ads include area, rooms, floor, rent/sale type, and availability.</span>
+            </li>
+
+            <li>
+              <i class="fa-solid fa-check"></i>
+              <span>Service ads include service location, delivery time, experience, and working method.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <form class="form-card" id="sellForm">
-      <div id="formMessage"></div>
+    <section class="sell-layout">
+      <aside class="sell-sidebar-card">
+        <h3>Publishing steps</h3>
 
-      <div class="alert" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
+        <div class="sell-progress-list">
+          <div class="progress-item">
+            <span>1</span>
+            <p>Select country and category</p>
+          </div>
+
+          <div class="progress-item">
+            <span>2</span>
+            <p>Fill details based on the selected ad type</p>
+          </div>
+
+          <div class="progress-item">
+            <span>3</span>
+            <p>Add images, description, and contact information</p>
+          </div>
+
+          <div class="progress-item">
+            <span>4</span>
+            <p>Publish and appear in search results</p>
+          </div>
+        </div>
+      </aside>
+
+      <div class="sell-form-shell">
+        <div class="sell-form-header">
+          <div>
+            <h2>Ad information</h2>
+            <p>The required details change depending on the selected category.</p>
+          </div>
+
+          <div class="selected-pill">
+            <i class="fa-solid fa-layer-group"></i>
+            <span data-selected-category>Category</span>
+          </div>
+        </div>
+
+        <form class="sell-form" id="sellForm" data-sell-form>
+          <div id="formMessage" data-form-message></div>
+
+          <section class="form-section">
+            <div class="form-section-title">
+              <i class="fa-solid fa-globe"></i>
+              <div>
+                <h3>Country and category</h3>
+                <p>These choices control language, market, and the required details.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="sellCountry">Country</label>
+                <select id="sellCountry" name="countryCode" data-country-select required></select>
+                <span class="field-hint">The ad will appear in this country's market.</span>
+              </div>
+
+              <div class="form-field">
+                <label for="categorySelect">Category</label>
+                <select id="categorySelect" name="categoryId" data-category-select required></select>
+                <span class="field-hint">The form below changes depending on this category.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section-title">
+              <i class="fa-solid fa-file-lines"></i>
+              <div>
+                <h3>Main ad details</h3>
+                <p>General information used in search results and listing cards.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field full">
+                <label for="title">Ad title</label>
+                <input
+                  id="title"
+                  name="title"
+                  type="text"
+                  placeholder="Example: Toyota Corolla 2020, 2-room apartment, website design service..."
+                  required
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="listingType">Listing type</label>
+                <select id="listingType" name="listingType" required></select>
+              </div>
+
+              <div class="form-field">
+                <label for="condition">Condition / status</label>
+                <select id="condition" name="condition"></select>
+              </div>
+
+              <div class="form-field">
+                <label for="price">Price</label>
+                <input id="price" name="price" type="number" min="0" step="1" placeholder="Example: 15000" />
+              </div>
+
+              <div class="form-field">
+                <label for="currency">Currency</label>
+                <input id="currency" name="currency" type="text" placeholder="Example: EUR, SEK, USD" />
+              </div>
+
+              <div class="form-field">
+                <label for="city">City</label>
+                <input id="city" name="city" type="text" placeholder="Example: Stockholm, Berlin, Damascus" required />
+              </div>
+
+              <div class="form-field">
+                <label for="address">Address / area</label>
+                <input id="address" name="address" type="text" placeholder="Street, district, or area" />
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section-title">
+              <i data-category-icon class="fa-solid fa-layer-group"></i>
+              <div>
+                <h3>Category-specific details</h3>
+                <p>These fields are different for cars, houses, electronics, services, and businesses.</p>
+              </div>
+            </div>
+
+            <div class="dynamic-note" id="dynamicNote">
+              Select a category to show the correct details.
+            </div>
+
+            <div class="form-grid" id="dynamicFields"></div>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section-title">
+              <i class="fa-solid fa-align-left"></i>
+              <div>
+                <h3>Description and images</h3>
+                <p>Add clear details. The system will also attach the category-specific details to the ad.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field full">
+                <label for="visibleDescription">Description</label>
+                <textarea
+                  id="visibleDescription"
+                  placeholder="Write full details, important notes, warranty, payment method, delivery, or service conditions..."
+                  required
+                ></textarea>
+                <span class="field-hint">Minimum 10 characters. More details make the ad easier to find.</span>
+              </div>
+
+              <textarea id="description" name="description" hidden></textarea>
+
+              <div class="form-field full">
+                <label for="images">Images</label>
+
+                <div class="media-upload">
+                  <i class="fa-solid fa-images"></i>
+                  <strong>Upload up to 5 images</strong>
+                  <p>Use clear photos. First image will be used as the main image.</p>
+                  <input id="images" name="images" type="file" accept="image/*" multiple />
+                </div>
+
+                <div class="preview-grid" id="imagePreview"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section-title">
+              <i class="fa-solid fa-address-card"></i>
+              <div>
+                <h3>Seller or provider contact</h3>
+                <p>At least one contact method is required.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="sellerName">Name</label>
+                <input id="sellerName" name="sellerName" type="text" placeholder="Your name or business name" />
+              </div>
+
+              <div class="form-field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" placeholder="+46..." />
+              </div>
+
+              <div class="form-field">
+                <label for="whatsapp">WhatsApp</label>
+                <input id="whatsapp" name="whatsapp" type="tel" placeholder="+46..." />
+              </div>
+
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="name@example.com" />
+              </div>
+            </div>
+          </section>
+
+          <div class="submit-bar">
+            <p>
+              Before publishing, make sure the category, country, price, contact,
+              and details are correct.
+            </p>
+
+            <button class="sell-submit-btn" type="submit">
+              <i class="fa-solid fa-paper-plane"></i>
+              Publish ad
+            </button>
+          </div>
+        </form>
       </div>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="sellCountry" data-i18n="country">Country</label>
-          <select id="sellCountry" data-country-select></select>
-        </div>
-
-        <div class="form-group">
-          <label for="brand" data-i18n="brand">Brand</label>
-          <input
-            id="brand"
-            name="brand"
-            type="text"
-            required
-            placeholder="Toyota"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="model" data-i18n="model">Model</label>
-          <input
-            id="model"
-            name="model"
-            type="text"
-            required
-            placeholder="Corolla"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="year" data-i18n="year">Year</label>
-          <input
-            id="year"
-            name="year"
-            type="number"
-            min="1980"
-            max="2030"
-            required
-            placeholder="2021"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="price" data-i18n="price">Price</label>
-          <input
-            id="price"
-            name="price"
-            type="number"
-            min="0"
-            required
-            placeholder="25000"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="mileage" data-i18n="mileage">Mileage</label>
-          <input
-            id="mileage"
-            name="mileage"
-            type="number"
-            min="0"
-            required
-            placeholder="80000"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="fuel" data-i18n="fuel">Fuel</label>
-          <select id="fuel" name="fuel">
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Hybrid">Hybrid</option>
-            <option value="Electric">Electric</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="city" data-i18n="city">City</label>
-          <input
-            id="city"
-            name="city"
-            type="text"
-            required
-            placeholder="Stockholm"
-          />
-        </div>
-
-        <div class="form-group full">
-          <label for="image" data-i18n="imageUrl">Image URL</label>
-          <input
-            id="image"
-            name="image"
-            type="url"
-            placeholder="https://example.com/car-image.jpg"
-          />
-        </div>
-
-        <div class="form-group full">
-          <label for="description" data-i18n="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            placeholder="Write car details here..."
-          ></textarea>
-        </div>
-      </div>
-
-      <button class="btn btn-primary btn-full" type="submit">
-        <i class="fa-solid fa-paper-plane"></i>
-        <span data-i18n="publish">Publish listing</span>
-      </button>
-    </form>
+    </section>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <div class="site-footer-inner">
-      <div>
-        © 2026 AutoMarket Global. All rights reserved.
-      </div>
+      <div>© 2026 HK Global Market & Services. All rights reserved.</div>
 
       <div class="footer-links">
-        <a href="terms.html" data-i18n="terms">Terms</a>
-        <a href="search.html" data-i18n="searchCars">Search cars</a>
-        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+        <a href="terms.html">Terms</a>
+        <a href="search.html">Search listings</a>
+        <a href="sell.html">Post an ad</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/core.js"></script>
+  <script src="assets/js/countries.js"></script>
+  <script src="assets/js/categories.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const dynamicFields = document.getElementById("dynamicFields");
+      const dynamicNote = document.getElementById("dynamicNote");
+      const categorySelect = document.getElementById("categorySelect");
+      const listingTypeSelect = document.getElementById("listingType");
+      const conditionSelect = document.getElementById("condition");
+      const sellForm = document.getElementById("sellForm");
+      const visibleDescription = document.getElementById("visibleDescription");
+      const hiddenDescription = document.getElementById("description");
+      const imageInput = document.getElementById("images");
+      const imagePreview = document.getElementById("imagePreview");
+
+      const LISTING_TYPES = {
+        default: [
+          ["sell", "For sale"],
+          ["rent", "For rent"],
+          ["service", "Service offer"],
+          ["wanted", "Wanted"],
+          ["exchange", "Exchange"]
+        ],
+
+        vehicles: [
+          ["sell", "Vehicle for sale"],
+          ["rent", "Vehicle for rent"],
+          ["leasing", "Leasing"],
+          ["wanted", "Wanted vehicle"],
+          ["parts", "Parts / accessories"]
+        ],
+
+        realEstate: [
+          ["sell", "Property for sale"],
+          ["rent", "Property for rent"],
+          ["daily-rent", "Daily rental"],
+          ["wanted", "Looking for property"]
+        ],
+
+        services: [
+          ["service", "I provide this service"],
+          ["request-service", "I need this service"],
+          ["consultation", "Consultation"],
+          ["contract", "Contract work"]
+        ],
+
+        digital: [
+          ["service", "Digital service"],
+          ["project", "Project work"],
+          ["consultation", "Consultation"],
+          ["subscription", "Subscription"]
+        ],
+
+        business: [
+          ["sell", "Business for sale"],
+          ["rent", "Business place for rent"],
+          ["partnership", "Partnership"],
+          ["equipment", "Business equipment"]
+        ],
+
+        personal: [
+          ["service", "Personal service"],
+          ["appointment", "Appointment"],
+          ["request-service", "I need this service"]
+        ]
+      };
+
+      const CONDITIONS = {
+        default: [
+          ["", "Select status"],
+          ["new", "New"],
+          ["used", "Used"],
+          ["excellent", "Excellent"],
+          ["good", "Good"],
+          ["needs-repair", "Needs repair"]
+        ],
+
+        realEstate: [
+          ["", "Select status"],
+          ["new", "New building"],
+          ["ready", "Ready to move"],
+          ["renovated", "Renovated"],
+          ["needs-renovation", "Needs renovation"],
+          ["under-construction", "Under construction"]
+        ],
+
+        services: [
+          ["", "Select availability"],
+          ["available-now", "Available now"],
+          ["by-appointment", "By appointment"],
+          ["online", "Online"],
+          ["in-person", "In person"],
+          ["online-in-person", "Online and in person"]
+        ]
+      };
+
+      const FIELD_SETS = {
+        vehicles: {
+          note: "Vehicle details help buyers compare accurately: year, mileage, fuel, gearbox, ownership, and technical status.",
+          fields: [
+            { name: "brand", label: "Brand", type: "text", placeholder: "Toyota, BMW, Volvo..." },
+            { name: "model", label: "Model", type: "text", placeholder: "Corolla, X5, V60..." },
+            { name: "year", label: "Year", type: "number", placeholder: "2020" },
+            { name: "mileage", label: "Mileage / km", type: "number", placeholder: "85000" },
+            {
+              name: "fuel",
+              label: "Fuel / energy",
+              type: "select",
+              options: ["Petrol", "Diesel", "Hybrid", "Electric", "Gas", "Other"]
+            },
+            {
+              name: "transmission",
+              label: "Transmission",
+              type: "select",
+              options: ["Automatic", "Manual", "Semi-automatic"]
+            },
+            {
+              name: "driveType",
+              label: "Drive type",
+              type: "select",
+              options: ["Front-wheel drive", "Rear-wheel drive", "All-wheel drive", "4x4"]
+            },
+            { name: "engine", label: "Engine / power", type: "text", placeholder: "2.0 TDI, 110 kW, 150 hp..." },
+            {
+              name: "ownership",
+              label: "Ownership",
+              type: "select",
+              options: ["Private owner", "Dealer", "Company", "Rental company"]
+            },
+            { name: "inspection", label: "Inspection / technical test", type: "text", placeholder: "Valid until..." },
+            { name: "damage", label: "Damage or accidents", type: "text", placeholder: "No accidents / repaired / small scratches..." },
+            { name: "features", label: "Important features", type: "textarea", placeholder: "Navigation, camera, winter tires, service history..." }
+          ]
+        },
+
+        rentalCars: {
+          note: "Rental vehicle ads need rental period, deposit, insurance, daily price, and allowed distance.",
+          fields: [
+            { name: "vehicleType", label: "Vehicle type", type: "text", placeholder: "Small car, family car, van..." },
+            { name: "rentalPeriod", label: "Rental period", type: "select", options: ["Hourly", "Daily", "Weekly", "Monthly", "Long-term"] },
+            { name: "deposit", label: "Deposit", type: "text", placeholder: "Example: 500 EUR" },
+            { name: "insurance", label: "Insurance included?", type: "select", options: ["Yes", "No", "Partial"] },
+            { name: "includedKm", label: "Included kilometers", type: "text", placeholder: "Example: 200 km/day" },
+            { name: "driverRequirements", label: "Driver requirements", type: "textarea", placeholder: "Age, license duration, documents..." }
+          ]
+        },
+
+        realEstate: {
+          note: "Real estate ads require accurate property type, area, rooms, floor, rent/sale type, and availability.",
+          fields: [
+            {
+              name: "propertyType",
+              label: "Property type",
+              type: "select",
+              options: ["House", "Apartment", "Room", "Studio", "Villa", "Commercial property", "Warehouse", "Land", "Farm"]
+            },
+            {
+              name: "purpose",
+              label: "Purpose",
+              type: "select",
+              options: ["For sale", "For rent", "Daily rent", "Investment", "Wanted"]
+            },
+            { name: "area", label: "Area / m²", type: "number", placeholder: "85" },
+            { name: "rooms", label: "Rooms", type: "text", placeholder: "2 rooms, 3+1..." },
+            { name: "bathrooms", label: "Bathrooms", type: "number", placeholder: "1" },
+            { name: "floor", label: "Floor", type: "text", placeholder: "2nd floor / ground floor..." },
+            { name: "totalFloors", label: "Building floors", type: "text", placeholder: "Example: 5 floors" },
+            {
+              name: "furnished",
+              label: "Furnished?",
+              type: "select",
+              options: ["Yes", "No", "Partly furnished"]
+            },
+            { name: "availableFrom", label: "Available from", type: "date" },
+            { name: "deposit", label: "Deposit / advance payment", type: "text", placeholder: "Example: 2 months" },
+            { name: "heating", label: "Heating / energy", type: "text", placeholder: "Central heating, gas, electric..." },
+            { name: "nearby", label: "Nearby places", type: "textarea", placeholder: "School, market, metro, hospital, parking..." }
+          ]
+        },
+
+        land: {
+          note: "Land and farm ads require area, legal status, road access, water, electricity, and usage type.",
+          fields: [
+            { name: "landArea", label: "Land area", type: "text", placeholder: "Example: 5000 m² / 2 hectares" },
+            {
+              name: "landUse",
+              label: "Usage type",
+              type: "select",
+              options: ["Agricultural", "Residential", "Commercial", "Industrial", "Investment", "Mixed use"]
+            },
+            { name: "ownershipDocument", label: "Ownership document", type: "text", placeholder: "Title deed, contract, shared ownership..." },
+            { name: "roadAccess", label: "Road access", type: "select", options: ["Yes", "No", "Nearby road"] },
+            { name: "water", label: "Water available?", type: "select", options: ["Yes", "No", "Nearby"] },
+            { name: "electricity", label: "Electricity available?", type: "select", options: ["Yes", "No", "Nearby"] },
+            { name: "soilOrCrop", label: "Soil / crops", type: "textarea", placeholder: "Olive trees, wheat, empty land, soil type..." }
+          ]
+        },
+
+        electronics: {
+          note: "Electronics ads need brand, model, storage/specs, warranty, accessories, and battery or technical condition.",
+          fields: [
+            { name: "brand", label: "Brand", type: "text", placeholder: "Apple, Samsung, Sony..." },
+            { name: "model", label: "Model", type: "text", placeholder: "iPhone 14, Galaxy S23..." },
+            { name: "storage", label: "Storage / memory", type: "text", placeholder: "128 GB, 16 GB RAM..." },
+            { name: "warranty", label: "Warranty", type: "text", placeholder: "Still valid / no warranty..." },
+            { name: "purchaseDate", label: "Purchase date", type: "text", placeholder: "2023 / 6 months ago..." },
+            { name: "battery", label: "Battery / technical condition", type: "text", placeholder: "Battery 90%, works perfectly..." },
+            { name: "accessories", label: "Included accessories", type: "textarea", placeholder: "Charger, box, case, invoice..." }
+          ]
+        },
+
+        home: {
+          note: "Home item ads need size, material, condition, delivery possibility, and room usage.",
+          fields: [
+            { name: "itemType", label: "Item type", type: "text", placeholder: "Sofa, table, washing machine..." },
+            { name: "brand", label: "Brand", type: "text", placeholder: "IKEA, Bosch, Samsung..." },
+            { name: "dimensions", label: "Dimensions", type: "text", placeholder: "Width × height × depth" },
+            { name: "material", label: "Material", type: "text", placeholder: "Wood, metal, leather..." },
+            { name: "color", label: "Color", type: "text", placeholder: "White, black, brown..." },
+            { name: "delivery", label: "Delivery possible?", type: "select", options: ["Yes", "No", "Buyer collects", "Delivery for extra fee"] },
+            { name: "assembly", label: "Assembly / disassembly", type: "select", options: ["Already assembled", "Can be disassembled", "Needs assembly"] }
+          ]
+        },
+
+        services: {
+          note: "Service ads need working area, service method, experience, time, price model, and guarantee.",
+          fields: [
+            { name: "serviceType", label: "Service type", type: "text", placeholder: "Plumbing, cleaning, car repair, teaching..." },
+            {
+              name: "serviceMethod",
+              label: "Service method",
+              type: "select",
+              options: ["At customer location", "At provider location", "Online", "Both online and in person"]
+            },
+            { name: "serviceArea", label: "Service area", type: "text", placeholder: "City, district, all country..." },
+            {
+              name: "priceModel",
+              label: "Price model",
+              type: "select",
+              options: ["Fixed price", "Hourly", "Daily", "Monthly", "Per project", "After inspection"]
+            },
+            { name: "experience", label: "Experience", type: "text", placeholder: "Example: 5 years" },
+            { name: "availability", label: "Availability", type: "text", placeholder: "Weekdays, weekends, urgent calls..." },
+            { name: "guarantee", label: "Guarantee", type: "text", placeholder: "Yes / No / depends on service" },
+            { name: "included", label: "What is included?", type: "textarea", placeholder: "Tools, materials, consultation, follow-up..." }
+          ]
+        },
+
+        education: {
+          note: "Education ads need subject, level, teaching method, duration, language, and certificate if available.",
+          fields: [
+            { name: "subject", label: "Subject / course", type: "text", placeholder: "German, Math, Programming..." },
+            { name: "level", label: "Level", type: "select", options: ["Beginner", "Intermediate", "Advanced", "School", "University", "Professional"] },
+            { name: "teachingMethod", label: "Teaching method", type: "select", options: ["Online", "In person", "Both"] },
+            { name: "lessonDuration", label: "Lesson duration", type: "text", placeholder: "45 min, 60 min, 90 min..." },
+            { name: "language", label: "Teaching language", type: "text", placeholder: "Arabic, English, German, Swedish..." },
+            { name: "certificate", label: "Certificate available?", type: "select", options: ["Yes", "No"] },
+            { name: "schedule", label: "Schedule", type: "textarea", placeholder: "Available days and times..." }
+          ]
+        },
+
+        business: {
+          note: "Business ads need business type, location, size, equipment, rent, revenue notes, and legal status.",
+          fields: [
+            { name: "businessType", label: "Business type", type: "text", placeholder: "Shop, restaurant, café, salon..." },
+            { name: "businessSize", label: "Size / area", type: "text", placeholder: "Example: 80 m²" },
+            { name: "monthlyRent", label: "Monthly rent", type: "text", placeholder: "If applicable" },
+            { name: "equipmentIncluded", label: "Equipment included?", type: "select", options: ["Yes", "No", "Partly"] },
+            { name: "employees", label: "Employees", type: "text", placeholder: "Optional" },
+            { name: "license", label: "License / legal status", type: "text", placeholder: "Registered, license available..." },
+            { name: "reason", label: "Reason for sale / offer", type: "textarea", placeholder: "Optional but useful..." }
+          ]
+        },
+
+        digital: {
+          note: "Digital service ads need service type, delivery time, tools, revisions, price model, and portfolio.",
+          fields: [
+            { name: "digitalType", label: "Digital service type", type: "select", options: ["Website", "Programming", "Graphic design", "Marketing", "Translation", "Writing", "SEO", "Social media"] },
+            { name: "deliveryTime", label: "Delivery time", type: "text", placeholder: "Example: 3 days, 1 week..." },
+            { name: "tools", label: "Tools / technologies", type: "text", placeholder: "HTML, CSS, React, Figma, Photoshop..." },
+            { name: "revisions", label: "Revisions", type: "text", placeholder: "Example: 2 revisions included" },
+            { name: "portfolio", label: "Portfolio link", type: "url", placeholder: "https://..." },
+            { name: "requirements", label: "What do you need from the customer?", type: "textarea", placeholder: "Text, images, logo, requirements, examples..." }
+          ]
+        },
+
+        personal: {
+          note: "Personal service ads need service type, availability, location, gender preference if relevant, and safety conditions.",
+          fields: [
+            { name: "personalServiceType", label: "Personal service type", type: "text", placeholder: "Beauty, child care, event help..." },
+            { name: "locationMode", label: "Location", type: "select", options: ["Customer location", "Provider location", "Online", "Event location"] },
+            { name: "availability", label: "Availability", type: "text", placeholder: "Days and times..." },
+            { name: "experience", label: "Experience", type: "text", placeholder: "Example: 3 years" },
+            { name: "materials", label: "Materials included?", type: "select", options: ["Yes", "No", "Depends on request"] },
+            { name: "notes", label: "Important notes", type: "textarea", placeholder: "Conditions, limits, requirements..." }
+          ]
+        }
+      };
+
+      const CATEGORY_MAP = {
+        "cars": "vehicles",
+        "motorcycles": "vehicles",
+        "bicycles": "vehicles",
+        "small-trucks": "vehicles",
+        "large-trucks": "vehicles",
+        "vehicle-parts": "vehicles",
+        "boats": "vehicles",
+        "rental-cars": "rentalCars",
+
+        "houses": "realEstate",
+        "apartments": "realEstate",
+        "rooms": "realEstate",
+        "commercial-real-estate": "realEstate",
+        "warehouses": "realEstate",
+        "agricultural-lands": "land",
+        "lands": "land",
+
+        "phones": "electronics",
+        "computers": "electronics",
+        "tablets": "electronics",
+        "tv-audio": "electronics",
+        "gaming": "electronics",
+        "cameras": "electronics",
+
+        "furniture": "home",
+        "home-appliances": "home",
+        "home-tools": "home",
+        "garden": "home",
+        "decor": "home",
+
+        "maintenance-centers": "services",
+        "car-service": "services",
+        "device-repair": "services",
+        "home-maintenance": "services",
+        "company-maintenance": "services",
+        "plumbing": "services",
+        "electricity": "services",
+        "painting": "services",
+        "cleaning-services": "services",
+        "transport-delivery": "services",
+
+        "education": "education",
+        "private-lessons": "education",
+        "language-courses": "education",
+        "online-courses": "education",
+
+        "shops": "business",
+        "business-for-sale": "business",
+        "restaurant-cafe": "business",
+        "business-equipment": "business",
+
+        "digital-services": "digital",
+        "web-design": "digital",
+        "programming": "digital",
+        "graphic-design": "digital",
+        "digital-marketing": "digital",
+        "translation-writing": "digital",
+
+        "personal-services": "personal",
+        "beauty-care": "personal",
+        "event-services": "personal",
+        "child-care": "personal"
+      };
+
+      function getCategories() {
+        return window.AMG_CATEGORIES || window.CATEGORIES || [];
+      }
+
+      function getCategoryById(id) {
+        return getCategories().find((category) => category.id === id) || null;
+      }
+
+      function getFieldSetKey(categoryId) {
+        const category = getCategoryById(categoryId);
+
+        if (CATEGORY_MAP[categoryId]) {
+          return CATEGORY_MAP[categoryId];
+        }
+
+        if (category && CATEGORY_MAP[category.group]) {
+          return CATEGORY_MAP[category.group];
+        }
+
+        if (category && FIELD_SETS[category.group]) {
+          return category.group;
+        }
+
+        return "vehicles";
+      }
+
+      function renderOptions(select, options) {
+        select.innerHTML = "";
+
+        options.forEach(([value, label]) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = label;
+          select.appendChild(option);
+        });
+      }
+
+      function createField(field) {
+        const wrapper = document.createElement("div");
+        wrapper.className = field.type === "textarea" ? "form-field full" : "form-field";
+
+        const label = document.createElement("label");
+        label.setAttribute("for", `detail_${field.name}`);
+        label.textContent = field.label;
+
+        let input;
+
+        if (field.type === "select") {
+          input = document.createElement("select");
+
+          const first = document.createElement("option");
+          first.value = "";
+          first.textContent = "Select";
+          input.appendChild(first);
+
+          field.options.forEach((optionLabel) => {
+            const option = document.createElement("option");
+            option.value = optionLabel;
+            option.textContent = optionLabel;
+            input.appendChild(option);
+          });
+        } else if (field.type === "textarea") {
+          input = document.createElement("textarea");
+          input.placeholder = field.placeholder || "";
+        } else {
+          input = document.createElement("input");
+          input.type = field.type || "text";
+          input.placeholder = field.placeholder || "";
+        }
+
+        input.id = `detail_${field.name}`;
+        input.name = `detail_${field.name}`;
+        input.dataset.detailLabel = field.label;
+
+        wrapper.appendChild(label);
+        wrapper.appendChild(input);
+
+        return wrapper;
+      }
+
+      function updateFormForCategory() {
+        const categoryId = categorySelect.value || localStorage.getItem("amg_selected_category") || "cars";
+        const category = getCategoryById(categoryId);
+        const key = getFieldSetKey(categoryId);
+        const fieldSet = FIELD_SETS[key] || FIELD_SETS.vehicles;
+
+        dynamicNote.textContent = fieldSet.note;
+        dynamicFields.innerHTML = "";
+
+        fieldSet.fields.forEach((field) => {
+          dynamicFields.appendChild(createField(field));
+        });
+
+        const group = category ? category.group : "default";
+
+        const listingTypeOptions =
+          LISTING_TYPES[key] ||
+          LISTING_TYPES[group] ||
+          LISTING_TYPES.default;
+
+        const conditionOptions =
+          CONDITIONS[key] ||
+          CONDITIONS[group] ||
+          CONDITIONS.default;
+
+        renderOptions(listingTypeSelect, listingTypeOptions);
+        renderOptions(conditionSelect, conditionOptions);
+      }
+
+      function buildDescription() {
+        const categoryId = categorySelect.value || "";
+        const category = getCategoryById(categoryId);
+
+        const categoryName = category && category.labels
+          ? category.labels.en || category.labels.ar || category.id
+          : categoryId;
+
+        const details = Array.from(document.querySelectorAll("[name^='detail_']"))
+          .map((input) => {
+            const label = input.dataset.detailLabel || input.name;
+            const value = String(input.value || "").trim();
+
+            if (!value) return "";
+
+            return `${label}: ${value}`;
+          })
+          .filter(Boolean);
+
+        const baseDescription = String(visibleDescription.value || "").trim();
+
+        hiddenDescription.value = [
+          baseDescription,
+          "",
+          "----- Category details -----",
+          `Category: ${categoryName}`,
+          ...details
+        ].join("\n").trim();
+      }
+
+      function previewImages() {
+        imagePreview.innerHTML = "";
+
+        const files = Array.from(imageInput.files || []).slice(0, 5);
+
+        files.forEach((file) => {
+          const reader = new FileReader();
+
+          reader.onload = function () {
+            const img = document.createElement("img");
+            img.src = reader.result;
+            img.alt = "Ad image preview";
+            imagePreview.appendChild(img);
+          };
+
+          reader.readAsDataURL(file);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(updateFormForCategory, 200);
+
+        categorySelect.addEventListener("change", updateFormForCategory);
+        window.addEventListener("amg:categorychange", updateFormForCategory);
+
+        imageInput.addEventListener("change", previewImages);
+
+        sellForm.addEventListener("submit", () => {
+          buildDescription();
+        });
+      });
+    })();
+  </script>
+
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
