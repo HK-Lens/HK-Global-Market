@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Post an ad | HK Global Market & Services</title>
-
-  <meta
-    name="description"
-    content="Publish a product, property, vehicle, business, or service ad on HK Global Market & Services."
-  />
+  <title>Post Ad | HK Global Market & Services</title>
+  <meta name="description" content="Post a smart multilingual ad by country and category." />
 
   <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -19,199 +15,383 @@
   />
 
   <style>
-    .sell-page {
-      min-height: 100vh;
+    :root {
+      --orange: #ff8b26;
+      --orange-dark: #e87512;
+      --dark: #101828;
+      --text: #344054;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.1);
+      --soft: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(255, 139, 38, 0.12), transparent 35%),
-        radial-gradient(circle at top right, rgba(28, 98, 255, 0.08), transparent 35%),
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(46, 144, 250, 0.1), transparent 30%),
         linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      color: var(--dark);
     }
 
-    .sell-hero {
-      padding: 120px 5vw 42px;
+    body[dir="rtl"] {
+      direction: rtl;
+      text-align: right;
     }
 
-    .sell-hero-inner {
-      max-width: 1180px;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      height: 100%;
+      max-width: 1240px;
       margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle,
+    .sidebar-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
+      place-items: center;
+      color: var(--dark);
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--orange);
+    }
+
+    .top-country {
+      min-width: 220px;
+      max-width: 320px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.42);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 320px;
+      background: #fff;
+      z-index: 90;
+      transform: translateX(-105%);
+      transition: 0.25s ease;
+      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      transform: translateX(105%);
+      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .sidebar-title span {
+      color: var(--orange);
+    }
+
+    .sidebar-nav {
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 800;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 56px 18px 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+      gap: 24px;
       align-items: stretch;
     }
 
-    .sell-title-box {
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid rgba(16, 24, 40, 0.08);
-      box-shadow: 0 24px 70px rgba(16, 24, 40, 0.08);
-      border-radius: 32px;
+    .hero-card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 34px;
       padding: 34px;
       backdrop-filter: blur(18px);
     }
 
-    .sell-badge {
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 9px;
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255, 139, 38, 0.1);
-      color: #d46b09;
-      font-weight: 800;
+      background: #fff4ea;
+      color: var(--orange-dark);
       font-size: 13px;
+      font-weight: 900;
       margin-bottom: 18px;
     }
 
-    .sell-title-box h1 {
-      margin: 0 0 14px;
-      font-size: clamp(34px, 6vw, 72px);
-      line-height: 0.95;
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 6vw, 70px);
+      line-height: 0.96;
       letter-spacing: -0.06em;
-      color: #111827;
     }
 
-    .sell-title-box h1 span {
-      color: #ff8b26;
+    .hero h1 span {
+      color: var(--orange);
     }
 
-    .sell-title-box p {
+    .hero p {
       margin: 0;
-      color: #667085;
-      font-size: 17px;
+      color: var(--muted);
       line-height: 1.8;
-      max-width: 720px;
+      font-size: 17px;
     }
 
-    .sell-info-card {
-      background: #111827;
-      color: #ffffff;
-      border-radius: 32px;
+    .guide-card {
+      background: var(--dark);
+      color: #fff;
+      border-radius: 34px;
       padding: 30px;
-      box-shadow: 0 30px 90px rgba(17, 24, 39, 0.22);
+      box-shadow: 0 30px 90px rgba(16, 24, 40, 0.22);
       position: relative;
       overflow: hidden;
     }
 
-    .sell-info-card::before {
+    .guide-card::before {
       content: "";
       position: absolute;
-      width: 240px;
-      height: 240px;
-      right: -80px;
-      top: -80px;
-      background: rgba(255, 139, 38, 0.22);
+      width: 260px;
+      height: 260px;
       border-radius: 50%;
+      right: -90px;
+      top: -100px;
+      background: rgba(255, 139, 38, 0.25);
       filter: blur(8px);
     }
 
-    .sell-info-card h2 {
+    .guide-card h2,
+    .guide-card ul {
       position: relative;
-      margin: 0 0 14px;
+    }
+
+    .guide-card h2 {
+      margin: 0 0 18px;
       font-size: 24px;
     }
 
-    .sell-info-card ul {
-      position: relative;
+    .guide-card ul {
+      list-style: none;
       margin: 0;
       padding: 0;
-      list-style: none;
       display: grid;
-      gap: 14px;
+      gap: 15px;
     }
 
-    .sell-info-card li {
+    .guide-card li {
       display: flex;
       gap: 12px;
       color: rgba(255, 255, 255, 0.82);
       line-height: 1.6;
     }
 
-    .sell-info-card i {
-      color: #ffad5f;
+    .guide-card i {
+      color: #ffbd7a;
       margin-top: 4px;
     }
 
-    .sell-layout {
-      max-width: 1180px;
+    .page-layout {
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 0 5vw 80px;
+      padding: 0 18px 80px;
       display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 28px;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 24px;
       align-items: start;
     }
 
-    .sell-sidebar-card {
+    .progress-card {
       position: sticky;
-      top: 92px;
+      top: 84px;
       background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(16, 24, 40, 0.08);
-      border-radius: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
       padding: 22px;
-      box-shadow: 0 20px 60px rgba(16, 24, 40, 0.08);
+      box-shadow: var(--shadow);
       backdrop-filter: blur(16px);
     }
 
-    .sell-sidebar-card h3 {
+    .progress-card h3 {
       margin: 0 0 14px;
       font-size: 18px;
-      color: #111827;
     }
 
-    .sell-progress-list {
+    .progress-list {
       display: grid;
       gap: 12px;
     }
 
     .progress-item {
       display: flex;
-      align-items: center;
       gap: 11px;
-      color: #667085;
-      font-size: 14px;
+      align-items: flex-start;
+      color: var(--muted);
       line-height: 1.5;
+      font-size: 14px;
     }
 
     .progress-item span {
       width: 30px;
       height: 30px;
       border-radius: 12px;
+      background: #fff4ea;
+      color: var(--orange);
       display: grid;
       place-items: center;
-      background: #fff4ea;
-      color: #ff8b26;
       font-weight: 900;
       flex: 0 0 auto;
     }
 
-    .sell-form-shell {
+    .form-shell {
       background: rgba(255, 255, 255, 0.94);
-      border: 1px solid rgba(16, 24, 40, 0.08);
+      border: 1px solid var(--line);
       border-radius: 34px;
-      box-shadow: 0 30px 90px rgba(16, 24, 40, 0.1);
+      box-shadow: var(--shadow);
       overflow: hidden;
     }
 
-    .sell-form-header {
+    .form-header {
       padding: 28px 30px;
-      border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, #fff, #fff8f2);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
-      background: linear-gradient(135deg, #ffffff, #fff8f2);
     }
 
-    .sell-form-header h2 {
+    .form-header h2 {
       margin: 0 0 6px;
-      color: #111827;
-      font-size: 26px;
-      letter-spacing: -0.03em;
+      font-size: 28px;
+      letter-spacing: -0.04em;
     }
 
-    .sell-form-header p {
+    .form-header p {
       margin: 0;
-      color: #667085;
+      color: var(--muted);
       line-height: 1.6;
     }
 
@@ -219,57 +399,57 @@
       display: inline-flex;
       align-items: center;
       gap: 9px;
-      padding: 11px 14px;
+      padding: 12px 15px;
       border-radius: 999px;
-      background: #111827;
-      color: white;
+      background: var(--dark);
+      color: #fff;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 900;
       white-space: nowrap;
     }
 
     .sell-form {
       padding: 30px;
       display: grid;
-      gap: 28px;
+      gap: 26px;
     }
 
     .form-section {
-      border: 1px solid rgba(16, 24, 40, 0.08);
+      border: 1px solid var(--line);
       border-radius: 26px;
       padding: 24px;
-      background: #ffffff;
+      background: #fff;
     }
 
-    .form-section-title {
+    .section-title {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 12px;
       margin-bottom: 20px;
     }
 
-    .form-section-title i {
-      width: 42px;
-      height: 42px;
+    .section-title i {
+      width: 44px;
+      height: 44px;
       border-radius: 16px;
+      background: #fff4ea;
+      color: var(--orange);
       display: grid;
       place-items: center;
-      background: #fff4ea;
-      color: #ff8b26;
       font-size: 18px;
+      flex: 0 0 auto;
     }
 
-    .form-section-title h3 {
+    .section-title h3 {
       margin: 0;
-      color: #111827;
       font-size: 20px;
     }
 
-    .form-section-title p {
-      margin: 4px 0 0;
-      color: #667085;
-      font-size: 14px;
+    .section-title p {
+      margin: 5px 0 0;
+      color: var(--muted);
       line-height: 1.5;
+      font-size: 14px;
     }
 
     .form-grid {
@@ -282,94 +462,95 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .form-field {
+    .field {
       display: grid;
       gap: 8px;
     }
 
-    .form-field.full {
+    .field.full {
       grid-column: 1 / -1;
     }
 
-    .form-field label {
-      color: #344054;
-      font-weight: 800;
+    .field label {
       font-size: 14px;
+      font-weight: 900;
+      color: #344054;
     }
 
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
+    .field input,
+    .field select,
+    .field textarea {
       width: 100%;
+      min-height: 48px;
       border: 1px solid rgba(16, 24, 40, 0.14);
       border-radius: 16px;
-      padding: 14px 15px;
-      font-size: 15px;
+      padding: 13px 15px;
+      background: #fff;
+      color: var(--dark);
       outline: none;
-      background: #ffffff;
-      color: #111827;
-      transition: 0.2s ease;
+      font-size: 15px;
     }
 
-    .form-field textarea {
-      min-height: 130px;
+    .field textarea {
+      min-height: 135px;
       resize: vertical;
       line-height: 1.7;
     }
 
-    .form-field input:focus,
-    .form-field select:focus,
-    .form-field textarea:focus {
-      border-color: #ff8b26;
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--orange);
       box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
     }
 
-    .field-hint {
+    .hint {
       color: #98a2b3;
       font-size: 12px;
       line-height: 1.5;
     }
 
     .dynamic-note {
-      margin-bottom: 18px;
       padding: 15px 16px;
       border-radius: 18px;
       background: #f8fafc;
+      border: 1px dashed rgba(16, 24, 40, 0.16);
       color: #475467;
       line-height: 1.7;
-      border: 1px dashed rgba(16, 24, 40, 0.14);
+      margin-bottom: 18px;
     }
 
-    .media-upload {
+    .media-box {
       border: 2px dashed rgba(255, 139, 38, 0.35);
+      background: #fffaf5;
       border-radius: 24px;
       padding: 24px;
-      background: #fffaf5;
       display: grid;
-      gap: 12px;
+      gap: 10px;
       text-align: center;
     }
 
-    .media-upload i {
+    .media-box i {
       font-size: 34px;
-      color: #ff8b26;
+      color: var(--orange);
     }
 
-    .media-upload strong {
-      color: #111827;
+    .media-box strong {
+      color: var(--dark);
     }
 
-    .media-upload p {
+    .media-box p {
+      color: var(--muted);
       margin: 0;
-      color: #667085;
       font-size: 14px;
+      line-height: 1.5;
     }
 
     .preview-grid {
+      margin-top: 14px;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 10px;
-      margin-top: 14px;
     }
 
     .preview-grid img {
@@ -377,14 +558,20 @@
       aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 16px;
-      border: 1px solid rgba(16, 24, 40, 0.08);
+      border: 1px solid var(--line);
     }
 
     .form-message {
+      display: none;
       padding: 14px 16px;
       border-radius: 16px;
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1.5;
+    }
+
+    .form-message.success,
+    .form-message.error {
+      display: block;
     }
 
     .form-message.success {
@@ -400,14 +587,14 @@
     }
 
     .submit-bar {
+      background: var(--dark);
+      color: #fff;
+      border-radius: 24px;
+      padding: 22px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 22px 24px;
-      border-radius: 24px;
-      background: #111827;
-      color: white;
     }
 
     .submit-bar p {
@@ -417,24 +604,44 @@
       font-size: 14px;
     }
 
-    .sell-submit-btn {
+    .submit-btn {
       border: 0;
       border-radius: 999px;
-      padding: 14px 20px;
-      background: #ff8b26;
-      color: white;
-      font-weight: 900;
-      cursor: pointer;
+      background: var(--orange);
+      color: #fff;
+      min-height: 48px;
+      padding: 0 22px;
       display: inline-flex;
       align-items: center;
       gap: 9px;
+      font-weight: 900;
+      cursor: pointer;
       box-shadow: 0 16px 40px rgba(255, 139, 38, 0.35);
       white-space: nowrap;
     }
 
-    .sell-submit-btn:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 800;
+      color: var(--dark);
     }
 
     body.menu-open {
@@ -442,97 +649,80 @@
     }
 
     @media (max-width: 920px) {
-      .sell-hero {
-        padding-top: 94px;
-      }
-
-      .sell-hero-inner,
-      .sell-layout {
+      .hero,
+      .page-layout {
         grid-template-columns: 1fr;
       }
 
-      .sell-sidebar-card {
+      .progress-card {
         position: static;
+      }
+
+      .form-header,
+      .submit-bar {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .form-grid,
       .form-grid.three {
         grid-template-columns: 1fr;
       }
+    }
 
-      .sell-form-header,
-      .submit-bar {
-        align-items: flex-start;
-        flex-direction: column;
+    @media (max-width: 560px) {
+      .top-country {
+        min-width: 150px;
+        max-width: 180px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .hero-card,
+      .guide-card,
+      .sell-form,
+      .form-header {
+        padding: 20px;
+      }
+
+      .form-section {
+        padding: 18px;
       }
 
       .preview-grid {
         grid-template-columns: repeat(3, 1fr);
       }
     }
-
-    @media (max-width: 540px) {
-      .sell-hero {
-        padding: 86px 14px 24px;
-      }
-
-      .sell-layout {
-        padding: 0 14px 60px;
-      }
-
-      .sell-title-box,
-      .sell-info-card,
-      .sell-form,
-      .sell-form-header {
-        padding: 20px;
-      }
-
-      .form-section {
-        padding: 18px;
-        border-radius: 22px;
-      }
-
-      .selected-pill {
-        white-space: normal;
-      }
-    }
   </style>
 </head>
 
-<body class="sell-page">
-  <header class="site-topbar">
-    <div class="site-topbar-inner">
-      <div class="topbar-left">
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false"
-        >
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="HK Global Market & Services home">
-          HK <span>Global</span>
-        </a>
+        <a class="brand" href="index.html">HK <span>Global</span></a>
       </div>
 
-      <div class="topbar-right">
-        <select
-          class="country-select"
-          id="countrySelect"
-          name="country"
-          aria-label="Choose country"
-        ></select>
+      <div class="top-right">
+        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
       </div>
     </div>
   </header>
 
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-title">HK <span>Global</span></div>
 
@@ -541,275 +731,261 @@
       </button>
     </div>
 
-    <nav class="sidebar-nav" aria-label="Main navigation">
+    <nav class="sidebar-nav">
       <a class="sidebar-link" href="index.html">
         <i class="fa-solid fa-house"></i>
-        <span>Home</span>
+        <span data-i18n="home">Home</span>
       </a>
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span>Search listings</span>
+        <span data-i18n="search">Search</span>
       </a>
 
       <a class="sidebar-link active" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span>Post an ad</span>
+        <span data-i18n="postAd">Post ad</span>
       </a>
-
-      <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
-        <span>My account</span>
+        <span data-i18n="account">My account</span>
       </a>
 
       <a class="sidebar-link" href="favorites.html">
         <i class="fa-solid fa-heart"></i>
-        <span>Favorites</span>
+        <span data-i18n="favorites">Favorites</span>
       </a>
 
       <a class="sidebar-link" href="messages.html">
         <i class="fa-solid fa-envelope"></i>
-        <span>Messages</span>
+        <span data-i18n="messages">Messages</span>
       </a>
 
       <a class="sidebar-link" href="dashboard.html">
         <i class="fa-solid fa-chart-line"></i>
-        <span>Dashboard</span>
+        <span data-i18n="dashboard">Dashboard</span>
       </a>
 
       <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="terms.html">
         <i class="fa-solid fa-shield-halved"></i>
-        <span>Terms</span>
+        <span data-i18n="terms">Terms</span>
       </a>
 
       <a class="sidebar-link" href="login.html">
         <i class="fa-solid fa-right-to-bracket"></i>
-        <span>Login</span>
+        <span data-i18n="login">Login</span>
       </a>
 
       <a class="sidebar-link" href="register.html">
         <i class="fa-solid fa-user-plus"></i>
-        <span>Create account</span>
+        <span data-i18n="register">Create account</span>
       </a>
     </nav>
 
-    <div class="sidebar-footer">
-      HK Global Market & Services · 2026
-    </div>
+    <div class="sidebar-footer">HK Global Market & Services · 2026</div>
   </aside>
 
   <main>
-    <section class="sell-hero">
-      <div class="sell-hero-inner">
-        <div class="sell-title-box">
-          <div class="sell-badge">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <span>Smart publishing form</span>
-          </div>
-
-          <h1>
-            Post a precise ad <span>for every category</span>
-          </h1>
-
-          <p>
-            Choose the country and category. The form will change automatically,
-            so a vehicle ad, real estate ad, product ad, business ad, or service ad
-            gets the correct details.
-          </p>
+    <section class="hero">
+      <div class="hero-card">
+        <div class="badge">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <span data-i18n="smartForm">Smart multilingual publishing</span>
         </div>
 
-        <div class="sell-info-card">
-          <h2>Why this form is different</h2>
+        <h1>
+          <span data-i18n="heroTitleA">Post the right ad</span>
+          <span data-i18n="heroTitleB">for every category</span>
+        </h1>
 
-          <ul>
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span>Vehicle ads include model, year, mileage, fuel, transmission, and condition.</span>
-            </li>
+        <p data-i18n="heroText">
+          Select a country, main category, and subcategory. The page will change language and show accurate fields for vehicles, properties, products, businesses, education, digital services, and personal services.
+        </p>
+      </div>
 
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span>Real estate ads include area, rooms, floor, rent/sale type, and availability.</span>
-            </li>
+      <div class="guide-card">
+        <h2 data-i18n="guideTitle">Professional ad structure</h2>
 
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span>Service ads include service location, delivery time, experience, and working method.</span>
-            </li>
-          </ul>
-        </div>
+        <ul>
+          <li>
+            <i class="fa-solid fa-check"></i>
+            <span data-i18n="guideOne">Vehicle ads include brand, model, year, mileage, fuel, transmission, inspection, and damage status.</span>
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            <span data-i18n="guideTwo">Property ads include rent or sale type, area, rooms, floor, furniture, deposit, and availability.</span>
+          </li>
+
+          <li>
+            <i class="fa-solid fa-check"></i>
+            <span data-i18n="guideThree">Service ads include location, delivery method, experience, price model, availability, and guarantee.</span>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <section class="sell-layout">
-      <aside class="sell-sidebar-card">
-        <h3>Publishing steps</h3>
+    <section class="page-layout">
+      <aside class="progress-card">
+        <h3 data-i18n="stepsTitle">Publishing steps</h3>
 
-        <div class="sell-progress-list">
+        <div class="progress-list">
           <div class="progress-item">
             <span>1</span>
-            <p>Select country and category</p>
+            <p data-i18n="stepOne">Choose country and language.</p>
           </div>
 
           <div class="progress-item">
             <span>2</span>
-            <p>Fill details based on the selected ad type</p>
+            <p data-i18n="stepTwo">Choose main category and subcategory.</p>
           </div>
 
           <div class="progress-item">
             <span>3</span>
-            <p>Add images, description, and contact information</p>
+            <p data-i18n="stepThree">Fill details suitable for this ad type.</p>
           </div>
 
           <div class="progress-item">
             <span>4</span>
-            <p>Publish and appear in search results</p>
+            <p data-i18n="stepFour">Publish and appear in search results.</p>
           </div>
         </div>
       </aside>
 
-      <div class="sell-form-shell">
-        <div class="sell-form-header">
+      <div class="form-shell">
+        <div class="form-header">
           <div>
-            <h2>Ad information</h2>
-            <p>The required details change depending on the selected category.</p>
+            <h2 data-i18n="formTitle">Ad information</h2>
+            <p data-i18n="formSubtitle">The form changes automatically based on the selected ad type.</p>
           </div>
 
           <div class="selected-pill">
             <i class="fa-solid fa-layer-group"></i>
-            <span data-selected-category>Category</span>
+            <span id="selectedCategoryText">Category</span>
           </div>
         </div>
 
         <form class="sell-form" id="sellForm" data-sell-form>
-          <div id="formMessage" data-form-message></div>
+          <div id="formMessage" class="form-message" data-form-message></div>
 
           <section class="form-section">
-            <div class="form-section-title">
+            <div class="section-title">
               <i class="fa-solid fa-globe"></i>
               <div>
-                <h3>Country and category</h3>
-                <p>These choices control language, market, and the required details.</p>
+                <h3 data-i18n="countryCategoryTitle">Country and category</h3>
+                <p data-i18n="countryCategoryText">These choices control language, market, and the correct details.</p>
               </div>
             </div>
 
             <div class="form-grid">
-              <div class="form-field">
-                <label for="sellCountry">Country</label>
+              <div class="field">
+                <label for="sellCountry" data-i18n="country">Country</label>
                 <select id="sellCountry" name="countryCode" data-country-select required></select>
-                <span class="field-hint">The ad will appear in this country's market.</span>
+                <span class="hint" data-i18n="countryHint">The ad will appear in this country.</span>
               </div>
 
-              <div class="form-field">
-                <label for="categorySelect">Category</label>
+              <div class="field">
+                <label for="mainGroupSelect" data-i18n="mainCategory">Main category</label>
+                <select id="mainGroupSelect" required></select>
+                <span class="hint" data-i18n="mainCategoryHint">Example: vehicles, real estate, services.</span>
+              </div>
+
+              <div class="field full">
+                <label for="categorySelect" data-i18n="subCategory">Subcategory</label>
                 <select id="categorySelect" name="categoryId" data-category-select required></select>
-                <span class="field-hint">The form below changes depending on this category.</span>
+                <span class="hint" data-i18n="subCategoryHint">The details below depend on this choice.</span>
               </div>
             </div>
           </section>
 
           <section class="form-section">
-            <div class="form-section-title">
+            <div class="section-title">
               <i class="fa-solid fa-file-lines"></i>
               <div>
-                <h3>Main ad details</h3>
-                <p>General information used in search results and listing cards.</p>
+                <h3 data-i18n="basicTitle">Basic ad details</h3>
+                <p data-i18n="basicText">This information appears in the search page and listing cards.</p>
               </div>
             </div>
 
             <div class="form-grid">
-              <div class="form-field full">
-                <label for="title">Ad title</label>
-                <input
-                  id="title"
-                  name="title"
-                  type="text"
-                  placeholder="Example: Toyota Corolla 2020, 2-room apartment, website design service..."
-                  required
-                />
+              <div class="field full">
+                <label for="title" data-i18n="adTitle">Ad title</label>
+                <input id="title" name="title" type="text" required />
               </div>
 
-              <div class="form-field">
-                <label for="listingType">Listing type</label>
+              <div class="field">
+                <label for="listingType" data-i18n="listingType">Listing type</label>
                 <select id="listingType" name="listingType" required></select>
               </div>
 
-              <div class="form-field">
-                <label for="condition">Condition / status</label>
+              <div class="field">
+                <label for="condition" data-i18n="condition">Condition / status</label>
                 <select id="condition" name="condition"></select>
               </div>
 
-              <div class="form-field">
-                <label for="price">Price</label>
-                <input id="price" name="price" type="number" min="0" step="1" placeholder="Example: 15000" />
+              <div class="field">
+                <label for="price" data-i18n="price">Price</label>
+                <input id="price" name="price" type="number" min="0" step="1" />
               </div>
 
-              <div class="form-field">
-                <label for="currency">Currency</label>
-                <input id="currency" name="currency" type="text" placeholder="Example: EUR, SEK, USD" />
+              <div class="field">
+                <label for="currency" data-i18n="currency">Currency</label>
+                <input id="currency" name="currency" type="text" />
               </div>
 
-              <div class="form-field">
-                <label for="city">City</label>
-                <input id="city" name="city" type="text" placeholder="Example: Stockholm, Berlin, Damascus" required />
+              <div class="field">
+                <label for="city" data-i18n="city">City</label>
+                <input id="city" name="city" type="text" required />
               </div>
 
-              <div class="form-field">
-                <label for="address">Address / area</label>
-                <input id="address" name="address" type="text" placeholder="Street, district, or area" />
+              <div class="field">
+                <label for="address" data-i18n="address">Address / area</label>
+                <input id="address" name="address" type="text" />
               </div>
             </div>
           </section>
 
           <section class="form-section">
-            <div class="form-section-title">
-              <i data-category-icon class="fa-solid fa-layer-group"></i>
+            <div class="section-title">
+              <i id="categoryIcon" class="fa-solid fa-layer-group"></i>
               <div>
-                <h3>Category-specific details</h3>
-                <p>These fields are different for cars, houses, electronics, services, and businesses.</p>
+                <h3 data-i18n="detailsTitle">Detailed information</h3>
+                <p data-i18n="detailsText">These fields are different for every ad type.</p>
               </div>
             </div>
 
-            <div class="dynamic-note" id="dynamicNote">
-              Select a category to show the correct details.
-            </div>
-
+            <div class="dynamic-note" id="dynamicNote"></div>
             <div class="form-grid" id="dynamicFields"></div>
           </section>
 
           <section class="form-section">
-            <div class="form-section-title">
+            <div class="section-title">
               <i class="fa-solid fa-align-left"></i>
               <div>
-                <h3>Description and images</h3>
-                <p>Add clear details. The system will also attach the category-specific details to the ad.</p>
+                <h3 data-i18n="descriptionImagesTitle">Description and images</h3>
+                <p data-i18n="descriptionImagesText">Add clear details and photos. The first photo becomes the main image.</p>
               </div>
             </div>
 
             <div class="form-grid">
-              <div class="form-field full">
-                <label for="visibleDescription">Description</label>
-                <textarea
-                  id="visibleDescription"
-                  placeholder="Write full details, important notes, warranty, payment method, delivery, or service conditions..."
-                  required
-                ></textarea>
-                <span class="field-hint">Minimum 10 characters. More details make the ad easier to find.</span>
+              <div class="field full">
+                <label for="visibleDescription" data-i18n="description">Description</label>
+                <textarea id="visibleDescription" required></textarea>
+                <span class="hint" data-i18n="descriptionHint">Write important details, notes, payment method, delivery, or service conditions.</span>
               </div>
 
               <textarea id="description" name="description" hidden></textarea>
 
-              <div class="form-field full">
-                <label for="images">Images</label>
+              <div class="field full">
+                <label for="images" data-i18n="images">Images</label>
 
-                <div class="media-upload">
+                <div class="media-box">
                   <i class="fa-solid fa-images"></i>
-                  <strong>Upload up to 5 images</strong>
-                  <p>Use clear photos. First image will be used as the main image.</p>
+                  <strong data-i18n="uploadTitle">Upload up to 5 images</strong>
+                  <p data-i18n="uploadText">Use clear photos. First image will be used as the main image.</p>
                   <input id="images" name="images" type="file" accept="image/*" multiple />
                 </div>
 
@@ -819,46 +995,43 @@
           </section>
 
           <section class="form-section">
-            <div class="form-section-title">
+            <div class="section-title">
               <i class="fa-solid fa-address-card"></i>
               <div>
-                <h3>Seller or provider contact</h3>
-                <p>At least one contact method is required.</p>
+                <h3 data-i18n="contactTitle">Seller or provider contact</h3>
+                <p data-i18n="contactText">At least one contact method is required.</p>
               </div>
             </div>
 
             <div class="form-grid">
-              <div class="form-field">
-                <label for="sellerName">Name</label>
-                <input id="sellerName" name="sellerName" type="text" placeholder="Your name or business name" />
+              <div class="field">
+                <label for="sellerName" data-i18n="name">Name</label>
+                <input id="sellerName" name="sellerName" type="text" />
               </div>
 
-              <div class="form-field">
-                <label for="phone">Phone</label>
-                <input id="phone" name="phone" type="tel" placeholder="+46..." />
+              <div class="field">
+                <label for="phone" data-i18n="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" />
               </div>
 
-              <div class="form-field">
+              <div class="field">
                 <label for="whatsapp">WhatsApp</label>
-                <input id="whatsapp" name="whatsapp" type="tel" placeholder="+46..." />
+                <input id="whatsapp" name="whatsapp" type="tel" />
               </div>
 
-              <div class="form-field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" placeholder="name@example.com" />
+              <div class="field">
+                <label for="email" data-i18n="email">Email</label>
+                <input id="email" name="email" type="email" />
               </div>
             </div>
           </section>
 
           <div class="submit-bar">
-            <p>
-              Before publishing, make sure the category, country, price, contact,
-              and details are correct.
-            </p>
+            <p data-i18n="submitNote">Check country, category, price, details, photos, and contact before publishing.</p>
 
-            <button class="sell-submit-btn" type="submit">
+            <button class="submit-btn" type="submit">
               <i class="fa-solid fa-paper-plane"></i>
-              Publish ad
+              <span data-i18n="publish">Publish ad</span>
             </button>
           </div>
         </form>
@@ -866,14 +1039,14 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <div>© 2026 HK Global Market & Services. All rights reserved.</div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 HK Global Market & Services.</div>
 
       <div class="footer-links">
-        <a href="terms.html">Terms</a>
-        <a href="search.html">Search listings</a>
-        <a href="sell.html">Post an ad</a>
+        <a href="terms.html" data-i18n="terms">Terms</a>
+        <a href="search.html" data-i18n="search">Search</a>
+        <a href="sell.html" data-i18n="postAd">Post ad</a>
       </div>
     </div>
   </footer>
@@ -885,536 +1058,914 @@
     (function () {
       "use strict";
 
-      const dynamicFields = document.getElementById("dynamicFields");
-      const dynamicNote = document.getElementById("dynamicNote");
-      const categorySelect = document.getElementById("categorySelect");
-      const listingTypeSelect = document.getElementById("listingType");
-      const conditionSelect = document.getElementById("condition");
-      const sellForm = document.getElementById("sellForm");
-      const visibleDescription = document.getElementById("visibleDescription");
-      const hiddenDescription = document.getElementById("description");
-      const imageInput = document.getElementById("images");
-      const imagePreview = document.getElementById("imagePreview");
-
-      const LISTING_TYPES = {
-        default: [
-          ["sell", "For sale"],
-          ["rent", "For rent"],
-          ["service", "Service offer"],
-          ["wanted", "Wanted"],
-          ["exchange", "Exchange"]
-        ],
-
-        vehicles: [
-          ["sell", "Vehicle for sale"],
-          ["rent", "Vehicle for rent"],
-          ["leasing", "Leasing"],
-          ["wanted", "Wanted vehicle"],
-          ["parts", "Parts / accessories"]
-        ],
-
-        realEstate: [
-          ["sell", "Property for sale"],
-          ["rent", "Property for rent"],
-          ["daily-rent", "Daily rental"],
-          ["wanted", "Looking for property"]
-        ],
-
-        services: [
-          ["service", "I provide this service"],
-          ["request-service", "I need this service"],
-          ["consultation", "Consultation"],
-          ["contract", "Contract work"]
-        ],
-
-        digital: [
-          ["service", "Digital service"],
-          ["project", "Project work"],
-          ["consultation", "Consultation"],
-          ["subscription", "Subscription"]
-        ],
-
-        business: [
-          ["sell", "Business for sale"],
-          ["rent", "Business place for rent"],
-          ["partnership", "Partnership"],
-          ["equipment", "Business equipment"]
-        ],
-
-        personal: [
-          ["service", "Personal service"],
-          ["appointment", "Appointment"],
-          ["request-service", "I need this service"]
-        ]
+      const STORAGE = {
+        country: "amg_country_code",
+        countryLabel: "amg_country_label",
+        lang: "amg_country_lang",
+        category: "amg_selected_category",
+        categoryLabel: "amg_category_label"
       };
 
-      const CONDITIONS = {
-        default: [
-          ["", "Select status"],
-          ["new", "New"],
-          ["used", "Used"],
-          ["excellent", "Excellent"],
-          ["good", "Good"],
-          ["needs-repair", "Needs repair"]
-        ],
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
-        realEstate: [
-          ["", "Select status"],
-          ["new", "New building"],
-          ["ready", "Ready to move"],
-          ["renovated", "Renovated"],
-          ["needs-renovation", "Needs renovation"],
-          ["under-construction", "Under construction"]
-        ],
+      const DICT = {
+        en: {
+          home: "Home", search: "Search", postAd: "Post ad", account: "My account", favorites: "Favorites",
+          messages: "Messages", dashboard: "Dashboard", terms: "Terms", login: "Login", register: "Create account",
+          smartForm: "Smart multilingual publishing", heroTitleA: "Post the right ad", heroTitleB: "for every category",
+          heroText: "Select a country, main category, and subcategory. The page will change language and show accurate fields for vehicles, properties, products, businesses, education, digital services, and personal services.",
+          guideTitle: "Professional ad structure", guideOne: "Vehicle ads include brand, model, year, mileage, fuel, transmission, inspection, and damage status.",
+          guideTwo: "Property ads include rent or sale type, area, rooms, floor, furniture, deposit, and availability.",
+          guideThree: "Service ads include location, delivery method, experience, price model, availability, and guarantee.",
+          stepsTitle: "Publishing steps", stepOne: "Choose country and language.", stepTwo: "Choose main category and subcategory.",
+          stepThree: "Fill details suitable for this ad type.", stepFour: "Publish and appear in search results.",
+          formTitle: "Ad information", formSubtitle: "The form changes automatically based on the selected ad type.",
+          countryCategoryTitle: "Country and category", countryCategoryText: "These choices control language, market, and the correct details.",
+          country: "Country", countryHint: "The ad will appear in this country.", mainCategory: "Main category",
+          mainCategoryHint: "Example: vehicles, real estate, services.", subCategory: "Subcategory", subCategoryHint: "The details below depend on this choice.",
+          basicTitle: "Basic ad details", basicText: "This information appears in the search page and listing cards.",
+          adTitle: "Ad title", listingType: "Listing type", condition: "Condition / status", price: "Price",
+          currency: "Currency", city: "City", address: "Address / area", detailsTitle: "Detailed information",
+          detailsText: "These fields are different for every ad type.", descriptionImagesTitle: "Description and images",
+          descriptionImagesText: "Add clear details and photos. The first photo becomes the main image.",
+          description: "Description", descriptionHint: "Write important details, notes, payment method, delivery, or service conditions.",
+          images: "Images", uploadTitle: "Upload up to 5 images", uploadText: "Use clear photos. First image will be used as the main image.",
+          contactTitle: "Seller or provider contact", contactText: "At least one contact method is required.",
+          name: "Name", phone: "Phone", email: "Email", submitNote: "Check country, category, price, details, photos, and contact before publishing.",
+          publish: "Publish ad", select: "Select", saved: "Ad details prepared.", fillRequired: "Please complete the required fields.",
+          groups_vehicles: "Vehicles", groups_realEstate: "Real estate", groups_electronics: "Electronics", groups_home: "Home items",
+          groups_business: "Business", groups_services: "Services", groups_education: "Education", groups_digital: "Digital services",
+          privateCars: "Private cars", rentalCars: "Rental cars", motorcycles: "Motorcycles", bicycles: "Bicycles",
+          smallTrucks: "Small trucks", heavyTrucks: "Heavy trucks", vehicleParts: "Vehicle parts",
+          propertySale: "Property for sale", propertyRent: "Property for rent", rooms: "Rooms", commercialProperty: "Commercial property",
+          lands: "Land", farms: "Farms", phones: "Phones", computers: "Computers", tvAudio: "TV and audio", gaming: "Gaming",
+          furniture: "Furniture", appliances: "Appliances", tools: "Home tools", garden: "Garden", shops: "Shops",
+          restaurants: "Restaurants and cafés", businessSale: "Business for sale", businessEquipment: "Business equipment",
+          vehicleService: "Vehicle service", homeMaintenance: "Home maintenance", companyMaintenance: "Company maintenance",
+          deviceRepair: "Device repair", cleaning: "Cleaning", transport: "Transport and delivery", personalCare: "Personal care",
+          eventServices: "Event services", privateLessons: "Private lessons", languageCourses: "Language courses",
+          onlineCourses: "Online courses", webDesign: "Web design", programming: "Programming", graphicDesign: "Graphic design",
+          marketing: "Digital marketing", translationWriting: "Translation and writing"
+        },
 
-        services: [
-          ["", "Select availability"],
-          ["available-now", "Available now"],
-          ["by-appointment", "By appointment"],
-          ["online", "Online"],
-          ["in-person", "In person"],
-          ["online-in-person", "Online and in person"]
-        ]
+        ar: {
+          home: "الرئيسية", search: "البحث", postAd: "نشر إعلان", account: "حسابي", favorites: "المفضلة",
+          messages: "الرسائل", dashboard: "لوحة التحكم", terms: "الشروط", login: "تسجيل الدخول", register: "إنشاء حساب",
+          smartForm: "نشر ذكي متعدد اللغات", heroTitleA: "انشر الإعلان الصحيح", heroTitleB: "لكل فئة",
+          heroText: "اختر الدولة والفئة الرئيسية والفرعية. ستتغير اللغة تلقائياً وتظهر حقول دقيقة للمركبات والعقارات والمنتجات والأعمال والتعليم والخدمات الرقمية والشخصية.",
+          guideTitle: "هيكل إعلان احترافي", guideOne: "إعلانات المركبات تشمل الماركة والموديل والسنة والكيلومترات والوقود وناقل الحركة والفحص وحالة الضرر.",
+          guideTwo: "إعلانات العقارات تشمل البيع أو الإيجار والمساحة والغرف والطابق والأثاث والتأمين وتاريخ التوفر.",
+          guideThree: "إعلانات الخدمات تشمل مكان الخدمة وطريقة التنفيذ والخبرة ونظام السعر والتوفر والضمان.",
+          stepsTitle: "خطوات النشر", stepOne: "اختر الدولة واللغة.", stepTwo: "اختر الفئة الرئيسية والفرعية.",
+          stepThree: "املأ التفاصيل المناسبة لنوع الإعلان.", stepFour: "انشر الإعلان ليظهر في نتائج البحث.",
+          formTitle: "معلومات الإعلان", formSubtitle: "النموذج يتغير تلقائياً حسب نوع الإعلان.",
+          countryCategoryTitle: "الدولة والفئة", countryCategoryText: "هذه الاختيارات تتحكم باللغة والسوق والتفاصيل المطلوبة.",
+          country: "الدولة", countryHint: "سيظهر الإعلان في سوق هذه الدولة.", mainCategory: "الفئة الرئيسية",
+          mainCategoryHint: "مثال: مركبات، عقارات، خدمات.", subCategory: "الفئة الفرعية", subCategoryHint: "التفاصيل بالأسفل تعتمد على هذا الاختيار.",
+          basicTitle: "التفاصيل الأساسية", basicText: "هذه المعلومات تظهر في صفحة البحث وبطاقات الإعلانات.",
+          adTitle: "عنوان الإعلان", listingType: "نوع الإعلان", condition: "الحالة", price: "السعر",
+          currency: "العملة", city: "المدينة", address: "العنوان / المنطقة", detailsTitle: "المعلومات التفصيلية",
+          detailsText: "هذه الحقول مختلفة حسب كل نوع إعلان.", descriptionImagesTitle: "الوصف والصور",
+          descriptionImagesText: "أضف تفاصيل وصور واضحة. أول صورة ستكون الصورة الرئيسية.",
+          description: "الوصف", descriptionHint: "اكتب التفاصيل المهمة، الملاحظات، الدفع، التوصيل، أو شروط الخدمة.",
+          images: "الصور", uploadTitle: "ارفع حتى 5 صور", uploadText: "استخدم صوراً واضحة. أول صورة ستكون الصورة الرئيسية.",
+          contactTitle: "بيانات البائع أو مقدم الخدمة", contactText: "يجب وضع طريقة تواصل واحدة على الأقل.",
+          name: "الاسم", phone: "الهاتف", email: "البريد الإلكتروني", submitNote: "تأكد من الدولة والفئة والسعر والتفاصيل والصور وبيانات التواصل قبل النشر.",
+          publish: "نشر الإعلان", select: "اختر", saved: "تم تجهيز تفاصيل الإعلان.", fillRequired: "يرجى إكمال الحقول المطلوبة.",
+          groups_vehicles: "مركبات", groups_realEstate: "عقارات", groups_electronics: "إلكترونيات", groups_home: "أدوات منزلية",
+          groups_business: "أعمال ومحلات", groups_services: "خدمات", groups_education: "تعليم", groups_digital: "خدمات رقمية",
+          privateCars: "سيارات خاصة", rentalCars: "سيارات للإيجار", motorcycles: "دراجات نارية", bicycles: "دراجات هوائية",
+          smallTrucks: "شاحنات صغيرة", heavyTrucks: "شاحنات كبيرة", vehicleParts: "قطع غيار مركبات",
+          propertySale: "عقار للبيع", propertyRent: "عقار للإيجار", rooms: "غرف", commercialProperty: "عقار تجاري",
+          lands: "أراضي", farms: "أراضٍ زراعية", phones: "هواتف", computers: "كمبيوترات", tvAudio: "تلفزيون وصوتيات", gaming: "ألعاب",
+          furniture: "أثاث", appliances: "أجهزة منزلية", tools: "أدوات منزلية", garden: "حديقة", shops: "محلات",
+          restaurants: "مطاعم ومقاهي", businessSale: "مشروع للبيع", businessEquipment: "معدات تجارية",
+          vehicleService: "صيانة مركبات", homeMaintenance: "صيانة منازل", companyMaintenance: "صيانة شركات",
+          deviceRepair: "إصلاح أجهزة", cleaning: "تنظيف", transport: "نقل وتوصيل", personalCare: "خدمات شخصية",
+          eventServices: "خدمات مناسبات", privateLessons: "دروس خصوصية", languageCourses: "دورات لغات",
+          onlineCourses: "دورات أونلاين", webDesign: "تصميم مواقع", programming: "برمجة", graphicDesign: "تصميم جرافيك",
+          marketing: "تسويق رقمي", translationWriting: "ترجمة وكتابة"
+        },
+
+        sv: {
+          home: "Hem", search: "Sök", postAd: "Lägg upp annons", account: "Mitt konto", favorites: "Favoriter",
+          messages: "Meddelanden", dashboard: "Panel", terms: "Villkor", login: "Logga in", register: "Skapa konto",
+          smartForm: "Smart flerspråkig annonsering", heroTitleA: "Publicera rätt annons", heroTitleB: "för varje kategori",
+          heroText: "Välj land, huvudkategori och underkategori. Sidan byter språk och visar rätt fält för fordon, bostäder, produkter, företag, utbildning och tjänster.",
+          guideTitle: "Professionell annonsstruktur", guideOne: "Fordonsannonser inkluderar märke, modell, år, miltal, bränsle, växellåda, besiktning och skador.",
+          guideTwo: "Bostadsannonser inkluderar försäljning eller uthyrning, yta, rum, våning, möblering, deposition och tillgänglighet.",
+          guideThree: "Tjänsteannonser inkluderar plats, metod, erfarenhet, prismodell, tillgänglighet och garanti.",
+          stepsTitle: "Publiceringssteg", stepOne: "Välj land och språk.", stepTwo: "Välj huvudkategori och underkategori.",
+          stepThree: "Fyll i detaljer för annonstypen.", stepFour: "Publicera och syns i sökresultat.",
+          formTitle: "Annonsinformation", formSubtitle: "Formuläret ändras automatiskt efter annonstyp.",
+          countryCategoryTitle: "Land och kategori", countryCategoryText: "Dessa val styr språk, marknad och rätt detaljer.",
+          country: "Land", countryHint: "Annonsen visas i detta land.", mainCategory: "Huvudkategori",
+          mainCategoryHint: "Exempel: fordon, bostäder, tjänster.", subCategory: "Underkategori", subCategoryHint: "Detaljerna nedan beror på detta val.",
+          basicTitle: "Grundläggande detaljer", basicText: "Denna information visas i sökresultat och annonskort.",
+          adTitle: "Annonstitel", listingType: "Annonstyp", condition: "Skick / status", price: "Pris",
+          currency: "Valuta", city: "Stad", address: "Adress / område", detailsTitle: "Detaljerad information",
+          detailsText: "Dessa fält är olika för varje annonstyp.", descriptionImagesTitle: "Beskrivning och bilder",
+          descriptionImagesText: "Lägg till tydliga detaljer och bilder. Första bilden blir huvudbild.",
+          description: "Beskrivning", descriptionHint: "Skriv viktiga detaljer, betalning, leverans eller villkor.",
+          images: "Bilder", uploadTitle: "Ladda upp upp till 5 bilder", uploadText: "Använd tydliga bilder. Första bilden blir huvudbild.",
+          contactTitle: "Säljare eller tjänsteleverantör", contactText: "Minst en kontaktmetod krävs.",
+          name: "Namn", phone: "Telefon", email: "E-post", submitNote: "Kontrollera land, kategori, pris, detaljer, bilder och kontakt innan publicering.",
+          publish: "Publicera annons", select: "Välj", saved: "Annonsdetaljer förberedda.", fillRequired: "Fyll i obligatoriska fält.",
+          groups_vehicles: "Fordon", groups_realEstate: "Fastigheter", groups_electronics: "Elektronik", groups_home: "Hemartiklar",
+          groups_business: "Företag", groups_services: "Tjänster", groups_education: "Utbildning", groups_digital: "Digitala tjänster",
+          privateCars: "Personbilar", rentalCars: "Hyrbilar", motorcycles: "Motorcyklar", bicycles: "Cyklar",
+          smallTrucks: "Små lastbilar", heavyTrucks: "Tunga lastbilar", vehicleParts: "Fordonsdelar",
+          propertySale: "Bostad till salu", propertyRent: "Bostad att hyra", rooms: "Rum", commercialProperty: "Kommersiell fastighet",
+          lands: "Mark", farms: "Jordbruksmark", phones: "Telefoner", computers: "Datorer", tvAudio: "TV och ljud", gaming: "Gaming",
+          furniture: "Möbler", appliances: "Vitvaror", tools: "Hemverktyg", garden: "Trädgård", shops: "Butiker",
+          restaurants: "Restauranger och caféer", businessSale: "Företag till salu", businessEquipment: "Företagsutrustning",
+          vehicleService: "Fordonsservice", homeMaintenance: "Hemunderhåll", companyMaintenance: "Företagsunderhåll",
+          deviceRepair: "Enhetsreparation", cleaning: "Städning", transport: "Transport och leverans", personalCare: "Personliga tjänster",
+          eventServices: "Eventtjänster", privateLessons: "Privatlektioner", languageCourses: "Språkkurser",
+          onlineCourses: "Onlinekurser", webDesign: "Webbdesign", programming: "Programmering", graphicDesign: "Grafisk design",
+          marketing: "Digital marknadsföring", translationWriting: "Översättning och skrivande"
+        },
+
+        de: {},
+        tr: {},
+        fr: {},
+        es: {},
+        it: {},
+        pt: {},
+        nl: {}
       };
+
+      DICT.de = DICT.en;
+      DICT.tr = DICT.en;
+      DICT.fr = DICT.en;
+      DICT.es = DICT.en;
+      DICT.it = DICT.en;
+      DICT.pt = DICT.en;
+      DICT.nl = DICT.en;
+
+      const GROUPS = [
+        { id: "vehicles", key: "groups_vehicles", icon: "fa-car" },
+        { id: "realEstate", key: "groups_realEstate", icon: "fa-building" },
+        { id: "electronics", key: "groups_electronics", icon: "fa-laptop" },
+        { id: "home", key: "groups_home", icon: "fa-couch" },
+        { id: "business", key: "groups_business", icon: "fa-store" },
+        { id: "services", key: "groups_services", icon: "fa-screwdriver-wrench" },
+        { id: "education", key: "groups_education", icon: "fa-graduation-cap" },
+        { id: "digital", key: "groups_digital", icon: "fa-code" }
+      ];
+
+      const FALLBACK_CATEGORIES = [
+        { id: "private-cars", group: "vehicles", key: "privateCars", icon: "fa-car" },
+        { id: "rental-cars", group: "vehicles", key: "rentalCars", icon: "fa-key" },
+        { id: "motorcycles", group: "vehicles", key: "motorcycles", icon: "fa-motorcycle" },
+        { id: "bicycles", group: "vehicles", key: "bicycles", icon: "fa-bicycle" },
+        { id: "small-trucks", group: "vehicles", key: "smallTrucks", icon: "fa-truck-pickup" },
+        { id: "heavy-trucks", group: "vehicles", key: "heavyTrucks", icon: "fa-truck" },
+        { id: "vehicle-parts", group: "vehicles", key: "vehicleParts", icon: "fa-gears" },
+
+        { id: "property-sale", group: "realEstate", key: "propertySale", icon: "fa-house" },
+        { id: "property-rent", group: "realEstate", key: "propertyRent", icon: "fa-building" },
+        { id: "rooms", group: "realEstate", key: "rooms", icon: "fa-door-open" },
+        { id: "commercial-property", group: "realEstate", key: "commercialProperty", icon: "fa-warehouse" },
+        { id: "lands", group: "realEstate", key: "lands", icon: "fa-map" },
+        { id: "farms", group: "realEstate", key: "farms", icon: "fa-tractor" },
+
+        { id: "phones", group: "electronics", key: "phones", icon: "fa-mobile-screen" },
+        { id: "computers", group: "electronics", key: "computers", icon: "fa-computer" },
+        { id: "tv-audio", group: "electronics", key: "tvAudio", icon: "fa-tv" },
+        { id: "gaming", group: "electronics", key: "gaming", icon: "fa-gamepad" },
+
+        { id: "furniture", group: "home", key: "furniture", icon: "fa-couch" },
+        { id: "appliances", group: "home", key: "appliances", icon: "fa-blender" },
+        { id: "home-tools", group: "home", key: "tools", icon: "fa-screwdriver" },
+        { id: "garden", group: "home", key: "garden", icon: "fa-seedling" },
+
+        { id: "shops", group: "business", key: "shops", icon: "fa-store" },
+        { id: "restaurants", group: "business", key: "restaurants", icon: "fa-utensils" },
+        { id: "business-sale", group: "business", key: "businessSale", icon: "fa-handshake" },
+        { id: "business-equipment", group: "business", key: "businessEquipment", icon: "fa-cash-register" },
+
+        { id: "vehicle-service", group: "services", key: "vehicleService", icon: "fa-car-burst" },
+        { id: "home-maintenance", group: "services", key: "homeMaintenance", icon: "fa-house-circle-check" },
+        { id: "company-maintenance", group: "services", key: "companyMaintenance", icon: "fa-building-circle-check" },
+        { id: "device-repair", group: "services", key: "deviceRepair", icon: "fa-screwdriver-wrench" },
+        { id: "cleaning", group: "services", key: "cleaning", icon: "fa-broom" },
+        { id: "transport", group: "services", key: "transport", icon: "fa-truck-fast" },
+        { id: "personal-care", group: "services", key: "personalCare", icon: "fa-user-check" },
+        { id: "event-services", group: "services", key: "eventServices", icon: "fa-calendar-check" },
+
+        { id: "private-lessons", group: "education", key: "privateLessons", icon: "fa-chalkboard-user" },
+        { id: "language-courses", group: "education", key: "languageCourses", icon: "fa-language" },
+        { id: "online-courses", group: "education", key: "onlineCourses", icon: "fa-laptop-file" },
+
+        { id: "web-design", group: "digital", key: "webDesign", icon: "fa-globe" },
+        { id: "programming", group: "digital", key: "programming", icon: "fa-code" },
+        { id: "graphic-design", group: "digital", key: "graphicDesign", icon: "fa-pen-nib" },
+        { id: "marketing", group: "digital", key: "marketing", icon: "fa-bullhorn" },
+        { id: "translation-writing", group: "digital", key: "translationWriting", icon: "fa-file-pen" }
+      ];
 
       const FIELD_SETS = {
         vehicles: {
-          note: "Vehicle details help buyers compare accurately: year, mileage, fuel, gearbox, ownership, and technical status.",
+          note: {
+            en: "Vehicle ads need precise technical details: brand, model, year, mileage, fuel, gearbox, inspection, ownership, and damage status.",
+            ar: "إعلانات المركبات تحتاج تفاصيل دقيقة: الماركة، الموديل، السنة، الكيلومترات، الوقود، ناقل الحركة، الفحص، الملكية، وحالة الضرر.",
+            sv: "Fordonsannonser behöver tekniska detaljer: märke, modell, år, miltal, bränsle, växellåda, besiktning, ägande och skador."
+          },
           fields: [
-            { name: "brand", label: "Brand", type: "text", placeholder: "Toyota, BMW, Volvo..." },
-            { name: "model", label: "Model", type: "text", placeholder: "Corolla, X5, V60..." },
-            { name: "year", label: "Year", type: "number", placeholder: "2020" },
-            { name: "mileage", label: "Mileage / km", type: "number", placeholder: "85000" },
-            {
-              name: "fuel",
-              label: "Fuel / energy",
-              type: "select",
-              options: ["Petrol", "Diesel", "Hybrid", "Electric", "Gas", "Other"]
-            },
-            {
-              name: "transmission",
-              label: "Transmission",
-              type: "select",
-              options: ["Automatic", "Manual", "Semi-automatic"]
-            },
-            {
-              name: "driveType",
-              label: "Drive type",
-              type: "select",
-              options: ["Front-wheel drive", "Rear-wheel drive", "All-wheel drive", "4x4"]
-            },
-            { name: "engine", label: "Engine / power", type: "text", placeholder: "2.0 TDI, 110 kW, 150 hp..." },
-            {
-              name: "ownership",
-              label: "Ownership",
-              type: "select",
-              options: ["Private owner", "Dealer", "Company", "Rental company"]
-            },
-            { name: "inspection", label: "Inspection / technical test", type: "text", placeholder: "Valid until..." },
-            { name: "damage", label: "Damage or accidents", type: "text", placeholder: "No accidents / repaired / small scratches..." },
-            { name: "features", label: "Important features", type: "textarea", placeholder: "Navigation, camera, winter tires, service history..." }
+            ["brand", "Brand / الماركة", "text"],
+            ["model", "Model / الموديل", "text"],
+            ["year", "Year / السنة", "number"],
+            ["mileage", "Mileage km / الكيلومترات", "number"],
+            ["fuel", "Fuel / الوقود", "select", ["Petrol", "Diesel", "Hybrid", "Electric", "Gas", "Other"]],
+            ["transmission", "Transmission / ناقل الحركة", "select", ["Automatic", "Manual", "Semi-automatic"]],
+            ["driveType", "Drive type / نظام الدفع", "select", ["Front-wheel drive", "Rear-wheel drive", "All-wheel drive", "4x4"]],
+            ["engine", "Engine / المحرك", "text"],
+            ["inspection", "Inspection / الفحص", "text"],
+            ["damage", "Damage / الحوادث أو الضرر", "textarea"]
           ]
         },
 
         rentalCars: {
-          note: "Rental vehicle ads need rental period, deposit, insurance, daily price, and allowed distance.",
+          note: {
+            en: "Rental car ads need rental period, deposit, insurance, allowed kilometers, driver requirements, and pickup location.",
+            ar: "إعلانات تأجير السيارات تحتاج مدة الإيجار، التأمين، العربون، الكيلومترات المسموحة، شروط السائق، ومكان الاستلام.",
+            sv: "Hyrbilsannonser behöver hyresperiod, deposition, försäkring, kilometer, krav på förare och upphämtningsplats."
+          },
           fields: [
-            { name: "vehicleType", label: "Vehicle type", type: "text", placeholder: "Small car, family car, van..." },
-            { name: "rentalPeriod", label: "Rental period", type: "select", options: ["Hourly", "Daily", "Weekly", "Monthly", "Long-term"] },
-            { name: "deposit", label: "Deposit", type: "text", placeholder: "Example: 500 EUR" },
-            { name: "insurance", label: "Insurance included?", type: "select", options: ["Yes", "No", "Partial"] },
-            { name: "includedKm", label: "Included kilometers", type: "text", placeholder: "Example: 200 km/day" },
-            { name: "driverRequirements", label: "Driver requirements", type: "textarea", placeholder: "Age, license duration, documents..." }
+            ["vehicleType", "Vehicle type / نوع السيارة", "text"],
+            ["rentalPeriod", "Rental period / مدة الإيجار", "select", ["Hourly", "Daily", "Weekly", "Monthly", "Long-term"]],
+            ["deposit", "Deposit / العربون", "text"],
+            ["insurance", "Insurance / التأمين", "select", ["Included", "Not included", "Partial"]],
+            ["includedKm", "Included km / الكيلومترات المسموحة", "text"],
+            ["driverRequirements", "Driver requirements / شروط السائق", "textarea"]
+          ]
+        },
+
+        motorcycles: {
+          note: {
+            en: "Motorcycle ads need brand, model, engine capacity, mileage, year, license category, and technical condition.",
+            ar: "إعلانات الدراجات النارية تحتاج الماركة والموديل وسعة المحرك والكيلومترات والسنة وفئة الرخصة والحالة الفنية.",
+            sv: "Motorcykelannonser behöver märke, modell, motorstorlek, miltal, år, körkortsklass och tekniskt skick."
+          },
+          fields: [
+            ["brand", "Brand / الماركة", "text"],
+            ["model", "Model / الموديل", "text"],
+            ["year", "Year / السنة", "number"],
+            ["mileage", "Mileage km / الكيلومترات", "number"],
+            ["engineCapacity", "Engine capacity / سعة المحرك", "text"],
+            ["licenseClass", "License class / فئة الرخصة", "text"],
+            ["technicalStatus", "Technical status / الحالة الفنية", "textarea"]
+          ]
+        },
+
+        bicycles: {
+          note: {
+            en: "Bicycle ads need type, frame size, wheel size, brakes, gears, and condition.",
+            ar: "إعلانات الدراجات الهوائية تحتاج النوع، مقاس الهيكل، مقاس العجلات، الفرامل، السرعات، والحالة.",
+            sv: "Cykelannonser behöver typ, ramstorlek, hjulstorlek, bromsar, växlar och skick."
+          },
+          fields: [
+            ["bikeType", "Bicycle type / نوع الدراجة", "select", ["City", "Mountain", "Road", "Electric", "Kids", "Other"]],
+            ["frameSize", "Frame size / مقاس الهيكل", "text"],
+            ["wheelSize", "Wheel size / مقاس العجلات", "text"],
+            ["gears", "Gears / السرعات", "text"],
+            ["brakes", "Brakes / الفرامل", "text"],
+            ["accessories", "Accessories / الملحقات", "textarea"]
+          ]
+        },
+
+        trucks: {
+          note: {
+            en: "Truck ads need load capacity, body type, mileage, engine, inspection, and commercial use details.",
+            ar: "إعلانات الشاحنات تحتاج الحمولة، نوع الصندوق، الكيلومترات، المحرك، الفحص، وتفاصيل الاستخدام التجاري.",
+            sv: "Lastbilsannonser behöver lastkapacitet, karosstyp, miltal, motor, besiktning och användning."
+          },
+          fields: [
+            ["truckType", "Truck type / نوع الشاحنة", "text"],
+            ["loadCapacity", "Load capacity / الحمولة", "text"],
+            ["bodyType", "Body type / نوع الصندوق", "text"],
+            ["year", "Year / السنة", "number"],
+            ["mileage", "Mileage km / الكيلومترات", "number"],
+            ["inspection", "Inspection / الفحص", "text"],
+            ["commercialNotes", "Commercial notes / ملاحظات تجارية", "textarea"]
+          ]
+        },
+
+        vehicleParts: {
+          note: {
+            en: "Vehicle parts ads need compatible vehicle, part number, condition, original/aftermarket status, and installation possibility.",
+            ar: "إعلانات قطع الغيار تحتاج المركبة المناسبة، رقم القطعة، الحالة، أصلية أو تجارية، وإمكانية التركيب.",
+            sv: "Reservdelsannonser behöver kompatibelt fordon, artikelnummer, skick, original/eftermarknad och installation."
+          },
+          fields: [
+            ["partName", "Part name / اسم القطعة", "text"],
+            ["compatibleVehicle", "Compatible vehicle / المركبة المناسبة", "text"],
+            ["partNumber", "Part number / رقم القطعة", "text"],
+            ["partCondition", "Part condition / حالة القطعة", "select", ["New", "Used", "Refurbished"]],
+            ["original", "Original or aftermarket / أصلية أو تجارية", "select", ["Original", "Aftermarket", "Unknown"]],
+            ["installation", "Installation available / هل يوجد تركيب", "select", ["Yes", "No", "Ask seller"]]
           ]
         },
 
         realEstate: {
-          note: "Real estate ads require accurate property type, area, rooms, floor, rent/sale type, and availability.",
+          note: {
+            en: "Real estate ads need property type, sale/rent purpose, area, rooms, floor, furniture, deposit, heating, and availability.",
+            ar: "إعلانات العقارات تحتاج نوع العقار، بيع أو إيجار، المساحة، الغرف، الطابق، الأثاث، التأمين، التدفئة، وتاريخ التوفر.",
+            sv: "Fastighetsannonser behöver typ, försäljning/hyra, yta, rum, våning, möblering, deposition, uppvärmning och tillgänglighet."
+          },
           fields: [
-            {
-              name: "propertyType",
-              label: "Property type",
-              type: "select",
-              options: ["House", "Apartment", "Room", "Studio", "Villa", "Commercial property", "Warehouse", "Land", "Farm"]
-            },
-            {
-              name: "purpose",
-              label: "Purpose",
-              type: "select",
-              options: ["For sale", "For rent", "Daily rent", "Investment", "Wanted"]
-            },
-            { name: "area", label: "Area / m²", type: "number", placeholder: "85" },
-            { name: "rooms", label: "Rooms", type: "text", placeholder: "2 rooms, 3+1..." },
-            { name: "bathrooms", label: "Bathrooms", type: "number", placeholder: "1" },
-            { name: "floor", label: "Floor", type: "text", placeholder: "2nd floor / ground floor..." },
-            { name: "totalFloors", label: "Building floors", type: "text", placeholder: "Example: 5 floors" },
-            {
-              name: "furnished",
-              label: "Furnished?",
-              type: "select",
-              options: ["Yes", "No", "Partly furnished"]
-            },
-            { name: "availableFrom", label: "Available from", type: "date" },
-            { name: "deposit", label: "Deposit / advance payment", type: "text", placeholder: "Example: 2 months" },
-            { name: "heating", label: "Heating / energy", type: "text", placeholder: "Central heating, gas, electric..." },
-            { name: "nearby", label: "Nearby places", type: "textarea", placeholder: "School, market, metro, hospital, parking..." }
+            ["propertyType", "Property type / نوع العقار", "select", ["Apartment", "House", "Room", "Villa", "Commercial", "Warehouse"]],
+            ["purpose", "Purpose / الغرض", "select", ["For sale", "For rent", "Daily rent", "Investment"]],
+            ["area", "Area m² / المساحة", "number"],
+            ["rooms", "Rooms / عدد الغرف", "text"],
+            ["bathrooms", "Bathrooms / الحمامات", "number"],
+            ["floor", "Floor / الطابق", "text"],
+            ["furnished", "Furnished / مفروش", "select", ["Yes", "No", "Partly"]],
+            ["deposit", "Deposit / التأمين", "text"],
+            ["heating", "Heating / التدفئة", "text"],
+            ["availableFrom", "Available from / متاح من", "date"],
+            ["nearby", "Nearby / الأماكن القريبة", "textarea"]
           ]
         },
 
         land: {
-          note: "Land and farm ads require area, legal status, road access, water, electricity, and usage type.",
+          note: {
+            en: "Land and farm ads need area, legal status, road access, water, electricity, soil, crops, and usage type.",
+            ar: "إعلانات الأراضي والمزارع تحتاج المساحة، الوضع القانوني، الطريق، الماء، الكهرباء، التربة، المزروعات، ونوع الاستخدام.",
+            sv: "Markannonser behöver yta, juridisk status, väg, vatten, el, jord, grödor och användning."
+          },
           fields: [
-            { name: "landArea", label: "Land area", type: "text", placeholder: "Example: 5000 m² / 2 hectares" },
-            {
-              name: "landUse",
-              label: "Usage type",
-              type: "select",
-              options: ["Agricultural", "Residential", "Commercial", "Industrial", "Investment", "Mixed use"]
-            },
-            { name: "ownershipDocument", label: "Ownership document", type: "text", placeholder: "Title deed, contract, shared ownership..." },
-            { name: "roadAccess", label: "Road access", type: "select", options: ["Yes", "No", "Nearby road"] },
-            { name: "water", label: "Water available?", type: "select", options: ["Yes", "No", "Nearby"] },
-            { name: "electricity", label: "Electricity available?", type: "select", options: ["Yes", "No", "Nearby"] },
-            { name: "soilOrCrop", label: "Soil / crops", type: "textarea", placeholder: "Olive trees, wheat, empty land, soil type..." }
+            ["landArea", "Land area / مساحة الأرض", "text"],
+            ["landUse", "Usage type / نوع الاستخدام", "select", ["Agricultural", "Residential", "Commercial", "Industrial", "Investment"]],
+            ["ownershipDocument", "Ownership document / وثيقة الملكية", "text"],
+            ["roadAccess", "Road access / طريق", "select", ["Yes", "No", "Nearby"]],
+            ["water", "Water / ماء", "select", ["Yes", "No", "Nearby"]],
+            ["electricity", "Electricity / كهرباء", "select", ["Yes", "No", "Nearby"]],
+            ["soilOrCrop", "Soil or crops / التربة أو المزروعات", "textarea"]
           ]
         },
 
         electronics: {
-          note: "Electronics ads need brand, model, storage/specs, warranty, accessories, and battery or technical condition.",
+          note: {
+            en: "Electronics ads need brand, model, storage, warranty, battery or technical condition, accessories, and invoice status.",
+            ar: "إعلانات الإلكترونيات تحتاج الماركة، الموديل، التخزين، الضمان، البطارية أو الحالة الفنية، الملحقات، والفاتورة.",
+            sv: "Elektronikannonser behöver märke, modell, lagring, garanti, batteri/tekniskt skick, tillbehör och kvitto."
+          },
           fields: [
-            { name: "brand", label: "Brand", type: "text", placeholder: "Apple, Samsung, Sony..." },
-            { name: "model", label: "Model", type: "text", placeholder: "iPhone 14, Galaxy S23..." },
-            { name: "storage", label: "Storage / memory", type: "text", placeholder: "128 GB, 16 GB RAM..." },
-            { name: "warranty", label: "Warranty", type: "text", placeholder: "Still valid / no warranty..." },
-            { name: "purchaseDate", label: "Purchase date", type: "text", placeholder: "2023 / 6 months ago..." },
-            { name: "battery", label: "Battery / technical condition", type: "text", placeholder: "Battery 90%, works perfectly..." },
-            { name: "accessories", label: "Included accessories", type: "textarea", placeholder: "Charger, box, case, invoice..." }
+            ["brand", "Brand / الماركة", "text"],
+            ["model", "Model / الموديل", "text"],
+            ["storage", "Storage / التخزين", "text"],
+            ["warranty", "Warranty / الضمان", "text"],
+            ["battery", "Battery or technical condition / البطارية أو الحالة الفنية", "text"],
+            ["invoice", "Invoice / الفاتورة", "select", ["Available", "Not available"]],
+            ["accessories", "Accessories / الملحقات", "textarea"]
           ]
         },
 
         home: {
-          note: "Home item ads need size, material, condition, delivery possibility, and room usage.",
+          note: {
+            en: "Home item ads need item type, brand, dimensions, material, color, delivery, and assembly details.",
+            ar: "إعلانات الأدوات المنزلية تحتاج نوع الغرض، الماركة، المقاسات، المادة، اللون، التوصيل، والتركيب.",
+            sv: "Hemartiklar behöver typ, märke, mått, material, färg, leverans och montering."
+          },
           fields: [
-            { name: "itemType", label: "Item type", type: "text", placeholder: "Sofa, table, washing machine..." },
-            { name: "brand", label: "Brand", type: "text", placeholder: "IKEA, Bosch, Samsung..." },
-            { name: "dimensions", label: "Dimensions", type: "text", placeholder: "Width × height × depth" },
-            { name: "material", label: "Material", type: "text", placeholder: "Wood, metal, leather..." },
-            { name: "color", label: "Color", type: "text", placeholder: "White, black, brown..." },
-            { name: "delivery", label: "Delivery possible?", type: "select", options: ["Yes", "No", "Buyer collects", "Delivery for extra fee"] },
-            { name: "assembly", label: "Assembly / disassembly", type: "select", options: ["Already assembled", "Can be disassembled", "Needs assembly"] }
-          ]
-        },
-
-        services: {
-          note: "Service ads need working area, service method, experience, time, price model, and guarantee.",
-          fields: [
-            { name: "serviceType", label: "Service type", type: "text", placeholder: "Plumbing, cleaning, car repair, teaching..." },
-            {
-              name: "serviceMethod",
-              label: "Service method",
-              type: "select",
-              options: ["At customer location", "At provider location", "Online", "Both online and in person"]
-            },
-            { name: "serviceArea", label: "Service area", type: "text", placeholder: "City, district, all country..." },
-            {
-              name: "priceModel",
-              label: "Price model",
-              type: "select",
-              options: ["Fixed price", "Hourly", "Daily", "Monthly", "Per project", "After inspection"]
-            },
-            { name: "experience", label: "Experience", type: "text", placeholder: "Example: 5 years" },
-            { name: "availability", label: "Availability", type: "text", placeholder: "Weekdays, weekends, urgent calls..." },
-            { name: "guarantee", label: "Guarantee", type: "text", placeholder: "Yes / No / depends on service" },
-            { name: "included", label: "What is included?", type: "textarea", placeholder: "Tools, materials, consultation, follow-up..." }
-          ]
-        },
-
-        education: {
-          note: "Education ads need subject, level, teaching method, duration, language, and certificate if available.",
-          fields: [
-            { name: "subject", label: "Subject / course", type: "text", placeholder: "German, Math, Programming..." },
-            { name: "level", label: "Level", type: "select", options: ["Beginner", "Intermediate", "Advanced", "School", "University", "Professional"] },
-            { name: "teachingMethod", label: "Teaching method", type: "select", options: ["Online", "In person", "Both"] },
-            { name: "lessonDuration", label: "Lesson duration", type: "text", placeholder: "45 min, 60 min, 90 min..." },
-            { name: "language", label: "Teaching language", type: "text", placeholder: "Arabic, English, German, Swedish..." },
-            { name: "certificate", label: "Certificate available?", type: "select", options: ["Yes", "No"] },
-            { name: "schedule", label: "Schedule", type: "textarea", placeholder: "Available days and times..." }
+            ["itemType", "Item type / نوع الغرض", "text"],
+            ["brand", "Brand / الماركة", "text"],
+            ["dimensions", "Dimensions / المقاسات", "text"],
+            ["material", "Material / المادة", "text"],
+            ["color", "Color / اللون", "text"],
+            ["delivery", "Delivery / التوصيل", "select", ["Yes", "No", "Buyer collects", "Extra fee"]],
+            ["assembly", "Assembly / التركيب", "select", ["Assembled", "Can be disassembled", "Needs assembly"]]
           ]
         },
 
         business: {
-          note: "Business ads need business type, location, size, equipment, rent, revenue notes, and legal status.",
+          note: {
+            en: "Business ads need business type, location, size, equipment, rent, license, employees, and reason for sale or offer.",
+            ar: "إعلانات الأعمال والمحلات تحتاج نوع العمل، الموقع، المساحة، المعدات، الإيجار، الترخيص، الموظفين، وسبب البيع أو العرض.",
+            sv: "Företagsannonser behöver typ, plats, storlek, utrustning, hyra, licens, anställda och orsak."
+          },
           fields: [
-            { name: "businessType", label: "Business type", type: "text", placeholder: "Shop, restaurant, café, salon..." },
-            { name: "businessSize", label: "Size / area", type: "text", placeholder: "Example: 80 m²" },
-            { name: "monthlyRent", label: "Monthly rent", type: "text", placeholder: "If applicable" },
-            { name: "equipmentIncluded", label: "Equipment included?", type: "select", options: ["Yes", "No", "Partly"] },
-            { name: "employees", label: "Employees", type: "text", placeholder: "Optional" },
-            { name: "license", label: "License / legal status", type: "text", placeholder: "Registered, license available..." },
-            { name: "reason", label: "Reason for sale / offer", type: "textarea", placeholder: "Optional but useful..." }
+            ["businessType", "Business type / نوع العمل", "text"],
+            ["businessSize", "Size / المساحة", "text"],
+            ["monthlyRent", "Monthly rent / الإيجار الشهري", "text"],
+            ["equipmentIncluded", "Equipment included / المعدات", "select", ["Yes", "No", "Partly"]],
+            ["employees", "Employees / الموظفون", "text"],
+            ["license", "License / الترخيص", "text"],
+            ["reason", "Reason / السبب", "textarea"]
+          ]
+        },
+
+        services: {
+          note: {
+            en: "Service ads need service type, location, work method, price model, experience, availability, guarantee, and included work.",
+            ar: "إعلانات الخدمات تحتاج نوع الخدمة، المكان، طريقة التنفيذ، نظام السعر، الخبرة، التوفر، الضمان، وما يشمله العمل.",
+            sv: "Tjänster behöver typ, plats, metod, prismodell, erfarenhet, tillgänglighet, garanti och vad som ingår."
+          },
+          fields: [
+            ["serviceType", "Service type / نوع الخدمة", "text"],
+            ["serviceMethod", "Service method / طريقة الخدمة", "select", ["Customer location", "Provider location", "Online", "Both"]],
+            ["serviceArea", "Service area / منطقة الخدمة", "text"],
+            ["priceModel", "Price model / نظام السعر", "select", ["Fixed", "Hourly", "Daily", "Monthly", "Per project", "After inspection"]],
+            ["experience", "Experience / الخبرة", "text"],
+            ["availability", "Availability / التوفر", "text"],
+            ["guarantee", "Guarantee / الضمان", "text"],
+            ["included", "Included work / ما يشمله العمل", "textarea"]
+          ]
+        },
+
+        education: {
+          note: {
+            en: "Education ads need subject, level, teaching method, duration, language, certificate, and schedule.",
+            ar: "إعلانات التعليم تحتاج المادة، المستوى، طريقة التدريس، مدة الدرس، اللغة، الشهادة، والجدول.",
+            sv: "Utbildningsannonser behöver ämne, nivå, metod, längd, språk, certifikat och schema."
+          },
+          fields: [
+            ["subject", "Subject / المادة", "text"],
+            ["level", "Level / المستوى", "select", ["Beginner", "Intermediate", "Advanced", "School", "University", "Professional"]],
+            ["teachingMethod", "Teaching method / طريقة التدريس", "select", ["Online", "In person", "Both"]],
+            ["lessonDuration", "Lesson duration / مدة الدرس", "text"],
+            ["language", "Language / اللغة", "text"],
+            ["certificate", "Certificate / شهادة", "select", ["Yes", "No"]],
+            ["schedule", "Schedule / الجدول", "textarea"]
           ]
         },
 
         digital: {
-          note: "Digital service ads need service type, delivery time, tools, revisions, price model, and portfolio.",
+          note: {
+            en: "Digital service ads need service type, delivery time, tools, revisions, portfolio, and customer requirements.",
+            ar: "إعلانات الخدمات الرقمية تحتاج نوع الخدمة، مدة التسليم، الأدوات، التعديلات، معرض الأعمال، ومتطلبات العميل.",
+            sv: "Digitala tjänster behöver typ, leveranstid, verktyg, revisioner, portfolio och kundkrav."
+          },
           fields: [
-            { name: "digitalType", label: "Digital service type", type: "select", options: ["Website", "Programming", "Graphic design", "Marketing", "Translation", "Writing", "SEO", "Social media"] },
-            { name: "deliveryTime", label: "Delivery time", type: "text", placeholder: "Example: 3 days, 1 week..." },
-            { name: "tools", label: "Tools / technologies", type: "text", placeholder: "HTML, CSS, React, Figma, Photoshop..." },
-            { name: "revisions", label: "Revisions", type: "text", placeholder: "Example: 2 revisions included" },
-            { name: "portfolio", label: "Portfolio link", type: "url", placeholder: "https://..." },
-            { name: "requirements", label: "What do you need from the customer?", type: "textarea", placeholder: "Text, images, logo, requirements, examples..." }
-          ]
-        },
-
-        personal: {
-          note: "Personal service ads need service type, availability, location, gender preference if relevant, and safety conditions.",
-          fields: [
-            { name: "personalServiceType", label: "Personal service type", type: "text", placeholder: "Beauty, child care, event help..." },
-            { name: "locationMode", label: "Location", type: "select", options: ["Customer location", "Provider location", "Online", "Event location"] },
-            { name: "availability", label: "Availability", type: "text", placeholder: "Days and times..." },
-            { name: "experience", label: "Experience", type: "text", placeholder: "Example: 3 years" },
-            { name: "materials", label: "Materials included?", type: "select", options: ["Yes", "No", "Depends on request"] },
-            { name: "notes", label: "Important notes", type: "textarea", placeholder: "Conditions, limits, requirements..." }
+            ["digitalType", "Digital service type / نوع الخدمة الرقمية", "text"],
+            ["deliveryTime", "Delivery time / مدة التسليم", "text"],
+            ["tools", "Tools / الأدوات", "text"],
+            ["revisions", "Revisions / التعديلات", "text"],
+            ["portfolio", "Portfolio link / رابط الأعمال", "url"],
+            ["requirements", "Customer requirements / متطلبات العميل", "textarea"]
           ]
         }
       };
 
-      const CATEGORY_MAP = {
+      const FIELD_MAP = {
+        "private-cars": "vehicles",
         "cars": "vehicles",
-        "motorcycles": "vehicles",
-        "bicycles": "vehicles",
-        "small-trucks": "vehicles",
-        "large-trucks": "vehicles",
-        "vehicle-parts": "vehicles",
-        "boats": "vehicles",
         "rental-cars": "rentalCars",
-
-        "houses": "realEstate",
-        "apartments": "realEstate",
+        "motorcycles": "motorcycles",
+        "bicycles": "bicycles",
+        "small-trucks": "trucks",
+        "heavy-trucks": "trucks",
+        "vehicle-parts": "vehicleParts",
+        "property-sale": "realEstate",
+        "property-rent": "realEstate",
         "rooms": "realEstate",
-        "commercial-real-estate": "realEstate",
-        "warehouses": "realEstate",
-        "agricultural-lands": "land",
+        "commercial-property": "realEstate",
         "lands": "land",
-
+        "farms": "land",
         "phones": "electronics",
         "computers": "electronics",
-        "tablets": "electronics",
         "tv-audio": "electronics",
         "gaming": "electronics",
-        "cameras": "electronics",
-
         "furniture": "home",
-        "home-appliances": "home",
+        "appliances": "home",
         "home-tools": "home",
         "garden": "home",
-        "decor": "home",
-
-        "maintenance-centers": "services",
-        "car-service": "services",
-        "device-repair": "services",
+        "shops": "business",
+        "restaurants": "business",
+        "business-sale": "business",
+        "business-equipment": "business",
+        "vehicle-service": "services",
         "home-maintenance": "services",
         "company-maintenance": "services",
-        "plumbing": "services",
-        "electricity": "services",
-        "painting": "services",
-        "cleaning-services": "services",
-        "transport-delivery": "services",
-
-        "education": "education",
+        "device-repair": "services",
+        "cleaning": "services",
+        "transport": "services",
+        "personal-care": "services",
+        "event-services": "services",
         "private-lessons": "education",
         "language-courses": "education",
         "online-courses": "education",
-
-        "shops": "business",
-        "business-for-sale": "business",
-        "restaurant-cafe": "business",
-        "business-equipment": "business",
-
-        "digital-services": "digital",
         "web-design": "digital",
         "programming": "digital",
         "graphic-design": "digital",
-        "digital-marketing": "digital",
-        "translation-writing": "digital",
-
-        "personal-services": "personal",
-        "beauty-care": "personal",
-        "event-services": "personal",
-        "child-care": "personal"
+        "marketing": "digital",
+        "translation-writing": "digital"
       };
 
+      const GROUP_FIELD_MAP = {
+        vehicles: "vehicles",
+        realEstate: "realEstate",
+        electronics: "electronics",
+        home: "home",
+        business: "business",
+        services: "services",
+        education: "education",
+        digital: "digital"
+      };
+
+      const LISTING_TYPES = {
+        default: ["For sale", "For rent", "Wanted", "Exchange", "Service offer"],
+        vehicles: ["Vehicle for sale", "Vehicle for rent", "Leasing", "Wanted vehicle", "Parts / accessories"],
+        realEstate: ["Property for sale", "Property for rent", "Daily rent", "Wanted property"],
+        services: ["I provide this service", "I need this service", "Consultation", "Contract work"],
+        digital: ["Digital service", "Project work", "Consultation", "Subscription"],
+        education: ["Course offer", "Private lesson", "Online lesson", "Looking for teacher"],
+        business: ["Business for sale", "Partnership", "Equipment for sale", "Commercial rent"]
+      };
+
+      const CONDITIONS = {
+        default: ["New", "Used", "Excellent", "Good", "Needs repair"],
+        realEstate: ["New building", "Ready to move", "Renovated", "Needs renovation", "Under construction"],
+        services: ["Available now", "By appointment", "Online", "In person", "Online and in person"]
+      };
+
+      function currentLang() {
+        const lang = localStorage.getItem(STORAGE.lang) || document.documentElement.lang || "en";
+        return String(lang).slice(0, 2).toLowerCase();
+      }
+
+      function t(key) {
+        const lang = currentLang();
+        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+      }
+
+      function localText(obj, fallback = "") {
+        const lang = currentLang();
+
+        if (!obj) return fallback;
+
+        if (typeof obj === "string") return obj;
+
+        if (obj.labels) {
+          return obj.labels[lang] || obj.labels.en || obj.labels.ar || obj.name || fallback;
+        }
+
+        if (obj.names) {
+          return obj.names[lang] || obj.names.en || obj.names.ar || obj.name || fallback;
+        }
+
+        if (obj.key) return t(obj.key);
+
+        return obj.label || obj.name || fallback;
+      }
+
+      function getCountries() {
+        return window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+      }
+
+      function countryCode(country) {
+        return country?.code || country?.id || country?.iso2 || country?.value || "";
+      }
+
+      function countryLang(country) {
+        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
+      }
+
+      function countryCurrency(country) {
+        return country?.currency || country?.currencyCode || "";
+      }
+
+      function getCountryByCode(code) {
+        const clean = String(code || "").toUpperCase();
+        return getCountries().find((c) => String(countryCode(c)).toUpperCase() === clean) || getCountries()[0] || null;
+      }
+
       function getCategories() {
-        return window.AMG_CATEGORIES || window.CATEGORIES || [];
+        const external = window.AMG_CATEGORIES || window.CATEGORIES || window.categories || [];
+        return external.length ? external : FALLBACK_CATEGORIES;
       }
 
-      function getCategoryById(id) {
-        return getCategories().find((category) => category.id === id) || null;
+      function getCategory(id) {
+        return getCategories().find((c) => c.id === id) || getCategories()[0] || FALLBACK_CATEGORIES[0];
       }
 
-      function getFieldSetKey(categoryId) {
-        const category = getCategoryById(categoryId);
-
-        if (CATEGORY_MAP[categoryId]) {
-          return CATEGORY_MAP[categoryId];
-        }
-
-        if (category && CATEGORY_MAP[category.group]) {
-          return CATEGORY_MAP[category.group];
-        }
-
-        if (category && FIELD_SETS[category.group]) {
-          return category.group;
-        }
-
-        return "vehicles";
+      function categoryGroup(category) {
+        return category?.group || "vehicles";
       }
 
-      function renderOptions(select, options) {
+      function categoryLabel(category) {
+        return localText(category, category?.id || "");
+      }
+
+      function categoryIcon(category) {
+        return category?.icon || "fa-layer-group";
+      }
+
+      function getFieldKey(category) {
+        return FIELD_MAP[category?.id] || GROUP_FIELD_MAP[categoryGroup(category)] || "vehicles";
+      }
+
+      function fillCountries() {
+        const countries = getCountries();
+        const selects = [$("#countrySelect"), $("#sellCountry")].filter(Boolean);
+
+        if (!countries.length) return;
+
+        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
+
+        selects.forEach((select) => {
+          select.innerHTML = "";
+
+          countries.forEach((country) => {
+            const option = document.createElement("option");
+            option.value = countryCode(country);
+            option.textContent = localText(country, countryCode(country));
+            select.appendChild(option);
+          });
+
+          select.value = saved;
+          select.dataset.amgFilledByApp = "true";
+        });
+      }
+
+      function applyCountry(code) {
+        const country = getCountryByCode(code);
+        if (!country) return;
+
+        const codeValue = countryCode(country);
+        const lang = countryLang(country);
+        const label = localText(country, codeValue);
+
+        localStorage.setItem(STORAGE.country, codeValue);
+        localStorage.setItem(STORAGE.countryLabel, label);
+        localStorage.setItem(STORAGE.lang, lang);
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.body.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+
+        [$("#countrySelect"), $("#sellCountry")].filter(Boolean).forEach((select) => {
+          select.value = codeValue;
+        });
+
+        const currencyInput = $("#currency");
+        if (currencyInput && !currencyInput.value) {
+          currencyInput.value = countryCurrency(country);
+        }
+
+        applyTranslations();
+        fillCountries();
+        fillGroups();
+        fillSubcategories($("#mainGroupSelect").value || "vehicles");
+
+        window.dispatchEvent(new CustomEvent("amg:countrychange", { detail: { country } }));
+      }
+
+      function applyTranslations() {
+        $$("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+
+        $("#title").placeholder = currentLang() === "ar"
+          ? "مثال: Toyota Corolla 2020، شقة للإيجار، خدمة تصميم موقع..."
+          : "Example: Toyota Corolla 2020, apartment for rent, web design service...";
+
+        $("#price").placeholder = "15000";
+        $("#currency").placeholder = "EUR / SEK / USD";
+        $("#city").placeholder = currentLang() === "ar" ? "مثال: ستوكهولم، برلين، دمشق" : "Example: Stockholm, Berlin, Damascus";
+        $("#address").placeholder = currentLang() === "ar" ? "الحي أو الشارع أو المنطقة" : "Street, district, or area";
+        $("#visibleDescription").placeholder = currentLang() === "ar"
+          ? "اكتب وصفاً واضحاً: الحالة، المميزات، طريقة الدفع، التوصيل، أو شروط الخدمة..."
+          : "Write clear details: condition, features, payment, delivery, or service terms...";
+      }
+
+      function fillGroups() {
+        const select = $("#mainGroupSelect");
+        const current = select.value || localStorage.getItem("amg_main_group") || "vehicles";
+
         select.innerHTML = "";
 
-        options.forEach(([value, label]) => {
+        GROUPS.forEach((group) => {
           const option = document.createElement("option");
-          option.value = value;
-          option.textContent = label;
+          option.value = group.id;
+          option.textContent = t(group.key);
+          select.appendChild(option);
+        });
+
+        select.value = current;
+      }
+
+      function fillSubcategories(groupId) {
+        const select = $("#categorySelect");
+        const categories = getCategories().filter((category) => categoryGroup(category) === groupId);
+
+        const saved = localStorage.getItem(STORAGE.category);
+        const selectedStillExists = categories.some((category) => category.id === saved);
+
+        select.innerHTML = "";
+
+        categories.forEach((category) => {
+          const option = document.createElement("option");
+          option.value = category.id;
+          option.textContent = categoryLabel(category);
+          select.appendChild(option);
+        });
+
+        select.value = selectedStillExists ? saved : categories[0]?.id || "";
+        select.dataset.amgFilledByApp = "true";
+
+        updateCategory();
+      }
+
+      function fillSelect(select, options) {
+        select.innerHTML = "";
+
+        const first = document.createElement("option");
+        first.value = "";
+        first.textContent = t("select");
+        select.appendChild(first);
+
+        options.forEach((text) => {
+          const option = document.createElement("option");
+          option.value = text;
+          option.textContent = text;
           select.appendChild(option);
         });
       }
 
-      function createField(field) {
-        const wrapper = document.createElement("div");
-        wrapper.className = field.type === "textarea" ? "form-field full" : "form-field";
+      function createDetailField(def) {
+        const [name, label, type, options] = def;
 
-        const label = document.createElement("label");
-        label.setAttribute("for", `detail_${field.name}`);
-        label.textContent = field.label;
+        const wrap = document.createElement("div");
+        wrap.className = type === "textarea" ? "field full" : "field";
+
+        const labelEl = document.createElement("label");
+        labelEl.htmlFor = "detail_" + name;
+        labelEl.textContent = label;
 
         let input;
 
-        if (field.type === "select") {
+        if (type === "select") {
           input = document.createElement("select");
 
-          const first = document.createElement("option");
-          first.value = "";
-          first.textContent = "Select";
-          input.appendChild(first);
+          const empty = document.createElement("option");
+          empty.value = "";
+          empty.textContent = t("select");
+          input.appendChild(empty);
 
-          field.options.forEach((optionLabel) => {
+          (options || []).forEach((text) => {
             const option = document.createElement("option");
-            option.value = optionLabel;
-            option.textContent = optionLabel;
+            option.value = text;
+            option.textContent = text;
             input.appendChild(option);
           });
-        } else if (field.type === "textarea") {
+        } else if (type === "textarea") {
           input = document.createElement("textarea");
-          input.placeholder = field.placeholder || "";
         } else {
           input = document.createElement("input");
-          input.type = field.type || "text";
-          input.placeholder = field.placeholder || "";
+          input.type = type || "text";
         }
 
-        input.id = `detail_${field.name}`;
-        input.name = `detail_${field.name}`;
-        input.dataset.detailLabel = field.label;
+        input.id = "detail_" + name;
+        input.name = "detail_" + name;
+        input.dataset.detailLabel = label;
 
-        wrapper.appendChild(label);
-        wrapper.appendChild(input);
+        wrap.appendChild(labelEl);
+        wrap.appendChild(input);
 
-        return wrapper;
+        return wrap;
       }
 
-      function updateFormForCategory() {
-        const categoryId = categorySelect.value || localStorage.getItem("amg_selected_category") || "cars";
-        const category = getCategoryById(categoryId);
-        const key = getFieldSetKey(categoryId);
-        const fieldSet = FIELD_SETS[key] || FIELD_SETS.vehicles;
+      function updateCategory() {
+        const category = getCategory($("#categorySelect").value);
+        const fieldKey = getFieldKey(category);
+        const set = FIELD_SETS[fieldKey] || FIELD_SETS.vehicles;
 
-        dynamicNote.textContent = fieldSet.note;
-        dynamicFields.innerHTML = "";
+        const group = categoryGroup(category);
+        localStorage.setItem("amg_main_group", group);
+        localStorage.setItem(STORAGE.category, category.id);
+        localStorage.setItem(STORAGE.categoryLabel, categoryLabel(category));
 
-        fieldSet.fields.forEach((field) => {
-          dynamicFields.appendChild(createField(field));
-        });
+        $("#selectedCategoryText").textContent = categoryLabel(category);
+        $("#categoryIcon").className = "fa-solid " + categoryIcon(category);
 
-        const group = category ? category.group : "default";
+        $("#dynamicNote").textContent =
+          set.note[currentLang()] || set.note.en || "";
 
-        const listingTypeOptions =
-          LISTING_TYPES[key] ||
+        const container = $("#dynamicFields");
+        container.innerHTML = "";
+        set.fields.forEach((field) => container.appendChild(createDetailField(field)));
+
+        const listingOptions =
+          LISTING_TYPES[fieldKey] ||
           LISTING_TYPES[group] ||
           LISTING_TYPES.default;
 
         const conditionOptions =
-          CONDITIONS[key] ||
+          CONDITIONS[fieldKey] ||
           CONDITIONS[group] ||
           CONDITIONS.default;
 
-        renderOptions(listingTypeSelect, listingTypeOptions);
-        renderOptions(conditionSelect, conditionOptions);
+        fillSelect($("#listingType"), listingOptions);
+        fillSelect($("#condition"), conditionOptions);
+
+        window.dispatchEvent(new CustomEvent("amg:categorychange", { detail: { category } }));
       }
 
       function buildDescription() {
-        const categoryId = categorySelect.value || "";
-        const category = getCategoryById(categoryId);
-
-        const categoryName = category && category.labels
-          ? category.labels.en || category.labels.ar || category.id
-          : categoryId;
-
-        const details = Array.from(document.querySelectorAll("[name^='detail_']"))
+        const category = getCategory($("#categorySelect").value);
+        const details = $$("[name^='detail_']")
           .map((input) => {
-            const label = input.dataset.detailLabel || input.name;
             const value = String(input.value || "").trim();
-
             if (!value) return "";
-
-            return `${label}: ${value}`;
+            return `${input.dataset.detailLabel}: ${value}`;
           })
           .filter(Boolean);
 
-        const baseDescription = String(visibleDescription.value || "").trim();
+        const base = String($("#visibleDescription").value || "").trim();
 
-        hiddenDescription.value = [
-          baseDescription,
+        $("#description").value = [
+          base,
           "",
-          "----- Category details -----",
-          `Category: ${categoryName}`,
+          "----- Ad details -----",
+          "Main category: " + t("groups_" + categoryGroup(category)),
+          "Subcategory: " + categoryLabel(category),
           ...details
         ].join("\n").trim();
       }
 
       function previewImages() {
-        imagePreview.innerHTML = "";
+        const input = $("#images");
+        const preview = $("#imagePreview");
 
-        const files = Array.from(imageInput.files || []).slice(0, 5);
+        preview.innerHTML = "";
 
-        files.forEach((file) => {
+        Array.from(input.files || []).slice(0, 5).forEach((file) => {
           const reader = new FileReader();
 
           reader.onload = function () {
             const img = document.createElement("img");
             img.src = reader.result;
-            img.alt = "Ad image preview";
-            imagePreview.appendChild(img);
+            img.alt = "preview";
+            preview.appendChild(img);
           };
 
           reader.readAsDataURL(file);
         });
       }
 
-      document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(updateFormForCategory, 200);
+      function initMenu() {
+        const toggle = $("#menuToggle");
+        const sidebar = $("#sidebar");
+        const close = $("#sidebarClose");
+        const backdrop = $("#sidebarBackdrop");
 
-        categorySelect.addEventListener("change", updateFormForCategory);
-        window.addEventListener("amg:categorychange", updateFormForCategory);
+        function open() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document.body.classList.add("menu-open");
+        }
 
-        imageInput.addEventListener("change", previewImages);
+        function shut() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        }
 
-        sellForm.addEventListener("submit", () => {
+        toggle.addEventListener("click", open);
+        close.addEventListener("click", shut);
+        backdrop.addEventListener("click", shut);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") shut();
+        });
+      }
+
+      function init() {
+        initMenu();
+
+        fillCountries();
+
+        const startCountry =
+          localStorage.getItem(STORAGE.country) ||
+          $("#countrySelect")?.value ||
+          $("#sellCountry")?.value;
+
+        applyCountry(startCountry);
+
+        $("#countrySelect").addEventListener("change", (e) => applyCountry(e.target.value));
+        $("#sellCountry").addEventListener("change", (e) => applyCountry(e.target.value));
+
+        fillGroups();
+        fillSubcategories($("#mainGroupSelect").value || "vehicles");
+
+        $("#mainGroupSelect").addEventListener("change", (e) => {
+          localStorage.setItem("amg_main_group", e.target.value);
+          fillSubcategories(e.target.value);
+        });
+
+        $("#categorySelect").addEventListener("change", updateCategory);
+        $("#images").addEventListener("change", previewImages);
+
+        $("#sellForm").addEventListener("submit", function () {
           buildDescription();
         });
-      });
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
     })();
   </script>
 
