@@ -1,1 +1,286 @@
-<!DOCTYPE html><html lang="en" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sell a Car | AutoMarket Global</title><meta name="description" content="AutoMarket Global car marketplace by country."><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></head><body><header class="site-topbar"><div class="site-topbar-inner"><div class="topbar-left"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false"><i class="fa-solid fa-bars"></i></button><a class="logo" href="index.html" aria-label="AutoMarket Global home">AutoMarket <span>Global</span></a></div><div class="topbar-right"><select class="country-select" id="countrySelect" aria-label="Choose country"></select></div></div></header><div class="sidebar-backdrop" id="sidebarBackdrop"></div><aside class="sidebar" id="sidebar" aria-label="Main menu"><div class="sidebar-header"><div class="sidebar-title">AutoMarket <span>Global</span></div><button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button></div><nav class="sidebar-nav" aria-label="Main navigation"><a class="sidebar-link" href="index.html"><i class="fa-solid fa-house"></i><span data-i18n="home">home</span></a><a class="sidebar-link" href="search.html"><i class="fa-solid fa-magnifying-glass"></i><span data-i18n="searchCars">searchCars</span></a><a class="sidebar-link active" href="sell.html"><i class="fa-solid fa-circle-plus"></i><span data-i18n="sellCar">sellCar</span></a><div class="sidebar-divider"></div><a class="sidebar-link" href="account.html"><i class="fa-solid fa-user"></i><span data-i18n="account">account</span></a><a class="sidebar-link" href="favorites.html"><i class="fa-solid fa-heart"></i><span data-i18n="favorites">favorites</span></a><a class="sidebar-link" href="messages.html"><i class="fa-solid fa-envelope"></i><span data-i18n="messages">messages</span></a><a class="sidebar-link" href="dashboard.html"><i class="fa-solid fa-chart-line"></i><span data-i18n="dashboard">dashboard</span></a><div class="sidebar-divider"></div><a class="sidebar-link" href="terms.html"><i class="fa-solid fa-shield-halved"></i><span data-i18n="terms">terms</span></a><a class="sidebar-link" href="login.html"><i class="fa-solid fa-right-to-bracket"></i><span data-i18n="login">login</span></a><a class="sidebar-link" href="register.html"><i class="fa-solid fa-user-plus"></i><span data-i18n="register">register</span></a></nav><div class="sidebar-footer">AutoMarket Global · 2026</div></aside><main class="page"><section class="page-header"><p class="eyebrow"><i class="fa-solid fa-circle-plus"></i><span data-i18n="sellCar">Sell a car</span></p><h1 data-i18n="sellTitle">Publish your car listing</h1><p class="subtitle" data-i18n="sellSubtitle">Fill in the car information. This demo saves the listing in your browser.</p></section><form class="form-card" id="sellForm"><div id="formMessage"></div><div class="alert" data-i18n="demoNotice">Demo version: data is saved only in this browser until Firebase is connected.</div><div class="form-grid"><div class="form-group"><label data-i18n="country">Country</label><select data-country-select></select></div><div class="form-group"><label data-i18n="brand">Brand</label><input name="brand" required placeholder="Toyota"></div><div class="form-group"><label data-i18n="model">Model</label><input name="model" required placeholder="Corolla"></div><div class="form-group"><label data-i18n="year">Year</label><input name="year" type="number" min="1980" max="2030" required></div><div class="form-group"><label data-i18n="price">Price</label><input name="price" type="number" min="0" required></div><div class="form-group"><label data-i18n="mileage">Mileage</label><input name="mileage" type="number" min="0" required></div><div class="form-group"><label data-i18n="fuel">Fuel</label><select name="fuel"><option value="Petrol">Petrol</option><option value="Diesel">Diesel</option><option value="Hybrid">Hybrid</option><option value="Electric">Electric</option></select></div><div class="form-group"><label data-i18n="city">City</label><input name="city" required></div><div class="form-group full"><label data-i18n="imageUrl">Image URL</label><input name="image" type="url" placeholder="https://..."></div><div class="form-group full"><label data-i18n="description">Description</label><textarea name="description"></textarea></div></div><button class="btn btn-primary btn-full" type="submit"><i class="fa-solid fa-paper-plane"></i><span data-i18n="publish">Publish listing</span></button></form></main><footer class="site-footer"><div class="site-footer-inner"><div>© 2026 AutoMarket Global. All rights reserved.</div><div class="footer-links"><a href="terms.html" data-i18n="terms">Terms</a><a href="search.html" data-i18n="searchCars">Search cars</a><a href="sell.html" data-i18n="sellCar">Sell a car</a></div></div></footer><script src="assets/js/core.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Sell a Car | AutoMarket Global</title>
+
+  <meta
+    name="description"
+    content="Publish your car listing on AutoMarket Global and sell your car by country."
+  />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-topbar">
+    <div class="site-topbar-inner">
+      <div class="topbar-left">
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="sidebar"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
+          AutoMarket <span>Global</span>
+        </a>
+      </div>
+
+      <div class="topbar-right">
+        <select
+          class="country-select"
+          id="countrySelect"
+          aria-label="Choose country"
+        ></select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar backdrop -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+    <div class="sidebar-header">
+      <div class="sidebar-title">
+        AutoMarket <span>Global</span>
+      </div>
+
+      <button
+        class="sidebar-close"
+        id="sidebarClose"
+        type="button"
+        aria-label="Close menu"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <a class="sidebar-link" href="index.html">
+        <i class="fa-solid fa-house"></i>
+        <span data-i18n="home">Home</span>
+      </a>
+
+      <a class="sidebar-link" href="search.html">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span data-i18n="searchCars">Search cars</span>
+      </a>
+
+      <a class="sidebar-link active" href="sell.html">
+        <i class="fa-solid fa-circle-plus"></i>
+        <span data-i18n="sellCar">Sell a car</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a class="sidebar-link" href="account.html">
+        <i class="fa-solid fa-user"></i>
+        <span data-i18n="account">My account</span>
+      </a>
+
+      <a class="sidebar-link" href="favorites.html">
+        <i class="fa-solid fa-heart"></i>
+        <span data-i18n="favorites">Favorites</span>
+      </a>
+
+      <a class="sidebar-link" href="messages.html">
+        <i class="fa-solid fa-envelope"></i>
+        <span data-i18n="messages">Messages</span>
+      </a>
+
+      <a class="sidebar-link" href="dashboard.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span data-i18n="dashboard">Dashboard</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a class="sidebar-link" href="terms.html">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span data-i18n="terms">Terms</span>
+      </a>
+
+      <a class="sidebar-link" href="login.html">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span data-i18n="login">Login</span>
+      </a>
+
+      <a class="sidebar-link" href="register.html">
+        <i class="fa-solid fa-user-plus"></i>
+        <span data-i18n="register">Create account</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      AutoMarket Global · 2026
+    </div>
+  </aside>
+
+  <!-- Main page -->
+  <main class="page">
+    <section class="page-header">
+      <p class="eyebrow">
+        <i class="fa-solid fa-circle-plus"></i>
+        <span data-i18n="sellCar">Sell a car</span>
+      </p>
+
+      <h1 data-i18n="sellTitle">Publish your car listing</h1>
+
+      <p class="subtitle" data-i18n="sellSubtitle">
+        Fill in the car information. This demo saves the listing in your browser.
+      </p>
+    </section>
+
+    <form class="form-card" id="sellForm">
+      <div id="formMessage"></div>
+
+      <div class="alert" data-i18n="demoNotice">
+        Demo version: data is saved only in this browser until Firebase is connected.
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="sellCountry" data-i18n="country">Country</label>
+          <select id="sellCountry" data-country-select></select>
+        </div>
+
+        <div class="form-group">
+          <label for="brand" data-i18n="brand">Brand</label>
+          <input
+            id="brand"
+            name="brand"
+            type="text"
+            required
+            placeholder="Toyota"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="model" data-i18n="model">Model</label>
+          <input
+            id="model"
+            name="model"
+            type="text"
+            required
+            placeholder="Corolla"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="year" data-i18n="year">Year</label>
+          <input
+            id="year"
+            name="year"
+            type="number"
+            min="1980"
+            max="2030"
+            required
+            placeholder="2021"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="price" data-i18n="price">Price</label>
+          <input
+            id="price"
+            name="price"
+            type="number"
+            min="0"
+            required
+            placeholder="25000"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="mileage" data-i18n="mileage">Mileage</label>
+          <input
+            id="mileage"
+            name="mileage"
+            type="number"
+            min="0"
+            required
+            placeholder="80000"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="fuel" data-i18n="fuel">Fuel</label>
+          <select id="fuel" name="fuel">
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Electric">Electric</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="city" data-i18n="city">City</label>
+          <input
+            id="city"
+            name="city"
+            type="text"
+            required
+            placeholder="Stockholm"
+          />
+        </div>
+
+        <div class="form-group full">
+          <label for="image" data-i18n="imageUrl">Image URL</label>
+          <input
+            id="image"
+            name="image"
+            type="url"
+            placeholder="https://example.com/car-image.jpg"
+          />
+        </div>
+
+        <div class="form-group full">
+          <label for="description" data-i18n="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Write car details here..."
+          ></textarea>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-full" type="submit">
+        <i class="fa-solid fa-paper-plane"></i>
+        <span data-i18n="publish">Publish listing</span>
+      </button>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div>
+        © 2026 AutoMarket Global. All rights reserved.
+      </div>
+
+      <div class="footer-links">
+        <a href="terms.html" data-i18n="terms">Terms</a>
+        <a href="search.html" data-i18n="searchCars">Search cars</a>
+        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/core.js"></script>
+</body>
+</html>
