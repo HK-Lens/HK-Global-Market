@@ -1,8 +1,54 @@
 {
   "hosting": {
     "public": ".",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "cleanUrls": true,
-    "trailingSlash": false
+    "trailingSlash": false,
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "**/.*/**",
+      "**/node_modules/**",
+      "**/package.json",
+      "**/package-lock.json",
+      "**/yarn.lock",
+      "**/pnpm-lock.yaml",
+      "**/.env",
+      "**/.env.*",
+      "**/*env*",
+      "**/*secret*",
+      "**/*private*",
+      "**/*credential*",
+      "**/*credentials*",
+      "**/*serviceAccount*",
+      "**/*service-account*",
+      "**/*adminsdk*",
+      "**/*.pem",
+      "**/*.key",
+      "**/*.crt",
+      "**/*.p12",
+      "**/*.pfx",
+      "**/firebase-debug.log",
+      "**/firebase-debug.*.log",
+      "**/ui-debug.log",
+      "**/README.md"
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(html|css|js)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }
