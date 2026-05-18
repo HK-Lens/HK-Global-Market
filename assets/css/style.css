@@ -1,5 +1,6 @@
 /* ===============================
    AutoMarket Global - Main Style
+   FINAL VERSION
    =============================== */
 
 :root {
@@ -21,9 +22,7 @@
   --max-width: 1180px;
 }
 
-/* ===============================
-   Reset
-   =============================== */
+/* Reset */
 
 * {
   box-sizing: border-box;
@@ -63,16 +62,14 @@ textarea {
   font-family: inherit;
 }
 
-/* ===============================
-   Header
-   =============================== */
+/* Header */
 
 .site-topbar {
   position: sticky;
   top: 0;
   z-index: 1000;
   height: var(--header-height);
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
@@ -144,9 +141,7 @@ textarea {
   outline: none;
 }
 
-/* ===============================
-   Sidebar
-   =============================== */
+/* Sidebar */
 
 .sidebar-backdrop {
   position: fixed;
@@ -248,9 +243,7 @@ html[dir="rtl"] .sidebar {
   padding-top: 16px;
 }
 
-/* ===============================
-   General Layout
-   =============================== */
+/* General Layout */
 
 .page {
   width: 100%;
@@ -293,27 +286,27 @@ html[dir="rtl"] .sidebar {
   margin: 0;
 }
 
-/* ===============================
-   Home / Hero
-   =============================== */
+/* Home Hero - without empty space */
 
 .hero,
 .home-hero,
 .landing-hero {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 64px 22px 78px;
-  min-height: calc(100vh - var(--header-height));
-  display: flex;
-  align-items: center;
+  padding: 54px 22px 34px;
+  min-height: 0 !important;
+  height: auto !important;
+  display: block !important;
 }
 
 .hero-inner,
 .hero-grid,
 .hero-content-wrapper {
   width: 100%;
+  min-height: 0 !important;
+  height: auto !important;
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
+  grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
   gap: 54px;
 }
@@ -355,7 +348,7 @@ html[dir="rtl"] .sidebar {
 
 .country-card,
 .selected-country-card {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 34px;
@@ -396,9 +389,7 @@ html[dir="rtl"] .sidebar {
   font-size: 14px;
 }
 
-/* ===============================
-   Buttons
-   =============================== */
+/* Buttons */
 
 .btn {
   min-height: 44px;
@@ -449,15 +440,15 @@ html[dir="rtl"] .sidebar {
   width: 100%;
 }
 
-/* ===============================
-   Quick Cards
-   =============================== */
+/* Quick Cards */
 
 .quick-links {
+  max-width: var(--max-width);
+  margin: 26px auto 54px;
+  padding: 0 22px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
-  margin-top: 34px;
 }
 
 .quick-card {
@@ -501,9 +492,7 @@ html[dir="rtl"] .sidebar {
   line-height: 1.7;
 }
 
-/* ===============================
-   Search Page
-   =============================== */
+/* Search Page */
 
 .search-layout {
   display: grid;
@@ -710,9 +699,7 @@ textarea:focus {
   color: var(--muted);
 }
 
-/* ===============================
-   Forms
-   =============================== */
+/* Forms */
 
 .form-card {
   max-width: 820px;
@@ -741,9 +728,7 @@ textarea:focus {
   color: #166534;
 }
 
-/* ===============================
-   Account / Dashboard
-   =============================== */
+/* Account / Dashboard */
 
 .list-item {
   display: flex;
@@ -792,9 +777,7 @@ textarea:focus {
   font-weight: 800;
 }
 
-/* ===============================
-   Footer
-   =============================== */
+/* Footer */
 
 .site-footer {
   border-top: 1px solid var(--border);
@@ -830,9 +813,7 @@ textarea:focus {
   color: var(--primary);
 }
 
-/* ===============================
-   RTL Support
-   =============================== */
+/* RTL Support */
 
 html[dir="rtl"] body {
   direction: rtl;
@@ -871,11 +852,15 @@ html[dir="rtl"] .selected-country-card {
   direction: rtl;
 }
 
-/* ===============================
-   Responsive
-   =============================== */
+/* Responsive */
 
 @media (max-width: 1000px) {
+  .hero,
+  .home-hero,
+  .landing-hero {
+    padding: 38px 22px 28px !important;
+  }
+
   .hero-inner,
   .hero-grid,
   .hero-content-wrapper {
@@ -947,26 +932,25 @@ html[dir="rtl"] .selected-country-card {
   .hero,
   .home-hero,
   .landing-hero {
-    min-height: auto !important;
+    min-height: 0 !important;
     height: auto !important;
-    padding: 26px 14px 42px !important;
+    padding: 24px 16px 18px !important;
     display: block !important;
-    align-items: start !important;
   }
 
   .hero-inner,
   .hero-grid,
   .hero-content-wrapper {
-    min-height: auto !important;
+    min-height: 0 !important;
     height: auto !important;
     display: grid !important;
     grid-template-columns: 1fr !important;
-    gap: 22px !important;
+    gap: 18px !important;
     align-items: start !important;
   }
 
   .hero-content {
-    text-align: center !important;
+    text-align: left !important;
     padding: 0 !important;
     margin: 0 !important;
   }
@@ -977,10 +961,10 @@ html[dir="rtl"] .selected-country-card {
 
   .hero h1,
   .hero-title {
-    font-size: 36px !important;
-    line-height: 1.15 !important;
-    margin-top: 10px !important;
-    letter-spacing: -0.8px;
+    font-size: 42px !important;
+    line-height: 1.08 !important;
+    margin: 0 0 14px !important;
+    letter-spacing: -1px;
   }
 
   .hero p,
@@ -991,10 +975,6 @@ html[dir="rtl"] .selected-country-card {
   }
 
   .hero-actions {
-    justify-content: center !important;
-  }
-
-  html[dir="rtl"] .hero-actions {
     justify-content: flex-start !important;
   }
 
@@ -1003,12 +983,23 @@ html[dir="rtl"] .selected-country-card {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    padding: 24px !important;
+    padding: 22px !important;
   }
 
   .country-card h2,
   .selected-country-card h2 {
-    font-size: 28px;
+    font-size: 26px;
+  }
+
+  .quick-links {
+    margin-top: 14px !important;
+    margin-bottom: 34px !important;
+    padding: 0 16px;
+    gap: 16px;
+  }
+
+  .quick-card {
+    padding: 22px;
   }
 
   .form-grid {
@@ -1021,7 +1012,7 @@ html[dir="rtl"] .selected-country-card {
   }
 
   .btn {
-    width: 100%;
+    width: auto;
   }
 
   .car-actions .btn {
@@ -1042,7 +1033,7 @@ html[dir="rtl"] .selected-country-card {
 @media (max-width: 420px) {
   .hero h1,
   .hero-title {
-    font-size: 32px !important;
+    font-size: 34px !important;
   }
 
   .page-header h1 {
@@ -1064,4 +1055,21 @@ html[dir="rtl"] .selected-country-card {
   .car-image {
     height: 190px;
   }
+}
+
+/* Absolute final spacing protection */
+
+.hero,
+.home-hero,
+.landing-hero,
+.hero-inner,
+.hero-grid,
+.hero-content-wrapper {
+  min-height: 0 !important;
+}
+
+main .hero:first-child,
+main .home-hero:first-child,
+main .landing-hero:first-child {
+  margin-top: 0 !important;
 }
