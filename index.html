@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>AutoMarket Global | Buy and Sell Cars Online</title>
+  <title>HK Global Market | Buy and Sell Worldwide</title>
 
   <meta
     name="description"
-    content="AutoMarket Global is a global car marketplace where users can buy, sell, search, and manage car listings by country."
+    content="HK Global Market is a worldwide marketplace for cars, houses, electronics, home tools, motorcycles, bicycles, shops, and agricultural lands."
   />
 
   <link rel="stylesheet" href="assets/css/style.css" />
@@ -20,7 +20,6 @@
 </head>
 
 <body>
-  <!-- Header -->
   <header class="site-topbar">
     <div class="site-topbar-inner">
       <div class="topbar-left">
@@ -35,12 +34,19 @@
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
-          AutoMarket <span>Global</span>
+        <a class="logo" href="index.html" aria-label="HK Global Market home">
+          HK <span>Global Market</span>
         </a>
       </div>
 
       <div class="topbar-right">
+        <select
+          class="category-select"
+          id="categorySelect"
+          name="category"
+          aria-label="Choose category"
+        ></select>
+
         <select
           class="country-select"
           id="countrySelect"
@@ -50,14 +56,12 @@
     </div>
   </header>
 
-  <!-- Sidebar backdrop -->
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar" aria-label="Main menu">
     <div class="sidebar-header">
       <div class="sidebar-title">
-        AutoMarket <span>Global</span>
+        HK <span>Global Market</span>
       </div>
 
       <button
@@ -73,153 +77,313 @@
     <nav class="sidebar-nav" aria-label="Main navigation">
       <a class="sidebar-link active" href="index.html">
         <i class="fa-solid fa-house"></i>
-        <span data-i18n="home">Home</span>
+        <span>Home</span>
       </a>
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
+        <span>Search listings</span>
       </a>
 
       <a class="sidebar-link" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
+        <span>Post an ad</span>
       </a>
 
       <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
-        <span data-i18n="account">My account</span>
+        <span>My account</span>
       </a>
 
       <a class="sidebar-link" href="favorites.html">
         <i class="fa-solid fa-heart"></i>
-        <span data-i18n="favorites">Favorites</span>
+        <span>Favorites</span>
       </a>
 
       <a class="sidebar-link" href="messages.html">
         <i class="fa-solid fa-envelope"></i>
-        <span data-i18n="messages">Messages</span>
+        <span>Messages</span>
       </a>
 
       <a class="sidebar-link" href="dashboard.html">
         <i class="fa-solid fa-chart-line"></i>
-        <span data-i18n="dashboard">Dashboard</span>
+        <span>Dashboard</span>
       </a>
 
       <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="terms.html">
         <i class="fa-solid fa-shield-halved"></i>
-        <span data-i18n="terms">Terms</span>
+        <span>Terms</span>
       </a>
 
       <a class="sidebar-link" href="login.html">
         <i class="fa-solid fa-right-to-bracket"></i>
-        <span data-i18n="login">Login</span>
+        <span>Login</span>
       </a>
 
       <a class="sidebar-link" href="register.html">
         <i class="fa-solid fa-user-plus"></i>
-        <span data-i18n="register">Create account</span>
+        <span>Create account</span>
       </a>
     </nav>
 
     <div class="sidebar-footer">
-      AutoMarket Global · 2026
+      HK Global Market · 2026
     </div>
   </aside>
 
-  <!-- Main page -->
-  <main class="page">
-    <section class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">
-          <i class="fa-solid fa-globe"></i>
-          <span data-i18n="marketplace">Global car marketplace</span>
-        </p>
+  <main>
+    <section class="home-hero">
+      <div class="hero-bg-shape shape-one"></div>
+      <div class="hero-bg-shape shape-two"></div>
 
-        <h1>
-          <span data-i18n="heroTitle1">Buy and sell cars</span>
-          <span class="accent" data-i18n="heroTitle2">by country</span>
-        </h1>
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fa-solid fa-globe"></i>
+            <span>Worldwide marketplace</span>
+          </div>
 
-        <p class="hero-text" data-i18n="heroText">
-          Choose your country, search available cars, save your favorites,
-          contact sellers, or publish your own car listing.
-        </p>
+          <h1 class="hero-title">
+            Buy and sell anything
+            <span>by country</span>
+          </h1>
 
-        <div class="hero-actions">
-          <a href="search.html" class="btn btn-primary">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span data-i18n="searchCars">Search cars</span>
-          </a>
+          <p class="hero-subtitle">
+            Choose your country and category, then browse real marketplace
+            listings such as cars, houses, electronics, home tools,
+            motorcycles, bicycles, shops, and agricultural lands.
+          </p>
 
-          <a href="sell.html" class="btn btn-secondary">
-            <i class="fa-solid fa-plus"></i>
-            <span data-i18n="sellCar">Sell a car</span>
-          </a>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="search.html">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              Search listings
+            </a>
+
+            <a class="btn btn-secondary" href="sell.html">
+              <i class="fa-solid fa-plus"></i>
+              Post an ad
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div>
+              <strong>195</strong>
+              <span>Countries</span>
+            </div>
+
+            <div>
+              <strong>8</strong>
+              <span>Main categories</span>
+            </div>
+
+            <div>
+              <strong>Global</strong>
+              <span>Local language support</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="hero-card">
-        <div class="hero-card-header">
-          <span data-i18n="selectedCountry">Selected country</span>
-          <i class="fa-solid fa-globe"></i>
+        <div class="hero-panel">
+          <div class="market-card main-market-card">
+            <div class="market-card-top">
+              <div class="market-icon">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+
+              <div>
+                <p>Selected country</p>
+                <h2 id="selectedCountryName" data-selected-country>
+                  Sweden - Sverige
+                </h2>
+              </div>
+            </div>
+
+            <div class="market-card-line"></div>
+
+            <div class="market-info-grid">
+              <div>
+                <span>Category</span>
+                <strong id="selectedCategory" data-selected-category>
+                  Cars
+                </strong>
+              </div>
+
+              <div>
+                <span>Mode</span>
+                <strong>Local market</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="floating-card floating-card-one">
+            <i class="fa-solid fa-house"></i>
+            <span>Houses</span>
+          </div>
+
+          <div class="floating-card floating-card-two">
+            <i class="fa-solid fa-laptop"></i>
+            <span>Electronics</span>
+          </div>
+
+          <div class="floating-card floating-card-three">
+            <i class="fa-solid fa-seedling"></i>
+            <span>Lands</span>
+          </div>
         </div>
-
-        <h2 id="selectedCountryName">Sweden - Sverige</h2>
-
-        <p data-i18n="selectedCountryText">
-          Listings, prices, and results will be filtered based on the country
-          selected from the top menu.
-        </p>
       </div>
     </section>
 
-    <section class="quick-links">
-      <a href="search.html" class="quick-card">
-        <i class="fa-solid fa-car"></i>
-        <h3 data-i18n="quickSearchTitle">Search cars</h3>
-        <p data-i18n="quickSearchText">
-          Find cars available in your selected country.
-        </p>
-      </a>
+    <section class="category-section">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">
+            <i class="fa-solid fa-layer-group"></i>
+            Marketplace categories
+          </p>
 
-      <a href="sell.html" class="quick-card">
+          <h2>Choose where you want to go</h2>
+        </div>
+
+        <a href="search.html" class="section-link">
+          View all listings
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="category-grid">
+        <a class="category-card" href="search.html?category=cars">
+          <i class="fa-solid fa-car"></i>
+          <h3>Cars</h3>
+          <p>New and used cars by country.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=houses">
+          <i class="fa-solid fa-house"></i>
+          <h3>Houses</h3>
+          <p>Homes, apartments, and properties.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=electronics">
+          <i class="fa-solid fa-laptop"></i>
+          <h3>Electronics</h3>
+          <p>Phones, computers, and devices.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=home-tools">
+          <i class="fa-solid fa-kitchen-set"></i>
+          <h3>Home tools</h3>
+          <p>Furniture, tools, and appliances.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=motorcycles">
+          <i class="fa-solid fa-motorcycle"></i>
+          <h3>Motorcycles</h3>
+          <p>Motorbikes and related items.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=bicycles">
+          <i class="fa-solid fa-bicycle"></i>
+          <h3>Bicycles</h3>
+          <p>City bikes, sport bikes, and parts.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=shops">
+          <i class="fa-solid fa-store"></i>
+          <h3>Commercial shops</h3>
+          <p>Stores, businesses, and commercial spaces.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=agricultural-lands">
+          <i class="fa-solid fa-seedling"></i>
+          <h3>Agricultural lands</h3>
+          <p>Farms, lands, and rural properties.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="how-section">
+      <div class="section-head centered">
+        <p class="section-kicker">
+          <i class="fa-solid fa-route"></i>
+          Simple steps
+        </p>
+
+        <h2>How HK Global Market works</h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span>01</span>
+          <i class="fa-solid fa-globe"></i>
+          <h3>Select country</h3>
+          <p>
+            The marketplace language and listings follow the selected country.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <span>02</span>
+          <i class="fa-solid fa-list"></i>
+          <h3>Choose category</h3>
+          <p>
+            Browse cars, homes, electronics, tools, bikes, shops, or lands.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <span>03</span>
+          <i class="fa-solid fa-message"></i>
+          <h3>Contact seller</h3>
+          <p>
+            Save favorites, send messages, and manage your account easily.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-content">
+        <p class="section-kicker">
+          <i class="fa-solid fa-bolt"></i>
+          Start now
+        </p>
+
+        <h2>Publish your first ad today</h2>
+
+        <p>
+          Add your item, choose the correct country and category, then make it
+          available to buyers in your local market.
+        </p>
+      </div>
+
+      <a href="sell.html" class="btn btn-primary">
         <i class="fa-solid fa-circle-plus"></i>
-        <h3 data-i18n="quickSellTitle">Sell a car</h3>
-        <p data-i18n="quickSellText">
-          Create a listing and publish your car online.
-        </p>
-      </a>
-
-      <a href="messages.html" class="quick-card">
-        <i class="fa-solid fa-envelope"></i>
-        <h3 data-i18n="quickMessagesTitle">Messages</h3>
-        <p data-i18n="quickMessagesText">
-          Contact sellers and manage conversations.
-        </p>
+        Post an ad
       </a>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <div class="site-footer-inner">
       <div>
-        © 2026 AutoMarket Global. All rights reserved.
+        © 2026 HK Global Market. All rights reserved.
       </div>
 
       <div class="footer-links">
-        <a href="terms.html" data-i18n="terms">Terms</a>
-        <a href="search.html" data-i18n="searchCars">Search cars</a>
-        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+        <a href="terms.html">Terms</a>
+        <a href="search.html">Search listings</a>
+        <a href="sell.html">Post an ad</a>
       </div>
     </div>
   </footer>
 
+  <script src="assets/js/countries.js"></script>
+  <script src="assets/js/categories.js"></script>
   <script src="assets/js/core.js"></script>
 </body>
 </html>
