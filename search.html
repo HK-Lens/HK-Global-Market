@@ -1,1 +1,293 @@
-<!DOCTYPE html><html lang="en" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Search Cars | AutoMarket Global</title><meta name="description" content="AutoMarket Global car marketplace by country."><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></head><body><header class="site-topbar"><div class="site-topbar-inner"><div class="topbar-left"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false"><i class="fa-solid fa-bars"></i></button><a class="logo" href="index.html" aria-label="AutoMarket Global home">AutoMarket <span>Global</span></a></div><div class="topbar-right"><select class="country-select" id="countrySelect" aria-label="Choose country"></select></div></div></header><div class="sidebar-backdrop" id="sidebarBackdrop"></div><aside class="sidebar" id="sidebar" aria-label="Main menu"><div class="sidebar-header"><div class="sidebar-title">AutoMarket <span>Global</span></div><button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button></div><nav class="sidebar-nav" aria-label="Main navigation"><a class="sidebar-link" href="index.html"><i class="fa-solid fa-house"></i><span data-i18n="home">home</span></a><a class="sidebar-link active" href="search.html"><i class="fa-solid fa-magnifying-glass"></i><span data-i18n="searchCars">searchCars</span></a><a class="sidebar-link" href="sell.html"><i class="fa-solid fa-circle-plus"></i><span data-i18n="sellCar">sellCar</span></a><div class="sidebar-divider"></div><a class="sidebar-link" href="account.html"><i class="fa-solid fa-user"></i><span data-i18n="account">account</span></a><a class="sidebar-link" href="favorites.html"><i class="fa-solid fa-heart"></i><span data-i18n="favorites">favorites</span></a><a class="sidebar-link" href="messages.html"><i class="fa-solid fa-envelope"></i><span data-i18n="messages">messages</span></a><a class="sidebar-link" href="dashboard.html"><i class="fa-solid fa-chart-line"></i><span data-i18n="dashboard">dashboard</span></a><div class="sidebar-divider"></div><a class="sidebar-link" href="terms.html"><i class="fa-solid fa-shield-halved"></i><span data-i18n="terms">terms</span></a><a class="sidebar-link" href="login.html"><i class="fa-solid fa-right-to-bracket"></i><span data-i18n="login">login</span></a><a class="sidebar-link" href="register.html"><i class="fa-solid fa-user-plus"></i><span data-i18n="register">register</span></a></nav><div class="sidebar-footer">AutoMarket Global · 2026</div></aside><main class="page"><section class="page-header"><p class="eyebrow"><i class="fa-solid fa-magnifying-glass"></i><span data-i18n="searchCars">Search cars</span></p><h1 data-i18n="findNextCar">Find your next car</h1><p class="subtitle" data-i18n="searchSubtitle">Choose a country and filter cars by brand, price, year, fuel type, and mileage.</p></section><section class="search-layout"><aside class="filter-card"><h2 data-i18n="filters">Filters</h2><div class="form-group"><label data-i18n="country">Country</label><select data-country-select></select></div><div class="form-group"><label data-i18n="brand">Brand</label><select id="filterBrand" data-filter><option value="" data-i18n="allBrands">All brands</option><option>Toyota</option><option>BMW</option><option>Mercedes-Benz</option><option>Volvo</option><option>Hyundai</option><option>Kia</option><option>Tesla</option></select></div><div class="form-group"><label data-i18n="fuel">Fuel</label><select id="filterFuel" data-filter><option value="" data-i18n="allFuel">All fuel types</option><option value="Petrol">Petrol</option><option value="Diesel">Diesel</option><option value="Hybrid">Hybrid</option><option value="Electric">Electric</option></select></div><div class="form-group"><label data-i18n="minPrice">Min price</label><input id="minPrice" data-filter type="number" min="0"></div><div class="form-group"><label data-i18n="maxPrice">Max price</label><input id="maxPrice" data-filter type="number" min="0"></div><div class="form-group"><label data-i18n="minYear">Min year</label><input id="minYear" data-filter type="number" min="1980" max="2030"></div><div class="form-group"><label data-i18n="maxMileage">Max mileage</label><input id="maxMileage" data-filter type="number" min="0"></div><div class="filter-actions"><button class="btn btn-primary" id="applyFilters" type="button"><i class="fa-solid fa-filter"></i><span data-i18n="applyFilters">Apply filters</span></button><button class="btn btn-secondary" id="resetFilters" type="button"><i class="fa-solid fa-rotate-left"></i><span data-i18n="reset">Reset</span></button></div></aside><section><div class="results-top"><div><strong id="resultsCount">0 cars</strong><div class="results-country" id="resultsCountry">Selected country</div></div><a href="sell.html" class="btn btn-primary"><i class="fa-solid fa-plus"></i><span data-i18n="sellCar">Sell a car</span></a></div><div class="car-grid" id="carGrid"></div><div class="empty-state" id="emptyState" style="display:none"><i class="fa-solid fa-car-side"></i><h3 data-i18n="noCars">No cars found</h3><p data-i18n="noCarsText">Try changing the country or removing some filters.</p></div></section></section></main><footer class="site-footer"><div class="site-footer-inner"><div>© 2026 AutoMarket Global. All rights reserved.</div><div class="footer-links"><a href="terms.html" data-i18n="terms">Terms</a><a href="search.html" data-i18n="searchCars">Search cars</a><a href="sell.html" data-i18n="sellCar">Sell a car</a></div></div></footer><script src="assets/js/core.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Search Cars | AutoMarket Global</title>
+
+  <meta
+    name="description"
+    content="Search cars by country, brand, price, year, fuel type, and mileage on AutoMarket Global."
+  />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-topbar">
+    <div class="site-topbar-inner">
+      <div class="topbar-left">
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="sidebar"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
+          AutoMarket <span>Global</span>
+        </a>
+      </div>
+
+      <div class="topbar-right">
+        <select
+          class="country-select"
+          id="countrySelect"
+          aria-label="Choose country"
+        ></select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar backdrop -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+    <div class="sidebar-header">
+      <div class="sidebar-title">
+        AutoMarket <span>Global</span>
+      </div>
+
+      <button
+        class="sidebar-close"
+        id="sidebarClose"
+        type="button"
+        aria-label="Close menu"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <a class="sidebar-link" href="index.html">
+        <i class="fa-solid fa-house"></i>
+        <span data-i18n="home">Home</span>
+      </a>
+
+      <a class="sidebar-link active" href="search.html">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span data-i18n="searchCars">Search cars</span>
+      </a>
+
+      <a class="sidebar-link" href="sell.html">
+        <i class="fa-solid fa-circle-plus"></i>
+        <span data-i18n="sellCar">Sell a car</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a class="sidebar-link" href="account.html">
+        <i class="fa-solid fa-user"></i>
+        <span data-i18n="account">My account</span>
+      </a>
+
+      <a class="sidebar-link" href="favorites.html">
+        <i class="fa-solid fa-heart"></i>
+        <span data-i18n="favorites">Favorites</span>
+      </a>
+
+      <a class="sidebar-link" href="messages.html">
+        <i class="fa-solid fa-envelope"></i>
+        <span data-i18n="messages">Messages</span>
+      </a>
+
+      <a class="sidebar-link" href="dashboard.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span data-i18n="dashboard">Dashboard</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a class="sidebar-link" href="terms.html">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span data-i18n="terms">Terms</span>
+      </a>
+
+      <a class="sidebar-link" href="login.html">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span data-i18n="login">Login</span>
+      </a>
+
+      <a class="sidebar-link" href="register.html">
+        <i class="fa-solid fa-user-plus"></i>
+        <span data-i18n="register">Create account</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      AutoMarket Global · 2026
+    </div>
+  </aside>
+
+  <!-- Main page -->
+  <main class="page">
+    <section class="page-header">
+      <p class="eyebrow">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span data-i18n="searchCars">Search cars</span>
+      </p>
+
+      <h1 data-i18n="findNextCar">Find your next car</h1>
+
+      <p class="subtitle" data-i18n="searchSubtitle">
+        Choose a country and filter cars by brand, price, year, fuel type, and mileage.
+      </p>
+    </section>
+
+    <section class="search-layout">
+      <!-- Filters -->
+      <aside class="filter-card">
+        <h2 data-i18n="filters">Filters</h2>
+
+        <div class="form-group">
+          <label for="filterCountry" data-i18n="country">Country</label>
+          <select id="filterCountry" data-country-select></select>
+        </div>
+
+        <div class="form-group">
+          <label for="filterBrand" data-i18n="brand">Brand</label>
+          <select id="filterBrand" data-filter>
+            <option value="" data-i18n="allBrands">All brands</option>
+            <option value="Toyota">Toyota</option>
+            <option value="BMW">BMW</option>
+            <option value="Mercedes-Benz">Mercedes-Benz</option>
+            <option value="Volvo">Volvo</option>
+            <option value="Hyundai">Hyundai</option>
+            <option value="Kia">Kia</option>
+            <option value="Tesla">Tesla</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filterFuel" data-i18n="fuel">Fuel</label>
+          <select id="filterFuel" data-filter>
+            <option value="" data-i18n="allFuel">All fuel types</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Electric">Electric</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="minPrice" data-i18n="minPrice">Min price</label>
+          <input
+            id="minPrice"
+            data-filter
+            type="number"
+            min="0"
+            placeholder="5000"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="maxPrice" data-i18n="maxPrice">Max price</label>
+          <input
+            id="maxPrice"
+            data-filter
+            type="number"
+            min="0"
+            placeholder="50000"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="minYear" data-i18n="minYear">Min year</label>
+          <input
+            id="minYear"
+            data-filter
+            type="number"
+            min="1980"
+            max="2030"
+            placeholder="2018"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="maxMileage" data-i18n="maxMileage">Max mileage</label>
+          <input
+            id="maxMileage"
+            data-filter
+            type="number"
+            min="0"
+            placeholder="120000"
+          />
+        </div>
+
+        <div class="filter-actions">
+          <button
+            class="btn btn-primary"
+            id="applyFilters"
+            type="button"
+            onclick="renderSearchPage()"
+          >
+            <i class="fa-solid fa-filter"></i>
+            <span data-i18n="applyFilters">Apply filters</span>
+          </button>
+
+          <button class="btn btn-secondary" id="resetFilters" type="button">
+            <i class="fa-solid fa-rotate-left"></i>
+            <span data-i18n="reset">Reset</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Results -->
+      <section>
+        <div class="results-top">
+          <div>
+            <strong id="resultsCount">0 cars</strong>
+            <div class="results-country" id="resultsCountry">
+              Selected country
+            </div>
+          </div>
+
+          <a href="sell.html" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i>
+            <span data-i18n="sellCar">Sell a car</span>
+          </a>
+        </div>
+
+        <div class="car-grid" id="carGrid"></div>
+
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <i class="fa-solid fa-car-side"></i>
+          <h3 data-i18n="noCars">No cars found</h3>
+          <p data-i18n="noCarsText">
+            Try changing the country or removing some filters.
+          </p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div>
+        © 2026 AutoMarket Global. All rights reserved.
+      </div>
+
+      <div class="footer-links">
+        <a href="terms.html" data-i18n="terms">Terms</a>
+        <a href="search.html" data-i18n="searchCars">Search cars</a>
+        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/core.js"></script>
+</body>
+</html>
