@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>HK Global Market | Buy and Sell Worldwide</title>
+  <title>HK Global Market & Services | Buy, Sell and Find Services Worldwide</title>
 
   <meta
     name="description"
-    content="HK Global Market is a worldwide marketplace for cars, houses, electronics, home tools, motorcycles, bicycles, shops, and agricultural lands."
+    content="HK Global Market & Services is a worldwide platform for products, real estate, vehicles, personal services, digital services, education, maintenance centers, home services, company services, shops, and agricultural lands."
   />
 
   <link rel="stylesheet" href="assets/css/style.css" />
@@ -20,6 +20,7 @@
 </head>
 
 <body>
+  <!-- Topbar -->
   <header class="site-topbar">
     <div class="site-topbar-inner">
       <div class="topbar-left">
@@ -34,8 +35,8 @@
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="HK Global Market home">
-          HK <span>Global Market</span>
+        <a class="logo" href="index.html" aria-label="HK Global Market & Services home">
+          HK <span>Global</span>
         </a>
       </div>
 
@@ -50,18 +51,21 @@
         <select
           class="country-select"
           id="countrySelect"
+          name="country"
           aria-label="Choose country"
         ></select>
       </div>
     </div>
   </header>
 
+  <!-- Sidebar backdrop -->
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
+  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar" aria-label="Main menu">
     <div class="sidebar-header">
       <div class="sidebar-title">
-        HK <span>Global Market</span>
+        HK <span>Global</span>
       </div>
 
       <button
@@ -77,65 +81,66 @@
     <nav class="sidebar-nav" aria-label="Main navigation">
       <a class="sidebar-link active" href="index.html">
         <i class="fa-solid fa-house"></i>
-        <span>Home</span>
+        <span data-home-i18n="navHome">Home</span>
       </a>
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span>Search listings</span>
+        <span data-home-i18n="navSearch">Search listings</span>
       </a>
 
       <a class="sidebar-link" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span>Post an ad</span>
+        <span data-home-i18n="navPost">Post an ad</span>
       </a>
 
       <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
-        <span>My account</span>
+        <span data-home-i18n="navAccount">My account</span>
       </a>
 
       <a class="sidebar-link" href="favorites.html">
         <i class="fa-solid fa-heart"></i>
-        <span>Favorites</span>
+        <span data-home-i18n="navFavorites">Favorites</span>
       </a>
 
       <a class="sidebar-link" href="messages.html">
         <i class="fa-solid fa-envelope"></i>
-        <span>Messages</span>
+        <span data-home-i18n="navMessages">Messages</span>
       </a>
 
       <a class="sidebar-link" href="dashboard.html">
         <i class="fa-solid fa-chart-line"></i>
-        <span>Dashboard</span>
+        <span data-home-i18n="navDashboard">Dashboard</span>
       </a>
 
       <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="terms.html">
         <i class="fa-solid fa-shield-halved"></i>
-        <span>Terms</span>
+        <span data-home-i18n="navTerms">Terms</span>
       </a>
 
       <a class="sidebar-link" href="login.html">
         <i class="fa-solid fa-right-to-bracket"></i>
-        <span>Login</span>
+        <span data-home-i18n="navLogin">Login</span>
       </a>
 
       <a class="sidebar-link" href="register.html">
         <i class="fa-solid fa-user-plus"></i>
-        <span>Create account</span>
+        <span data-home-i18n="navRegister">Create account</span>
       </a>
     </nav>
 
     <div class="sidebar-footer">
-      HK Global Market · 2026
+      HK Global Market & Services · 2026
     </div>
   </aside>
 
   <main>
+    <!-- Hero -->
     <section class="home-hero">
       <div class="hero-bg-shape shape-one"></div>
       <div class="hero-bg-shape shape-two"></div>
@@ -143,47 +148,47 @@
       <div class="hero-inner">
         <div class="hero-content">
           <div class="hero-badge">
-            <i class="fa-solid fa-globe"></i>
-            <span>Worldwide marketplace</span>
+            <i class="fa-solid fa-earth-europe"></i>
+            <span data-home-i18n="badge">Global marketplace and services platform</span>
           </div>
 
           <h1 class="hero-title">
-            Buy and sell anything
-            <span>by country</span>
+            <span data-home-i18n="heroLine1">Buy, sell and find</span>
+            <span data-home-i18n="heroLine2">services worldwide</span>
           </h1>
 
-          <p class="hero-subtitle">
-            Choose your country and category, then browse real marketplace
-            listings such as cars, houses, electronics, home tools,
-            motorcycles, bicycles, shops, and agricultural lands.
+          <p class="hero-subtitle" data-home-i18n="heroSubtitle">
+            Choose your country and category, then browse products, real estate,
+            vehicles, businesses, personal services, digital services, education,
+            maintenance centers, home services, and company services.
           </p>
 
           <div class="hero-actions">
             <a class="btn btn-primary" href="search.html">
               <i class="fa-solid fa-magnifying-glass"></i>
-              Search listings
+              <span data-home-i18n="searchButton">Search listings</span>
             </a>
 
             <a class="btn btn-secondary" href="sell.html">
-              <i class="fa-solid fa-plus"></i>
-              Post an ad
+              <i class="fa-solid fa-circle-plus"></i>
+              <span data-home-i18n="postButton">Post an ad</span>
             </a>
           </div>
 
           <div class="hero-trust">
             <div>
               <strong>195</strong>
-              <span>Countries</span>
+              <span data-home-i18n="countries">Countries</span>
             </div>
 
             <div>
-              <strong>8</strong>
-              <span>Main categories</span>
+              <strong>16+</strong>
+              <span data-home-i18n="categories">Categories</span>
             </div>
 
             <div>
-              <strong>Global</strong>
-              <span>Local language support</span>
+              <strong data-home-i18n="local">Local</strong>
+              <span data-home-i18n="languageSupport">Country language support</span>
             </div>
           </div>
         </div>
@@ -196,7 +201,7 @@
               </div>
 
               <div>
-                <p>Selected country</p>
+                <p data-home-i18n="selectedCountry">Selected country</p>
                 <h2 id="selectedCountryName" data-selected-country>
                   Sweden - Sverige
                 </h2>
@@ -207,50 +212,51 @@
 
             <div class="market-info-grid">
               <div>
-                <span>Category</span>
+                <span data-home-i18n="selectedCategoryText">Selected category</span>
                 <strong id="selectedCategory" data-selected-category>
                   Cars
                 </strong>
               </div>
 
               <div>
-                <span>Mode</span>
-                <strong>Local market</strong>
+                <span data-home-i18n="marketMode">Market mode</span>
+                <strong data-home-i18n="localMarket">Local market</strong>
               </div>
             </div>
           </div>
 
           <div class="floating-card floating-card-one">
-            <i class="fa-solid fa-house"></i>
-            <span>Houses</span>
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <span data-home-i18n="floatMaintenance">Maintenance</span>
           </div>
 
           <div class="floating-card floating-card-two">
-            <i class="fa-solid fa-laptop"></i>
-            <span>Electronics</span>
+            <i class="fa-solid fa-code"></i>
+            <span data-home-i18n="floatDigital">Digital services</span>
           </div>
 
           <div class="floating-card floating-card-three">
-            <i class="fa-solid fa-seedling"></i>
-            <span>Lands</span>
+            <i class="fa-solid fa-house"></i>
+            <span data-home-i18n="floatRealEstate">Real estate</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Main category groups -->
     <section class="category-section">
       <div class="section-head">
         <div>
           <p class="section-kicker">
             <i class="fa-solid fa-layer-group"></i>
-            Marketplace categories
+            <span data-home-i18n="categoryKicker">Main sections</span>
           </p>
 
-          <h2>Choose where you want to go</h2>
+          <h2 data-home-i18n="categoryTitle">Everything in one global platform</h2>
         </div>
 
         <a href="search.html" class="section-link">
-          View all listings
+          <span data-home-i18n="viewAll">View all listings</span>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
@@ -258,132 +264,497 @@
       <div class="category-grid">
         <a class="category-card" href="search.html?category=cars">
           <i class="fa-solid fa-car"></i>
-          <h3>Cars</h3>
-          <p>New and used cars by country.</p>
+          <h3 data-home-i18n="carsTitle">Cars</h3>
+          <p data-home-i18n="carsText">New and used cars by country.</p>
         </a>
 
         <a class="category-card" href="search.html?category=houses">
           <i class="fa-solid fa-house"></i>
-          <h3>Houses</h3>
-          <p>Homes, apartments, and properties.</p>
+          <h3 data-home-i18n="housesTitle">Houses & apartments</h3>
+          <p data-home-i18n="housesText">Homes, apartments, and properties.</p>
         </a>
 
         <a class="category-card" href="search.html?category=electronics">
           <i class="fa-solid fa-laptop"></i>
-          <h3>Electronics</h3>
-          <p>Phones, computers, and devices.</p>
+          <h3 data-home-i18n="electronicsTitle">Electronics</h3>
+          <p data-home-i18n="electronicsText">Phones, computers, and devices.</p>
         </a>
 
-        <a class="category-card" href="search.html?category=home-tools">
-          <i class="fa-solid fa-kitchen-set"></i>
-          <h3>Home tools</h3>
-          <p>Furniture, tools, and appliances.</p>
+        <a class="category-card" href="search.html?category=home-items">
+          <i class="fa-solid fa-couch"></i>
+          <h3 data-home-i18n="homeItemsTitle">Home items</h3>
+          <p data-home-i18n="homeItemsText">Furniture, tools, and appliances.</p>
         </a>
 
         <a class="category-card" href="search.html?category=motorcycles">
           <i class="fa-solid fa-motorcycle"></i>
-          <h3>Motorcycles</h3>
-          <p>Motorbikes and related items.</p>
+          <h3 data-home-i18n="motorcyclesTitle">Motorcycles</h3>
+          <p data-home-i18n="motorcyclesText">Motorbikes and related items.</p>
         </a>
 
         <a class="category-card" href="search.html?category=bicycles">
           <i class="fa-solid fa-bicycle"></i>
-          <h3>Bicycles</h3>
-          <p>City bikes, sport bikes, and parts.</p>
+          <h3 data-home-i18n="bicyclesTitle">Bicycles</h3>
+          <p data-home-i18n="bicyclesText">City bikes, sport bikes, and parts.</p>
         </a>
 
         <a class="category-card" href="search.html?category=shops">
           <i class="fa-solid fa-store"></i>
-          <h3>Commercial shops</h3>
-          <p>Stores, businesses, and commercial spaces.</p>
+          <h3 data-home-i18n="shopsTitle">Commercial shops</h3>
+          <p data-home-i18n="shopsText">Stores, businesses, and commercial spaces.</p>
         </a>
 
         <a class="category-card" href="search.html?category=agricultural-lands">
           <i class="fa-solid fa-seedling"></i>
-          <h3>Agricultural lands</h3>
-          <p>Farms, lands, and rural properties.</p>
+          <h3 data-home-i18n="landsTitle">Agricultural lands</h3>
+          <p data-home-i18n="landsText">Farms, lands, and rural properties.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=maintenance-centers">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+          <h3 data-home-i18n="maintenanceTitle">Maintenance centers</h3>
+          <p data-home-i18n="maintenanceText">Car, device, machine, and equipment service centers.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=home-maintenance">
+          <i class="fa-solid fa-house-chimney-crack"></i>
+          <h3 data-home-i18n="homeMaintenanceTitle">Home maintenance</h3>
+          <p data-home-i18n="homeMaintenanceText">Plumbing, electricity, painting, repair, and home work.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=company-maintenance">
+          <i class="fa-solid fa-building-user"></i>
+          <h3 data-home-i18n="companyMaintenanceTitle">Company maintenance</h3>
+          <p data-home-i18n="companyMaintenanceText">Technical and maintenance services for companies.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=education">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <h3 data-home-i18n="educationTitle">Education</h3>
+          <p data-home-i18n="educationText">Courses, private lessons, tutoring, and training.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=digital-services">
+          <i class="fa-solid fa-code"></i>
+          <h3 data-home-i18n="digitalTitle">Digital services</h3>
+          <p data-home-i18n="digitalText">Websites, design, programming, marketing, and online work.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=personal-services">
+          <i class="fa-solid fa-user-check"></i>
+          <h3 data-home-i18n="personalTitle">Personal services</h3>
+          <p data-home-i18n="personalText">Daily personal services, assistance, and local support.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=cleaning-services">
+          <i class="fa-solid fa-broom"></i>
+          <h3 data-home-i18n="cleaningTitle">Cleaning services</h3>
+          <p data-home-i18n="cleaningText">Home, office, shop, and building cleaning services.</p>
+        </a>
+
+        <a class="category-card" href="search.html?category=transport-delivery">
+          <i class="fa-solid fa-truck-fast"></i>
+          <h3 data-home-i18n="transportTitle">Transport & delivery</h3>
+          <p data-home-i18n="transportText">Moving, delivery, transport, and logistics services.</p>
         </a>
       </div>
     </section>
 
+    <!-- How it works -->
     <section class="how-section">
       <div class="section-head centered">
         <p class="section-kicker">
           <i class="fa-solid fa-route"></i>
-          Simple steps
+          <span data-home-i18n="stepsKicker">Simple process</span>
         </p>
 
-        <h2>How HK Global Market works</h2>
+        <h2 data-home-i18n="stepsTitle">How the platform works</h2>
       </div>
 
       <div class="steps-grid">
         <div class="step-card">
           <span>01</span>
           <i class="fa-solid fa-globe"></i>
-          <h3>Select country</h3>
-          <p>
-            The marketplace language and listings follow the selected country.
+          <h3 data-home-i18n="step1Title">Select country</h3>
+          <p data-home-i18n="step1Text">
+            Choose the country to display local language, currency, and listings.
           </p>
         </div>
 
         <div class="step-card">
           <span>02</span>
           <i class="fa-solid fa-list"></i>
-          <h3>Choose category</h3>
-          <p>
-            Browse cars, homes, electronics, tools, bikes, shops, or lands.
+          <h3 data-home-i18n="step2Title">Choose category</h3>
+          <p data-home-i18n="step2Text">
+            Select products, real estate, vehicles, businesses, or services.
           </p>
         </div>
 
         <div class="step-card">
           <span>03</span>
           <i class="fa-solid fa-message"></i>
-          <h3>Contact seller</h3>
-          <p>
-            Save favorites, send messages, and manage your account easily.
+          <h3 data-home-i18n="step3Title">Contact or publish</h3>
+          <p data-home-i18n="step3Text">
+            Contact sellers and service providers, or publish your own ad.
           </p>
         </div>
       </div>
     </section>
 
+    <!-- CTA -->
     <section class="cta-section">
       <div class="cta-content">
         <p class="section-kicker">
           <i class="fa-solid fa-bolt"></i>
-          Start now
+          <span data-home-i18n="ctaKicker">Start now</span>
         </p>
 
-        <h2>Publish your first ad today</h2>
+        <h2 data-home-i18n="ctaTitle">Publish your first ad today</h2>
 
-        <p>
-          Add your item, choose the correct country and category, then make it
-          available to buyers in your local market.
+        <p data-home-i18n="ctaText">
+          Add your product, property, vehicle, business, or service.
+          Choose the correct country and category so people can find you easily.
         </p>
       </div>
 
       <a href="sell.html" class="btn btn-primary">
         <i class="fa-solid fa-circle-plus"></i>
-        Post an ad
+        <span data-home-i18n="ctaButton">Post an ad</span>
       </a>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="site-footer-inner">
       <div>
-        © 2026 HK Global Market. All rights reserved.
+        © 2026 HK Global Market & Services. All rights reserved.
       </div>
 
       <div class="footer-links">
-        <a href="terms.html">Terms</a>
-        <a href="search.html">Search listings</a>
-        <a href="sell.html">Post an ad</a>
+        <a href="terms.html" data-home-i18n="navTerms">Terms</a>
+        <a href="search.html" data-home-i18n="navSearch">Search listings</a>
+        <a href="sell.html" data-home-i18n="navPost">Post an ad</a>
       </div>
     </div>
   </footer>
 
+  <!-- Important: countries first, categories second -->
   <script src="assets/js/countries.js"></script>
   <script src="assets/js/categories.js"></script>
-  <script src="assets/js/core.js"></script>
+
+  <script>
+    /* Index page language text */
+    const HOME_TEXT = {
+      en: {
+        navHome: "Home",
+        navSearch: "Search listings",
+        navPost: "Post an ad",
+        navAccount: "My account",
+        navFavorites: "Favorites",
+        navMessages: "Messages",
+        navDashboard: "Dashboard",
+        navTerms: "Terms",
+        navLogin: "Login",
+        navRegister: "Create account",
+
+        badge: "Global marketplace and services platform",
+        heroLine1: "Buy, sell and find",
+        heroLine2: "services worldwide",
+        heroSubtitle: "Choose your country and category, then browse products, real estate, vehicles, businesses, personal services, digital services, education, maintenance centers, home services, and company services.",
+        searchButton: "Search listings",
+        postButton: "Post an ad",
+
+        countries: "Countries",
+        categories: "Categories",
+        local: "Local",
+        languageSupport: "Country language support",
+
+        selectedCountry: "Selected country",
+        selectedCategoryText: "Selected category",
+        marketMode: "Market mode",
+        localMarket: "Local market",
+
+        floatMaintenance: "Maintenance",
+        floatDigital: "Digital services",
+        floatRealEstate: "Real estate",
+
+        categoryKicker: "Main sections",
+        categoryTitle: "Everything in one global platform",
+        viewAll: "View all listings",
+
+        carsTitle: "Cars",
+        carsText: "New and used cars by country.",
+        housesTitle: "Houses & apartments",
+        housesText: "Homes, apartments, and properties.",
+        electronicsTitle: "Electronics",
+        electronicsText: "Phones, computers, and devices.",
+        homeItemsTitle: "Home items",
+        homeItemsText: "Furniture, tools, and appliances.",
+        motorcyclesTitle: "Motorcycles",
+        motorcyclesText: "Motorbikes and related items.",
+        bicyclesTitle: "Bicycles",
+        bicyclesText: "City bikes, sport bikes, and parts.",
+        shopsTitle: "Commercial shops",
+        shopsText: "Stores, businesses, and commercial spaces.",
+        landsTitle: "Agricultural lands",
+        landsText: "Farms, lands, and rural properties.",
+        maintenanceTitle: "Maintenance centers",
+        maintenanceText: "Car, device, machine, and equipment service centers.",
+        homeMaintenanceTitle: "Home maintenance",
+        homeMaintenanceText: "Plumbing, electricity, painting, repair, and home work.",
+        companyMaintenanceTitle: "Company maintenance",
+        companyMaintenanceText: "Technical and maintenance services for companies.",
+        educationTitle: "Education",
+        educationText: "Courses, private lessons, tutoring, and training.",
+        digitalTitle: "Digital services",
+        digitalText: "Websites, design, programming, marketing, and online work.",
+        personalTitle: "Personal services",
+        personalText: "Daily personal services, assistance, and local support.",
+        cleaningTitle: "Cleaning services",
+        cleaningText: "Home, office, shop, and building cleaning services.",
+        transportTitle: "Transport & delivery",
+        transportText: "Moving, delivery, transport, and logistics services.",
+
+        stepsKicker: "Simple process",
+        stepsTitle: "How the platform works",
+        step1Title: "Select country",
+        step1Text: "Choose the country to display local language, currency, and listings.",
+        step2Title: "Choose category",
+        step2Text: "Select products, real estate, vehicles, businesses, or services.",
+        step3Title: "Contact or publish",
+        step3Text: "Contact sellers and service providers, or publish your own ad.",
+
+        ctaKicker: "Start now",
+        ctaTitle: "Publish your first ad today",
+        ctaText: "Add your product, property, vehicle, business, or service. Choose the correct country and category so people can find you easily.",
+        ctaButton: "Post an ad"
+      },
+
+      ar: {
+        navHome: "الرئيسية",
+        navSearch: "بحث الإعلانات",
+        navPost: "نشر إعلان",
+        navAccount: "حسابي",
+        navFavorites: "المفضلة",
+        navMessages: "الرسائل",
+        navDashboard: "لوحة التحكم",
+        navTerms: "الشروط",
+        navLogin: "تسجيل الدخول",
+        navRegister: "إنشاء حساب",
+
+        badge: "منصة عالمية للسوق والخدمات",
+        heroLine1: "اشترِ، بِع، وابحث عن",
+        heroLine2: "الخدمات حول العالم",
+        heroSubtitle: "اختر الدولة والقسم، ثم تصفّح المنتجات، العقارات، المركبات، الأعمال، الخدمات الشخصية، الخدمات الرقمية، التعليم، مراكز الصيانة، خدمات المنازل، وخدمات الشركات.",
+        searchButton: "بحث الإعلانات",
+        postButton: "نشر إعلان",
+
+        countries: "دولة",
+        categories: "قسم",
+        local: "محلي",
+        languageSupport: "دعم لغة الدولة",
+
+        selectedCountry: "الدولة المختارة",
+        selectedCategoryText: "القسم المختار",
+        marketMode: "نمط السوق",
+        localMarket: "سوق محلي",
+
+        floatMaintenance: "الصيانة",
+        floatDigital: "الخدمات الرقمية",
+        floatRealEstate: "العقارات",
+
+        categoryKicker: "الأقسام الرئيسية",
+        categoryTitle: "كل شيء في منصة عالمية واحدة",
+        viewAll: "عرض كل الإعلانات",
+
+        carsTitle: "السيارات",
+        carsText: "سيارات جديدة ومستعملة حسب الدولة.",
+        housesTitle: "المنازل والشقق",
+        housesText: "منازل، شقق، وعقارات.",
+        electronicsTitle: "الإلكترونيات",
+        electronicsText: "هواتف، حواسيب، وأجهزة.",
+        homeItemsTitle: "أدوات وأثاث منزلي",
+        homeItemsText: "أثاث، أدوات، وأجهزة منزلية.",
+        motorcyclesTitle: "الدراجات النارية",
+        motorcyclesText: "دراجات نارية وملحقاتها.",
+        bicyclesTitle: "الدراجات الهوائية",
+        bicyclesText: "دراجات مدينة، رياضية، وقطع غيار.",
+        shopsTitle: "المحلات التجارية",
+        shopsText: "محلات، أعمال، ومساحات تجارية.",
+        landsTitle: "الأراضي الزراعية",
+        landsText: "مزارع، أراضٍ، وعقارات ريفية.",
+        maintenanceTitle: "مراكز الصيانة",
+        maintenanceText: "مراكز صيانة للسيارات، الأجهزة، الآلات، والمعدات.",
+        homeMaintenanceTitle: "صيانة المنازل",
+        homeMaintenanceText: "سباكة، كهرباء، دهان، إصلاح، وأعمال منزلية.",
+        companyMaintenanceTitle: "صيانة الشركات",
+        companyMaintenanceText: "خدمات تقنية وصيانة للشركات.",
+        educationTitle: "التعليم",
+        educationText: "دورات، دروس خصوصية، تدريب وتعليم.",
+        digitalTitle: "الخدمات الرقمية",
+        digitalText: "مواقع، تصميم، برمجة، تسويق، وأعمال أونلاين.",
+        personalTitle: "الخدمات الشخصية",
+        personalText: "خدمات يومية، مساعدة شخصية، ودعم محلي.",
+        cleaningTitle: "خدمات التنظيف",
+        cleaningText: "تنظيف المنازل، المكاتب، المحلات، والمباني.",
+        transportTitle: "النقل والتوصيل",
+        transportText: "نقل، توصيل، شحن، وخدمات لوجستية.",
+
+        stepsKicker: "خطوات بسيطة",
+        stepsTitle: "كيف تعمل المنصة",
+        step1Title: "اختر الدولة",
+        step1Text: "اختر الدولة لعرض اللغة المحلية والعملة والإعلانات.",
+        step2Title: "اختر القسم",
+        step2Text: "اختر المنتجات، العقارات، المركبات، الأعمال، أو الخدمات.",
+        step3Title: "تواصل أو انشر",
+        step3Text: "تواصل مع البائعين ومقدمي الخدمات، أو انشر إعلانك.",
+
+        ctaKicker: "ابدأ الآن",
+        ctaTitle: "انشر أول إعلان لك اليوم",
+        ctaText: "أضف منتجك، عقارك، مركبتك، عملك، أو خدمتك. اختر الدولة والقسم الصحيح حتى يجدك الناس بسهولة.",
+        ctaButton: "نشر إعلان"
+      },
+
+      sv: {
+        navHome: "Hem",
+        navSearch: "Sök annonser",
+        navPost: "Publicera annons",
+        navAccount: "Mitt konto",
+        navFavorites: "Favoriter",
+        navMessages: "Meddelanden",
+        navDashboard: "Panel",
+        navTerms: "Villkor",
+        navLogin: "Logga in",
+        navRegister: "Skapa konto",
+
+        badge: "Global marknadsplats och tjänsteplattform",
+        heroLine1: "Köp, sälj och hitta",
+        heroLine2: "tjänster globalt",
+        heroSubtitle: "Välj land och kategori och bläddra bland produkter, fastigheter, fordon, företag, personliga tjänster, digitala tjänster, utbildning, servicecenter, hemtjänster och företagstjänster.",
+        searchButton: "Sök annonser",
+        postButton: "Publicera annons",
+
+        countries: "Länder",
+        categories: "Kategorier",
+        local: "Lokal",
+        languageSupport: "Språkstöd per land",
+
+        selectedCountry: "Valt land",
+        selectedCategoryText: "Vald kategori",
+        marketMode: "Marknadsläge",
+        localMarket: "Lokal marknad",
+
+        floatMaintenance: "Underhåll",
+        floatDigital: "Digitala tjänster",
+        floatRealEstate: "Fastigheter",
+
+        categoryKicker: "Huvudsektioner",
+        categoryTitle: "Allt i en global plattform",
+        viewAll: "Visa alla annonser",
+
+        carsTitle: "Bilar",
+        carsText: "Nya och begagnade bilar per land.",
+        housesTitle: "Hus och lägenheter",
+        housesText: "Hem, lägenheter och fastigheter.",
+        electronicsTitle: "Elektronik",
+        electronicsText: "Telefoner, datorer och enheter.",
+        homeItemsTitle: "Hemartiklar",
+        homeItemsText: "Möbler, verktyg och apparater.",
+        motorcyclesTitle: "Motorcyklar",
+        motorcyclesText: "Motorcyklar och tillbehör.",
+        bicyclesTitle: "Cyklar",
+        bicyclesText: "Stadscyklar, sportcyklar och delar.",
+        shopsTitle: "Butiker",
+        shopsText: "Butiker, företag och kommersiella lokaler.",
+        landsTitle: "Jordbruksmark",
+        landsText: "Gårdar, mark och landsbygdsfastigheter.",
+        maintenanceTitle: "Servicecenter",
+        maintenanceText: "Servicecenter för bilar, enheter, maskiner och utrustning.",
+        homeMaintenanceTitle: "Hemservice",
+        homeMaintenanceText: "VVS, el, målning, reparation och hemarbete.",
+        companyMaintenanceTitle: "Företagsservice",
+        companyMaintenanceText: "Tekniska tjänster och underhåll för företag.",
+        educationTitle: "Utbildning",
+        educationText: "Kurser, privatlektioner, handledning och träning.",
+        digitalTitle: "Digitala tjänster",
+        digitalText: "Webbplatser, design, programmering, marknadsföring och onlinearbete.",
+        personalTitle: "Personliga tjänster",
+        personalText: "Dagliga personliga tjänster, hjälp och lokalt stöd.",
+        cleaningTitle: "Städtjänster",
+        cleaningText: "Städning för hem, kontor, butiker och byggnader.",
+        transportTitle: "Transport och leverans",
+        transportText: "Flytt, leverans, transport och logistik.",
+
+        stepsKicker: "Enkel process",
+        stepsTitle: "Så fungerar plattformen",
+        step1Title: "Välj land",
+        step1Text: "Välj land för att visa lokalt språk, valuta och annonser.",
+        step2Title: "Välj kategori",
+        step2Text: "Välj produkter, fastigheter, fordon, företag eller tjänster.",
+        step3Title: "Kontakta eller publicera",
+        step3Text: "Kontakta säljare och tjänsteleverantörer eller publicera din egen annons.",
+
+        ctaKicker: "Börja nu",
+        ctaTitle: "Publicera din första annons idag",
+        ctaText: "Lägg till din produkt, fastighet, fordon, verksamhet eller tjänst. Välj rätt land och kategori så att människor lätt hittar dig.",
+        ctaButton: "Publicera annons"
+      }
+    };
+
+    function getHomeLang() {
+      const lang = (document.documentElement.lang || localStorage.getItem("amg_country_lang") || "en").slice(0, 2);
+      return HOME_TEXT[lang] ? lang : "en";
+    }
+
+    function applyHomeLanguage() {
+      const lang = getHomeLang();
+      const dictionary = HOME_TEXT[lang] || HOME_TEXT.en;
+
+      document.querySelectorAll("[data-home-i18n]").forEach((element) => {
+        const key = element.getAttribute("data-home-i18n");
+        element.textContent = dictionary[key] || HOME_TEXT.en[key] || element.textContent;
+      });
+    }
+
+    function setupHomeSidebar() {
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      const sidebarClose = document.getElementById("sidebarClose");
+      const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+
+      function openSidebar() {
+        sidebar.classList.add("open");
+        sidebarBackdrop.classList.add("open");
+        document.body.classList.add("menu-open");
+        menuToggle.setAttribute("aria-expanded", "true");
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarBackdrop.classList.remove("open");
+        document.body.classList.remove("menu-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      }
+
+      menuToggle.addEventListener("click", openSidebar);
+      sidebarClose.addEventListener("click", closeSidebar);
+      sidebarBackdrop.addEventListener("click", closeSidebar);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeSidebar();
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setupHomeSidebar();
+      applyHomeLanguage();
+    });
+
+    window.addEventListener("amg:countrychange", applyHomeLanguage);
+    window.addEventListener("amg:categorychange", applyHomeLanguage);
+  </script>
 </body>
 </html>
