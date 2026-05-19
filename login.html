@@ -7,6 +7,9 @@
   <title>Login | HK Global Market & Services</title>
   <meta name="description" content="Login to HK Global Market & Services to manage ads, messages, favorites, and account settings." />
 
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ff8b26" />
+
   <link rel="stylesheet" href="assets/css/style.css" />
 
   <link
@@ -15,711 +18,168 @@
   />
 
   <style>
-    :root {
-      --orange: #ff8b26;
-      --orange-dark: #e87512;
-      --dark: #101828;
-      --muted: #667085;
-      --line: rgba(16, 24, 40, 0.1);
-      --soft: #f8fafc;
-      --white: #ffffff;
-      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
-      --radius: 28px;
-      --danger: #b42318;
-      --success: #027a48;
-      --blue: #175cd3;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(255, 139, 38, 0.14), transparent 30%),
-        radial-gradient(circle at top right, rgba(46, 144, 250, 0.12), transparent 30%),
-        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
-      color: var(--dark);
-    }
-
-    body[dir="rtl"] {
-      direction: rtl;
-      text-align: right;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button,
-    input,
-    select {
-      font-family: inherit;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      height: 64px;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .topbar-inner {
-      height: 100%;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 0 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .top-left,
-    .top-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .menu-toggle,
-    .sidebar-close {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: #fff;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      color: var(--dark);
-    }
-
-    .brand {
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      white-space: nowrap;
-    }
-
-    .brand span {
-      color: var(--orange);
-    }
-
-    .top-country {
-      min-width: 220px;
-      max-width: 320px;
-      height: 42px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      padding: 0 14px;
-      background: #fff;
-      color: var(--dark);
-      outline: none;
-    }
-
-    .sidebar-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(16, 24, 40, 0.42);
-      z-index: 80;
-      opacity: 0;
-      pointer-events: none;
-      transition: 0.25s ease;
-    }
-
-    .sidebar-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 320px;
-      background: #fff;
-      z-index: 90;
-      transform: translateX(-105%);
-      transition: 0.25s ease;
-      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
-      display: flex;
-      flex-direction: column;
-    }
-
-    body[dir="rtl"] .sidebar {
-      left: auto;
-      right: 0;
-      transform: translateX(105%);
-      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
-    }
-
-    .sidebar.open {
-      transform: translateX(0);
-    }
-
-    .sidebar-header {
-      padding: 20px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .sidebar-title {
-      font-size: 20px;
-      font-weight: 900;
-    }
-
-    .sidebar-title span {
-      color: var(--orange);
-    }
-
-    .sidebar-nav {
-      padding: 18px;
-      display: grid;
-      gap: 8px;
-      overflow: auto;
-    }
-
-    .sidebar-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 13px 14px;
-      border-radius: 16px;
-      color: #344054;
-      font-weight: 800;
-    }
-
-    .sidebar-link:hover,
-    .sidebar-link.active {
-      background: #fff4ea;
-      color: var(--orange-dark);
-    }
-
-    .sidebar-divider {
-      height: 1px;
-      background: var(--line);
-      margin: 8px 0;
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      padding: 18px 20px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .page {
-      max-width: 1240px;
+    .auth-page {
+      max-width: 1180px;
       margin: 0 auto;
       padding: 34px 18px 80px;
     }
 
     .auth-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
+      grid-template-columns: minmax(0, 1fr) 440px;
       gap: 28px;
       align-items: stretch;
     }
 
-    .hero {
-      border-radius: 36px;
-      background:
-        linear-gradient(135deg, rgba(16, 24, 40, 0.96), rgba(16, 24, 40, 0.78)),
-        radial-gradient(circle at top right, rgba(255, 139, 38, 0.4), transparent 38%);
-      color: #fff;
-      padding: 38px;
-      box-shadow: 0 32px 90px rgba(16, 24, 40, 0.24);
-      overflow: hidden;
-      position: relative;
-      min-height: 680px;
+    .auth-hero {
+      min-height: 650px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      right: -120px;
-      top: -140px;
-      background: rgba(255, 139, 38, 0.22);
-      filter: blur(4px);
-    }
-
-    body[dir="rtl"] .hero::after {
-      right: auto;
-      left: -120px;
-    }
-
-    .hero-content,
-    .hero-bottom {
-      position: relative;
-      z-index: 2;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.12);
-      color: #ffd2aa;
-      font-size: 13px;
-      font-weight: 900;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      margin: 0 0 16px;
-      font-size: clamp(38px, 6vw, 76px);
-      line-height: 0.96;
-      letter-spacing: -0.065em;
-    }
-
-    .hero h1 span {
-      color: var(--orange);
-    }
-
-    .hero p {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.76);
-      line-height: 1.85;
-      font-size: 17px;
-      max-width: 720px;
-    }
-
-    .hero-features {
+    .auth-list {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      margin-top: 32px;
+      margin-top: 34px;
     }
 
-    .feature {
+    .auth-list-item {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 13px;
+      align-items: start;
       border: 1px solid rgba(255, 255, 255, 0.14);
       background: rgba(255, 255, 255, 0.08);
       border-radius: 24px;
-      padding: 18px;
+      padding: 16px;
       backdrop-filter: blur(14px);
     }
 
-    .feature i {
-      width: 50px;
-      height: 50px;
+    .auth-list-item i {
+      width: 52px;
+      height: 52px;
       border-radius: 18px;
       background: #fff4ea;
-      color: var(--orange);
+      color: #ff8b26;
       display: grid;
       place-items: center;
       font-size: 21px;
-      margin-bottom: 12px;
     }
 
-    .feature strong {
+    .auth-list-item strong {
       display: block;
-      margin-bottom: 6px;
-      font-size: 17px;
+      color: #fff;
+      margin-bottom: 5px;
+      font-size: 16px;
     }
 
-    .feature span {
-      display: block;
+    .auth-list-item span {
       color: rgba(255, 255, 255, 0.72);
       line-height: 1.6;
       font-size: 13px;
     }
 
-    .hero-bottom {
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 28px;
-      padding: 22px;
-      backdrop-filter: blur(14px);
-      margin-top: 34px;
+    .login-card {
+      align-self: center;
     }
 
-    .hero-bottom strong {
-      display: block;
-      font-size: 22px;
-      margin-bottom: 8px;
-    }
-
-    .hero-bottom span {
-      color: rgba(255, 255, 255, 0.74);
+    .auth-switch {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
       line-height: 1.7;
       font-size: 14px;
     }
 
-    .auth-card {
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid var(--line);
-      border-radius: 36px;
-      box-shadow: var(--shadow);
-      padding: 28px;
-      align-self: center;
+    .auth-switch a {
+      color: var(--orange-dark);
+      font-weight: 950;
     }
 
-    .auth-head {
-      margin-bottom: 22px;
-    }
-
-    .auth-icon {
-      width: 66px;
-      height: 66px;
-      border-radius: 24px;
-      background: #fff4ea;
-      color: var(--orange);
-      display: grid;
-      place-items: center;
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    .auth-head h2 {
-      margin: 0 0 8px;
-      font-size: 34px;
-      letter-spacing: -0.055em;
-    }
-
-    .auth-head p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 15px;
-    }
-
-    .status-box {
-      display: none;
-      border: 1px solid #abefc6;
-      background: #ecfdf3;
-      color: #054f31;
-      border-radius: 22px;
-      padding: 16px;
-      margin-bottom: 18px;
-      line-height: 1.65;
-      font-size: 14px;
-    }
-
-    .status-box.show {
-      display: block;
-    }
-
-    .status-box strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 16px;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 16px;
-    }
-
-    .field label {
-      display: block;
+    .password-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
       font-size: 13px;
       font-weight: 900;
-      color: #344054;
-      margin-bottom: 8px;
     }
 
-    .input-wrap {
-      position: relative;
-    }
-
-    .input-wrap i {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 15px;
-      color: var(--muted);
-    }
-
-    body[dir="rtl"] .input-wrap i {
-      left: auto;
-      right: 15px;
-    }
-
-    .input-wrap input {
-      width: 100%;
-      height: 52px;
-      border: 1px solid rgba(16, 24, 40, 0.14);
-      border-radius: 18px;
-      background: #fff;
-      color: var(--dark);
-      outline: none;
-      font-size: 15px;
-      padding: 0 46px 0 44px;
-    }
-
-    body[dir="rtl"] .input-wrap input {
-      padding: 0 44px 0 46px;
-    }
-
-    .input-wrap input:focus {
-      border-color: var(--orange);
-      box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
-    }
-
-    .toggle-password {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 8px;
-      width: 38px;
-      height: 38px;
-      border-radius: 13px;
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-    }
-
-    body[dir="rtl"] .toggle-password {
-      right: auto;
-      left: 8px;
-    }
-
-    .form-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 2px;
-    }
-
-    .check {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      color: #344054;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .check input {
-      width: 17px;
-      height: 17px;
-      accent-color: var(--orange);
-    }
-
-    .link-btn {
-      border: 0;
-      background: transparent;
+    .password-row a {
       color: var(--orange-dark);
-      font-weight: 900;
-      cursor: pointer;
-      padding: 0;
-      font-size: 14px;
     }
 
-    .submit-btn {
-      width: 100%;
-      height: 54px;
-      border: 0;
-      border-radius: 999px;
-      background: var(--orange);
-      color: #fff;
-      font-weight: 950;
-      font-size: 15px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 18px 44px rgba(255, 139, 38, 0.32);
-      margin-top: 4px;
-    }
-
-    .submit-btn:hover {
-      background: var(--orange-dark);
-    }
-
-    .auth-footer {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      line-height: 1.65;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .auth-footer a {
-      color: var(--orange-dark);
-      font-weight: 950;
-    }
-
-    .form-note {
+    .demo-box {
       margin-top: 16px;
-      border: 1px solid var(--line);
-      background: #fff;
+      border: 1px solid #fedf89;
+      background: #fffaeb;
+      color: #7a2e0e;
       border-radius: 22px;
       padding: 14px;
-      color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.7;
       font-size: 13px;
       display: flex;
       gap: 10px;
       align-items: flex-start;
     }
 
-    .form-note i {
-      color: var(--orange);
+    .demo-box i {
       margin-top: 2px;
+      color: var(--orange-dark);
     }
 
-    .alert {
-      display: none;
-      border-radius: 18px;
-      padding: 13px 14px;
-      line-height: 1.6;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .alert.show {
-      display: block;
-    }
-
-    .alert.error {
-      border: 1px solid #fecdca;
-      background: #fef3f2;
-      color: var(--danger);
-    }
-
-    .alert.success {
-      border: 1px solid #abefc6;
-      background: #ecfdf3;
-      color: var(--success);
-    }
-
-    .reset-panel {
-      display: none;
-      border: 1px solid var(--line);
-      background: #fff;
-      border-radius: 24px;
-      padding: 18px;
-      margin-top: 18px;
-    }
-
-    .reset-panel.show {
-      display: block;
-    }
-
-    .reset-panel h3 {
-      margin: 0 0 8px;
-      font-size: 20px;
-      letter-spacing: -0.035em;
-    }
-
-    .reset-panel p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 14px;
-    }
-
-    .reset-actions {
+    .auth-divider {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
     }
 
-    .btn {
-      min-height: 42px;
-      border-radius: 999px;
+    .auth-divider::before,
+    .auth-divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--line);
+    }
+
+    .social-row {
+      display: grid;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 100%;
+      min-height: 50px;
+      border-radius: 18px;
       border: 1px solid var(--line);
       background: #fff;
       color: var(--dark);
-      padding: 0 14px;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-weight: 900;
-      cursor: pointer;
-      font-size: 13px;
+      gap: 10px;
+      font-weight: 950;
+      transition: 0.2s ease;
     }
 
-    .btn.primary {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #fff;
+    .social-btn:hover {
+      transform: translateY(-1px);
+      background: #f9fafb;
     }
 
-    .btn.dark {
-      background: var(--dark);
-      border-color: var(--dark);
-      color: #fff;
-    }
-
-    .footer {
-      border-top: 1px solid var(--line);
-      background: #fff;
-      color: var(--muted);
-    }
-
-    .footer-inner {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 22px 18px;
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      font-size: 14px;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 16px;
+    .local-mode {
+      margin-top: 14px;
+      border-radius: 18px;
+      background: #f2f4f7;
+      color: #344054;
+      padding: 12px;
+      line-height: 1.6;
+      font-size: 12px;
       font-weight: 800;
-      color: var(--dark);
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 26px;
-      transform: translateX(-50%) translateY(20px);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 120;
-      background: var(--dark);
-      color: #fff;
-      border-radius: 999px;
-      padding: 13px 18px;
-      font-weight: 900;
-      box-shadow: 0 18px 55px rgba(16, 24, 40, 0.22);
-      transition: 0.25s ease;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    body.menu-open {
-      overflow: hidden;
     }
 
     @media (max-width: 980px) {
@@ -727,38 +187,18 @@
         grid-template-columns: 1fr;
       }
 
-      .hero {
+      .auth-hero {
         min-height: auto;
       }
     }
 
-    @media (max-width: 640px) {
-      .top-country {
-        min-width: 150px;
-        max-width: 180px;
-        font-size: 12px;
+    @media (max-width: 520px) {
+      .auth-page {
+        padding-inline: 12px;
       }
 
-      .brand {
-        font-size: 15px;
-      }
-
-      .page {
-        padding-top: 24px;
-      }
-
-      .hero,
-      .auth-card {
-        border-radius: 28px;
-        padding: 22px;
-      }
-
-      .hero-features {
+      .auth-list-item {
         grid-template-columns: 1fr;
-      }
-
-      .auth-head h2 {
-        font-size: 29px;
       }
     }
   </style>
@@ -776,7 +216,7 @@
       </div>
 
       <div class="top-right">
-        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
+        <select class="top-country" id="countrySelect" data-country-select aria-label="Choose country"></select>
       </div>
     </div>
   </header>
@@ -849,166 +289,157 @@
     <div class="sidebar-footer">HK Global Market & Services · 2026</div>
   </aside>
 
-  <main class="page">
+  <main class="auth-page">
     <section class="auth-layout">
-      <div class="hero">
-        <div class="hero-content">
+      <div class="hero auth-hero">
+        <div>
           <div class="badge">
-            <i class="fa-solid fa-lock"></i>
-            <span data-i18n="loginCenter">Secure login center</span>
+            <i class="fa-solid fa-shield-halved"></i>
+            <span data-page-i18n="secureLogin">Secure account access</span>
           </div>
 
           <h1>
-            <span data-i18n="heroTitleA">Access your</span>
-            <span data-i18n="heroTitleB">global account</span>
+            <span data-page-i18n="heroA">Login</span>
+            <span class="accent" data-page-i18n="heroB">and manage your market</span>
           </h1>
 
-          <p data-i18n="heroText">
-            Sign in to manage your advertisements, saved items, messages, dashboard activity, and country-based marketplace settings.
+          <p data-page-i18n="heroText">
+            Access your ads, messages, favorites, services, dashboard, and account details from one professional global marketplace.
           </p>
 
-          <div class="hero-features">
-            <div class="feature">
-              <i class="fa-solid fa-rectangle-ad"></i>
-              <strong data-i18n="featureAdsTitle">Manage ads</strong>
-              <span data-i18n="featureAdsText">Edit, review, and publish listings across categories.</span>
+          <div class="auth-list">
+            <div class="auth-list-item">
+              <i class="fa-solid fa-bullhorn"></i>
+              <div>
+                <strong data-page-i18n="featureAdsTitle">Manage your ads</strong>
+                <span data-page-i18n="featureAdsText">Edit, publish, pause, and follow all listings from your account.</span>
+              </div>
             </div>
 
-            <div class="feature">
+            <div class="auth-list-item">
               <i class="fa-solid fa-envelope"></i>
-              <strong data-i18n="featureMessagesTitle">Customer messages</strong>
-              <span data-i18n="featureMessagesText">Open contact requests and reply quickly.</span>
+              <div>
+                <strong data-page-i18n="featureMessagesTitle">Messages in one place</strong>
+                <span data-page-i18n="featureMessagesText">Receive buyer and seller messages linked to every listing.</span>
+              </div>
             </div>
 
-            <div class="feature">
-              <i class="fa-solid fa-heart"></i>
-              <strong data-i18n="featureFavoritesTitle">Saved favorites</strong>
-              <span data-i18n="featureFavoritesText">Return to important listings anytime.</span>
-            </div>
-
-            <div class="feature">
+            <div class="auth-list-item">
               <i class="fa-solid fa-globe"></i>
-              <strong data-i18n="featureCountryTitle">Country language</strong>
-              <span data-i18n="featureCountryText">The selected country controls the suitable language.</span>
+              <div>
+                <strong data-page-i18n="featureCountryTitle">Country-based experience</strong>
+                <span data-page-i18n="featureCountryText">The selected country controls language, currency, and local marketplace behavior.</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="hero-bottom">
-          <strong data-i18n="countryBoxTitle">One account, global marketplace</strong>
-          <span data-i18n="countryBoxText">
-            Your browser stores demo login data locally until a real backend authentication system is connected.
+          <strong data-page-i18n="noticeTitle">Global marketplace account</strong>
+          <span data-page-i18n="noticeText">
+            This login page works with localStorage now, and it is ready to connect with Firebase Authentication after adding your Firebase project data.
           </span>
         </div>
       </div>
 
-      <div class="auth-card">
+      <div class="auth-card login-card">
         <div class="auth-head">
           <div class="auth-icon">
-            <i class="fa-solid fa-user-lock"></i>
+            <i class="fa-solid fa-right-to-bracket"></i>
           </div>
 
-          <h2 data-i18n="signInTitle">Sign in</h2>
-          <p data-i18n="signInText">Enter your email and password to continue to your account.</p>
+          <h2 data-page-i18n="loginTitle">Login</h2>
+          <p data-page-i18n="loginText">
+            Enter your email and password to continue.
+          </p>
         </div>
 
-        <div class="status-box" id="loggedBox">
-          <strong data-i18n="alreadyLogged">You are already signed in.</strong>
-          <span id="loggedUserText"></span>
+        <div class="alert error" id="errorBox"></div>
+        <div class="alert success" id="successBox"></div>
 
-          <div class="reset-actions">
-            <a class="btn primary" href="account.html">
-              <i class="fa-solid fa-user"></i>
-              <span data-i18n="goAccount">Go to account</span>
-            </a>
-
-            <button class="btn" id="logoutBtn" type="button">
-              <i class="fa-solid fa-right-from-bracket"></i>
-              <span data-i18n="logout">Logout</span>
-            </button>
-          </div>
-        </div>
-
-        <form class="form-grid" id="loginForm">
-          <div class="alert error" id="errorBox"></div>
-          <div class="alert success" id="successBox"></div>
-
+        <form id="loginForm" class="form-grid" data-safe-submit>
           <div class="field">
-            <label for="email" data-i18n="email">Email address</label>
+            <label for="email" data-page-i18n="emailLabel">Email address</label>
             <div class="input-wrap">
               <i class="fa-solid fa-envelope"></i>
-              <input id="email" name="email" type="email" autocomplete="email" required />
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                data-page-placeholder="emailPlaceholder"
+                placeholder="name@example.com"
+              />
             </div>
           </div>
 
           <div class="field">
-            <label for="password" data-i18n="password">Password</label>
+            <label for="password" data-page-i18n="passwordLabel">Password</label>
             <div class="input-wrap">
               <i class="fa-solid fa-lock"></i>
-              <input id="password" name="password" type="password" autocomplete="current-password" required minlength="6" />
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                minlength="6"
+                data-page-placeholder="passwordPlaceholder"
+                placeholder="Enter your password"
+              />
 
               <button class="toggle-password" id="togglePassword" type="button" aria-label="Show password">
                 <i class="fa-solid fa-eye"></i>
               </button>
             </div>
-          </div>
 
-          <div class="form-row">
-            <label class="check">
-              <input id="remember" type="checkbox" checked />
-              <span data-i18n="remember">Remember me</span>
-            </label>
-
-            <button class="link-btn" id="forgotBtn" type="button" data-i18n="forgot">Forgot password?</button>
-          </div>
-
-          <button class="submit-btn" type="submit">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <span data-i18n="signIn">Sign in</span>
-          </button>
-        </form>
-
-        <div class="reset-panel" id="resetPanel">
-          <h3 data-i18n="resetTitle">Reset password</h3>
-          <p data-i18n="resetText">Enter your email. In this front-end version, a reset message will be simulated locally.</p>
-
-          <div class="field">
-            <label for="resetEmail" data-i18n="resetEmail">Account email</label>
-            <div class="input-wrap">
-              <i class="fa-solid fa-envelope-circle-check"></i>
-              <input id="resetEmail" type="email" />
+            <div class="password-row">
+              <a href="register.html" data-page-i18n="forgotPassword">Forgot password?</a>
             </div>
           </div>
 
-          <div class="reset-actions">
-            <button class="btn primary" id="sendResetBtn" type="button">
-              <i class="fa-solid fa-paper-plane"></i>
-              <span data-i18n="sendReset">Send reset</span>
-            </button>
+          <label class="check">
+            <input id="rememberMe" type="checkbox" checked />
+            <span data-page-i18n="rememberMe">Keep me logged in on this device</span>
+          </label>
 
-            <button class="btn" id="closeResetBtn" type="button">
-              <i class="fa-solid fa-xmark"></i>
-              <span data-i18n="close">Close</span>
-            </button>
-          </div>
+          <button class="submit-btn btn-full" type="submit">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span data-page-i18n="loginButton">Login</span>
+          </button>
+        </form>
+
+        <div class="auth-divider" data-page-i18n="or">or</div>
+
+        <div class="social-row">
+          <button class="social-btn" id="demoLoginBtn" type="button">
+            <i class="fa-solid fa-user-check"></i>
+            <span data-page-i18n="demoLogin">Continue with demo account</span>
+          </button>
+
+          <button class="social-btn" id="googleLoginBtn" type="button">
+            <i class="fa-brands fa-google"></i>
+            <span data-page-i18n="googleLogin">Continue with Google</span>
+          </button>
         </div>
 
-        <div class="form-note">
+        <div class="demo-box">
           <i class="fa-solid fa-circle-info"></i>
-          <span data-i18n="formNote">
-            This version uses local browser storage for demo login. Real authentication can be connected later with Firebase or another backend.
+          <span data-page-i18n="demoInfo">
+            Demo login is only for testing the interface before connecting Firebase.
           </span>
         </div>
 
-        <div class="auth-footer">
-          <span data-i18n="noAccount">Do not have an account?</span>
-          <a href="register.html" data-i18n="createAccount">Create account</a>
+        <div class="local-mode" id="firebaseStatusText"></div>
+
+        <div class="auth-switch">
+          <span data-page-i18n="noAccount">Do not have an account?</span>
+          <a href="register.html" data-page-i18n="createAccount">Create account</a>
         </div>
       </div>
     </section>
   </main>
-
-  <div class="toast" id="toast"></div>
 
   <footer class="footer">
     <div class="footer-inner">
@@ -1022,323 +453,262 @@
     </div>
   </footer>
 
+  <script src="firebase-config.js"></script>
   <script src="assets/js/countries.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="pwa-register.js"></script>
 
   <script>
     (function () {
       "use strict";
 
       const STORAGE = {
-        country: "amg_country_code",
-        countryLabel: "amg_country_label",
-        lang: "amg_country_lang",
         accounts: "hk_global_accounts",
         currentUser: "hk_global_current_user",
         session: "hk_global_auth_session"
       };
 
-      const RTL_LANGS = ["ar", "fa", "ur", "he"];
-
-      const $ = (selector, scope = document) => scope.querySelector(selector);
-      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
-
-      const FALLBACK_COUNTRIES = [
-        { code: "SE", labels: { en: "Sweden", ar: "السويد", sv: "Sverige", de: "Schweden", tr: "İsveç" }, lang: "sv", currency: "SEK" },
-        { code: "DE", labels: { en: "Germany", ar: "ألمانيا", sv: "Tyskland", de: "Deutschland", tr: "Almanya" }, lang: "de", currency: "EUR" },
-        { code: "SY", labels: { en: "Syria", ar: "سوريا", sv: "Syrien", de: "Syrien", tr: "Suriye" }, lang: "ar", currency: "USD" },
-        { code: "TR", labels: { en: "Türkiye", ar: "تركيا", sv: "Turkiet", de: "Türkei", tr: "Türkiye" }, lang: "tr", currency: "TRY" },
-        { code: "AE", labels: { en: "United Arab Emirates", ar: "الإمارات", sv: "Förenade Arabemiraten", de: "VAE", tr: "BAE" }, lang: "ar", currency: "AED" },
-        { code: "SA", labels: { en: "Saudi Arabia", ar: "السعودية", sv: "Saudiarabien", de: "Saudi-Arabien", tr: "Suudi Arabistan" }, lang: "ar", currency: "SAR" },
-        { code: "EG", labels: { en: "Egypt", ar: "مصر", sv: "Egypten", de: "Ägypten", tr: "Mısır" }, lang: "ar", currency: "EGP" }
-      ];
-
-      const DICT = {
+      const PAGE_DICT = {
         en: {
-          home: "Home",
-          search: "Search",
-          postAd: "Post ad",
-          account: "My account",
-          favorites: "Favorites",
-          messages: "Messages",
-          dashboard: "Dashboard",
-          terms: "Terms",
-          login: "Login",
-          register: "Create account",
-          loginCenter: "Secure login center",
-          heroTitleA: "Access your",
-          heroTitleB: "global account",
-          heroText: "Sign in to manage your advertisements, saved items, messages, dashboard activity, and country-based marketplace settings.",
-          featureAdsTitle: "Manage ads",
-          featureAdsText: "Edit, review, and publish listings across categories.",
-          featureMessagesTitle: "Customer messages",
-          featureMessagesText: "Open contact requests and reply quickly.",
-          featureFavoritesTitle: "Saved favorites",
-          featureFavoritesText: "Return to important listings anytime.",
-          featureCountryTitle: "Country language",
-          featureCountryText: "The selected country controls the suitable language.",
-          countryBoxTitle: "One account, global marketplace",
-          countryBoxText: "Your browser stores demo login data locally until a real backend authentication system is connected.",
-          signInTitle: "Sign in",
-          signInText: "Enter your email and password to continue to your account.",
-          email: "Email address",
-          password: "Password",
-          remember: "Remember me",
-          forgot: "Forgot password?",
-          signIn: "Sign in",
+          secureLogin: "Secure account access",
+          heroA: "Login",
+          heroB: "and manage your market",
+          heroText: "Access your ads, messages, favorites, services, dashboard, and account details from one professional global marketplace.",
+          featureAdsTitle: "Manage your ads",
+          featureAdsText: "Edit, publish, pause, and follow all listings from your account.",
+          featureMessagesTitle: "Messages in one place",
+          featureMessagesText: "Receive buyer and seller messages linked to every listing.",
+          featureCountryTitle: "Country-based experience",
+          featureCountryText: "The selected country controls language, currency, and local marketplace behavior.",
+          noticeTitle: "Global marketplace account",
+          noticeText: "This login page works with localStorage now, and it is ready to connect with Firebase Authentication after adding your Firebase project data.",
+          loginTitle: "Login",
+          loginText: "Enter your email and password to continue.",
+          emailLabel: "Email address",
+          emailPlaceholder: "name@example.com",
+          passwordLabel: "Password",
+          passwordPlaceholder: "Enter your password",
+          forgotPassword: "Forgot password?",
+          rememberMe: "Keep me logged in on this device",
+          loginButton: "Login",
+          or: "or",
+          demoLogin: "Continue with demo account",
+          googleLogin: "Continue with Google",
+          demoInfo: "Demo login is only for testing the interface before connecting Firebase.",
           noAccount: "Do not have an account?",
           createAccount: "Create account",
-          formNote: "This version uses local browser storage for demo login. Real authentication can be connected later with Firebase or another backend.",
-          invalidEmail: "Please enter a valid email address.",
-          passwordMin: "Password must be at least 6 characters.",
-          wrongPassword: "The password does not match this local account.",
-          success: "Login successful. Redirecting to your account...",
-          demoCreated: "No local account was found, so a demo account was created and signed in.",
-          alreadyLogged: "You are already signed in.",
-          goAccount: "Go to account",
-          logout: "Logout",
-          logoutDone: "You have been logged out.",
-          resetTitle: "Reset password",
-          resetText: "Enter your email. In this front-end version, a reset message will be simulated locally.",
-          resetEmail: "Account email",
-          sendReset: "Send reset",
-          close: "Close",
-          resetDone: "Password reset request saved locally."
+          emptyFields: "Please enter your email and password.",
+          accountNotFound: "Account not found. Please create an account first or use demo login.",
+          wrongPassword: "Wrong password.",
+          loginSuccess: "Logged in successfully.",
+          demoSuccess: "Demo account opened successfully.",
+          firebaseLocal: "Firebase is not configured yet. Login uses localStorage.",
+          firebaseConfigured: "Firebase configuration detected. Auth can be connected in the next step.",
+          googleUnavailable: "Google login needs Firebase Authentication configuration first.",
+          showPassword: "Show password",
+          hidePassword: "Hide password"
         },
 
         ar: {
-          home: "الرئيسية",
-          search: "البحث",
-          postAd: "نشر إعلان",
-          account: "حسابي",
-          favorites: "المفضلة",
-          messages: "الرسائل",
-          dashboard: "لوحة التحكم",
-          terms: "الشروط",
-          login: "تسجيل الدخول",
-          register: "إنشاء حساب",
-          loginCenter: "مركز تسجيل دخول آمن",
-          heroTitleA: "ادخل إلى",
-          heroTitleB: "حسابك العالمي",
-          heroText: "سجل الدخول لإدارة إعلاناتك والعناصر المحفوظة والرسائل ونشاط لوحة التحكم وإعدادات السوق حسب الدولة.",
+          secureLogin: "دخول آمن للحساب",
+          heroA: "سجّل الدخول",
+          heroB: "وأدر سوقك",
+          heroText: "ادخل إلى إعلاناتك ورسائلك ومفضلتك وخدماتك ولوحة التحكم وتفاصيل حسابك من منصة عالمية واحدة.",
           featureAdsTitle: "إدارة الإعلانات",
-          featureAdsText: "عدّل وراجع وانشر الإعلانات ضمن الفئات المختلفة.",
-          featureMessagesTitle: "رسائل العملاء",
-          featureMessagesText: "افتح طلبات التواصل ورد بسرعة.",
-          featureFavoritesTitle: "المفضلة المحفوظة",
-          featureFavoritesText: "ارجع إلى الإعلانات المهمة في أي وقت.",
-          featureCountryTitle: "لغة حسب الدولة",
-          featureCountryText: "الدولة المختارة تحدد اللغة المناسبة للمنصة.",
-          countryBoxTitle: "حساب واحد، سوق عالمي",
-          countryBoxText: "المتصفح يحفظ بيانات تسجيل الدخول التجريبية محلياً إلى أن يتم ربط نظام تسجيل دخول حقيقي.",
-          signInTitle: "تسجيل الدخول",
-          signInText: "أدخل البريد وكلمة المرور للمتابعة إلى حسابك.",
-          email: "البريد الإلكتروني",
-          password: "كلمة المرور",
-          remember: "تذكرني",
-          forgot: "نسيت كلمة المرور؟",
-          signIn: "دخول",
+          featureAdsText: "عدّل وانشر وأوقف وتابع كل الإعلانات من حسابك.",
+          featureMessagesTitle: "الرسائل في مكان واحد",
+          featureMessagesText: "استقبل رسائل المشترين والبائعين المرتبطة بكل إعلان.",
+          featureCountryTitle: "تجربة حسب الدولة",
+          featureCountryText: "الدولة المختارة تتحكم باللغة والعملة وسلوك السوق المحلي.",
+          noticeTitle: "حساب السوق العالمي",
+          noticeText: "صفحة الدخول تعمل الآن عبر localStorage، وهي جاهزة للربط مع Firebase Authentication بعد إضافة بيانات مشروع Firebase.",
+          loginTitle: "تسجيل الدخول",
+          loginText: "أدخل البريد الإلكتروني وكلمة المرور للمتابعة.",
+          emailLabel: "البريد الإلكتروني",
+          emailPlaceholder: "name@example.com",
+          passwordLabel: "كلمة المرور",
+          passwordPlaceholder: "أدخل كلمة المرور",
+          forgotPassword: "نسيت كلمة المرور؟",
+          rememberMe: "ابقني مسجلاً على هذا الجهاز",
+          loginButton: "دخول",
+          or: "أو",
+          demoLogin: "الدخول بحساب تجريبي",
+          googleLogin: "المتابعة باستخدام Google",
+          demoInfo: "الدخول التجريبي مخصص فقط لاختبار الواجهة قبل ربط Firebase.",
           noAccount: "ليس لديك حساب؟",
           createAccount: "إنشاء حساب",
-          formNote: "هذه النسخة تستخدم تخزين المتصفح المحلي لتسجيل دخول تجريبي. يمكن لاحقاً ربط تسجيل دخول حقيقي عبر Firebase أو أي خادم آخر.",
-          invalidEmail: "يرجى إدخال بريد إلكتروني صحيح.",
-          passwordMin: "كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
-          wrongPassword: "كلمة المرور لا تطابق هذا الحساب المحلي.",
-          success: "تم تسجيل الدخول بنجاح. سيتم تحويلك إلى حسابك...",
-          demoCreated: "لم يتم العثور على حساب محلي، لذلك تم إنشاء حساب تجريبي وتسجيل الدخول.",
-          alreadyLogged: "أنت مسجل الدخول بالفعل.",
-          goAccount: "الذهاب إلى الحساب",
-          logout: "تسجيل الخروج",
-          logoutDone: "تم تسجيل الخروج.",
-          resetTitle: "استعادة كلمة المرور",
-          resetText: "أدخل بريدك الإلكتروني. في هذه النسخة الأمامية سيتم حفظ طلب الاستعادة محلياً فقط.",
-          resetEmail: "بريد الحساب",
-          sendReset: "إرسال طلب الاستعادة",
-          close: "إغلاق",
-          resetDone: "تم حفظ طلب استعادة كلمة المرور محلياً."
+          emptyFields: "يرجى إدخال البريد الإلكتروني وكلمة المرور.",
+          accountNotFound: "الحساب غير موجود. أنشئ حساباً أولاً أو استخدم الدخول التجريبي.",
+          wrongPassword: "كلمة المرور غير صحيحة.",
+          loginSuccess: "تم تسجيل الدخول بنجاح.",
+          demoSuccess: "تم فتح الحساب التجريبي بنجاح.",
+          firebaseLocal: "Firebase غير مضبوط بعد. تسجيل الدخول يعمل عبر localStorage.",
+          firebaseConfigured: "تم اكتشاف إعدادات Firebase. يمكن ربط Auth في الخطوة التالية.",
+          googleUnavailable: "تسجيل الدخول عبر Google يحتاج إعداد Firebase Authentication أولاً.",
+          showPassword: "إظهار كلمة المرور",
+          hidePassword: "إخفاء كلمة المرور"
         },
 
         sv: {
-          home: "Hem",
-          search: "Sök",
-          postAd: "Lägg upp annons",
-          account: "Mitt konto",
-          favorites: "Favoriter",
-          messages: "Meddelanden",
-          dashboard: "Panel",
-          terms: "Villkor",
-          login: "Logga in",
-          register: "Skapa konto",
-          loginCenter: "Säkert inloggningscenter",
-          heroTitleA: "Öppna ditt",
-          heroTitleB: "globala konto",
-          heroText: "Logga in för att hantera annonser, sparade objekt, meddelanden, panelaktivitet och landsbaserade marknadsinställningar.",
+          secureLogin: "Säker kontoåtkomst",
+          heroA: "Logga in",
+          heroB: "och hantera din marknad",
+          heroText: "Hantera annonser, meddelanden, favoriter, tjänster, panel och konto från en global marknadsplats.",
           featureAdsTitle: "Hantera annonser",
-          featureAdsText: "Redigera, granska och publicera annonser i olika kategorier.",
-          featureMessagesTitle: "Kundmeddelanden",
-          featureMessagesText: "Öppna kontaktförfrågningar och svara snabbt.",
-          featureFavoritesTitle: "Sparade favoriter",
-          featureFavoritesText: "Återvänd till viktiga annonser när som helst.",
-          featureCountryTitle: "Landsspråk",
-          featureCountryText: "Det valda landet styr lämpligt språk.",
-          countryBoxTitle: "Ett konto, global marknad",
-          countryBoxText: "Din webbläsare sparar demo-inloggning lokalt tills riktig autentisering ansluts.",
-          signInTitle: "Logga in",
-          signInText: "Ange e-post och lösenord för att fortsätta till ditt konto.",
-          email: "E-postadress",
-          password: "Lösenord",
-          remember: "Kom ihåg mig",
-          forgot: "Glömt lösenord?",
-          signIn: "Logga in",
+          featureAdsText: "Redigera, publicera, pausa och följ alla annonser.",
+          featureMessagesTitle: "Meddelanden på ett ställe",
+          featureMessagesText: "Ta emot meddelanden kopplade till varje annons.",
+          featureCountryTitle: "Upplevelse per land",
+          featureCountryText: "Valt land styr språk, valuta och lokal marknad.",
+          noticeTitle: "Globalt marknadskonto",
+          noticeText: "Inloggningen fungerar med localStorage nu och är redo för Firebase Authentication.",
+          loginTitle: "Logga in",
+          loginText: "Ange e-post och lösenord.",
+          emailLabel: "E-postadress",
+          emailPlaceholder: "name@example.com",
+          passwordLabel: "Lösenord",
+          passwordPlaceholder: "Ange lösenord",
+          forgotPassword: "Glömt lösenord?",
+          rememberMe: "Håll mig inloggad på denna enhet",
+          loginButton: "Logga in",
+          or: "eller",
+          demoLogin: "Fortsätt med demokonto",
+          googleLogin: "Fortsätt med Google",
+          demoInfo: "Demo är endast för test innan Firebase kopplas.",
           noAccount: "Har du inget konto?",
           createAccount: "Skapa konto",
-          formNote: "Denna version använder lokal webbläsarlagring för demo-inloggning. Riktig autentisering kan anslutas senare.",
-          invalidEmail: "Ange en giltig e-postadress.",
-          passwordMin: "Lösenordet måste vara minst 6 tecken.",
-          wrongPassword: "Lösenordet matchar inte detta lokala konto.",
-          success: "Inloggning lyckades. Du skickas vidare till kontot...",
-          demoCreated: "Inget lokalt konto hittades, därför skapades ett demo-konto.",
-          alreadyLogged: "Du är redan inloggad.",
-          goAccount: "Gå till konto",
-          logout: "Logga ut",
-          logoutDone: "Du har loggats ut.",
-          resetTitle: "Återställ lösenord",
-          resetText: "Ange din e-post. I denna front-end-version simuleras återställningen lokalt.",
-          resetEmail: "Konto-e-post",
-          sendReset: "Skicka återställning",
-          close: "Stäng",
-          resetDone: "Begäran om lösenordsåterställning sparades lokalt."
+          emptyFields: "Ange e-post och lösenord.",
+          accountNotFound: "Konto hittades inte. Skapa konto först eller använd demo.",
+          wrongPassword: "Fel lösenord.",
+          loginSuccess: "Inloggning lyckades.",
+          demoSuccess: "Demokonto öppnat.",
+          firebaseLocal: "Firebase är inte konfigurerat. Inloggning använder localStorage.",
+          firebaseConfigured: "Firebase-konfiguration hittades. Auth kan kopplas i nästa steg.",
+          googleUnavailable: "Google-inloggning kräver Firebase Authentication först.",
+          showPassword: "Visa lösenord",
+          hidePassword: "Dölj lösenord"
         },
 
         de: {
-          home: "Start",
-          search: "Suche",
-          postAd: "Anzeige erstellen",
-          account: "Mein Konto",
-          favorites: "Favoriten",
-          messages: "Nachrichten",
-          dashboard: "Dashboard",
-          terms: "Bedingungen",
-          login: "Anmelden",
-          register: "Konto erstellen",
-          loginCenter: "Sicheres Login-Center",
-          heroTitleA: "Greife auf dein",
-          heroTitleB: "globales Konto zu",
-          heroText: "Melde dich an, um Anzeigen, gespeicherte Einträge, Nachrichten, Dashboard-Aktivitäten und länderbasierte Markteinstellungen zu verwalten.",
+          secureLogin: "Sicherer Kontozugang",
+          heroA: "Anmelden",
+          heroB: "und deinen Markt verwalten",
+          heroText: "Verwalte Anzeigen, Nachrichten, Favoriten, Dienste, Dashboard und Konto in einem globalen Marktplatz.",
           featureAdsTitle: "Anzeigen verwalten",
-          featureAdsText: "Anzeigen in verschiedenen Kategorien bearbeiten, prüfen und veröffentlichen.",
-          featureMessagesTitle: "Kundennachrichten",
-          featureMessagesText: "Kontaktanfragen öffnen und schnell antworten.",
-          featureFavoritesTitle: "Gespeicherte Favoriten",
-          featureFavoritesText: "Wichtige Anzeigen jederzeit wiederfinden.",
-          featureCountryTitle: "Ländersprache",
-          featureCountryText: "Das gewählte Land steuert die passende Sprache.",
-          countryBoxTitle: "Ein Konto, globaler Markt",
-          countryBoxText: "Der Browser speichert Demo-Login-Daten lokal, bis ein echtes Authentifizierungssystem verbunden wird.",
-          signInTitle: "Anmelden",
-          signInText: "Gib E-Mail und Passwort ein, um zu deinem Konto fortzufahren.",
-          email: "E-Mail-Adresse",
-          password: "Passwort",
-          remember: "Angemeldet bleiben",
-          forgot: "Passwort vergessen?",
-          signIn: "Anmelden",
+          featureAdsText: "Bearbeiten, veröffentlichen, pausieren und verfolgen.",
+          featureMessagesTitle: "Nachrichten an einem Ort",
+          featureMessagesText: "Nachrichten zu jeder Anzeige empfangen.",
+          featureCountryTitle: "Länderbasierte Erfahrung",
+          featureCountryText: "Das gewählte Land steuert Sprache, Währung und lokalen Markt.",
+          noticeTitle: "Globales Marktkonto",
+          noticeText: "Diese Anmeldung nutzt jetzt localStorage und ist bereit für Firebase Authentication.",
+          loginTitle: "Anmelden",
+          loginText: "E-Mail und Passwort eingeben.",
+          emailLabel: "E-Mail-Adresse",
+          emailPlaceholder: "name@example.com",
+          passwordLabel: "Passwort",
+          passwordPlaceholder: "Passwort eingeben",
+          forgotPassword: "Passwort vergessen?",
+          rememberMe: "Auf diesem Gerät angemeldet bleiben",
+          loginButton: "Anmelden",
+          or: "oder",
+          demoLogin: "Mit Demo-Konto fortfahren",
+          googleLogin: "Mit Google fortfahren",
+          demoInfo: "Demo ist nur zum Testen der Oberfläche vor Firebase.",
           noAccount: "Noch kein Konto?",
           createAccount: "Konto erstellen",
-          formNote: "Diese Version nutzt lokale Browserspeicherung für Demo-Login. Echte Authentifizierung kann später verbunden werden.",
-          invalidEmail: "Bitte gib eine gültige E-Mail-Adresse ein.",
-          passwordMin: "Das Passwort muss mindestens 6 Zeichen haben.",
-          wrongPassword: "Das Passwort passt nicht zu diesem lokalen Konto.",
-          success: "Anmeldung erfolgreich. Weiterleitung zum Konto...",
-          demoCreated: "Kein lokales Konto gefunden, daher wurde ein Demo-Konto erstellt.",
-          alreadyLogged: "Du bist bereits angemeldet.",
-          goAccount: "Zum Konto",
-          logout: "Abmelden",
-          logoutDone: "Du wurdest abgemeldet.",
-          resetTitle: "Passwort zurücksetzen",
-          resetText: "Gib deine E-Mail ein. In dieser Front-End-Version wird die Anfrage lokal simuliert.",
-          resetEmail: "Konto-E-Mail",
-          sendReset: "Reset senden",
-          close: "Schließen",
-          resetDone: "Passwort-Reset-Anfrage wurde lokal gespeichert."
+          emptyFields: "Bitte E-Mail und Passwort eingeben.",
+          accountNotFound: "Konto nicht gefunden. Bitte zuerst Konto erstellen oder Demo nutzen.",
+          wrongPassword: "Falsches Passwort.",
+          loginSuccess: "Erfolgreich angemeldet.",
+          demoSuccess: "Demo-Konto geöffnet.",
+          firebaseLocal: "Firebase ist noch nicht konfiguriert. Login nutzt localStorage.",
+          firebaseConfigured: "Firebase-Konfiguration erkannt. Auth kann im nächsten Schritt verbunden werden.",
+          googleUnavailable: "Google-Login benötigt zuerst Firebase Authentication.",
+          showPassword: "Passwort anzeigen",
+          hidePassword: "Passwort ausblenden"
         },
 
         tr: {
-          home: "Ana sayfa",
-          search: "Ara",
-          postAd: "İlan ver",
-          account: "Hesabım",
-          favorites: "Favoriler",
-          messages: "Mesajlar",
-          dashboard: "Panel",
-          terms: "Şartlar",
-          login: "Giriş",
-          register: "Hesap oluştur",
-          loginCenter: "Güvenli giriş merkezi",
-          heroTitleA: "Küresel",
-          heroTitleB: "hesabına eriş",
-          heroText: "İlanları, kayıtlı öğeleri, mesajları, panel aktivitesini ve ülke bazlı pazar ayarlarını yönetmek için giriş yap.",
+          secureLogin: "Güvenli hesap erişimi",
+          heroA: "Giriş yap",
+          heroB: "ve pazarını yönet",
+          heroText: "İlanlarını, mesajlarını, favorilerini, hizmetlerini, panelini ve hesabını tek yerden yönet.",
           featureAdsTitle: "İlanları yönet",
-          featureAdsText: "Farklı kategorilerde ilanları düzenle, incele ve yayınla.",
-          featureMessagesTitle: "Müşteri mesajları",
-          featureMessagesText: "İletişim taleplerini aç ve hızlı yanıt ver.",
-          featureFavoritesTitle: "Kayıtlı favoriler",
-          featureFavoritesText: "Önemli ilanlara istediğin zaman geri dön.",
-          featureCountryTitle: "Ülke dili",
-          featureCountryText: "Seçilen ülke uygun dili belirler.",
-          countryBoxTitle: "Tek hesap, küresel pazar",
-          countryBoxText: "Gerçek kimlik doğrulama bağlanana kadar tarayıcı demo giriş verilerini yerel olarak saklar.",
-          signInTitle: "Giriş yap",
-          signInText: "Hesabına devam etmek için e-posta ve şifreni gir.",
-          email: "E-posta adresi",
-          password: "Şifre",
-          remember: "Beni hatırla",
-          forgot: "Şifremi unuttum?",
-          signIn: "Giriş yap",
+          featureAdsText: "Düzenle, yayınla, durdur ve takip et.",
+          featureMessagesTitle: "Mesajlar tek yerde",
+          featureMessagesText: "Her ilan için alıcı ve satıcı mesajlarını al.",
+          featureCountryTitle: "Ülkeye göre deneyim",
+          featureCountryText: "Seçilen ülke dili, para birimini ve yerel pazarı belirler.",
+          noticeTitle: "Küresel pazar hesabı",
+          noticeText: "Bu giriş localStorage ile çalışır ve Firebase Authentication için hazırdır.",
+          loginTitle: "Giriş",
+          loginText: "E-posta ve şifreni gir.",
+          emailLabel: "E-posta",
+          emailPlaceholder: "name@example.com",
+          passwordLabel: "Şifre",
+          passwordPlaceholder: "Şifreni gir",
+          forgotPassword: "Şifremi unuttum?",
+          rememberMe: "Bu cihazda giriş açık kalsın",
+          loginButton: "Giriş yap",
+          or: "veya",
+          demoLogin: "Demo hesapla devam et",
+          googleLogin: "Google ile devam et",
+          demoInfo: "Demo sadece Firebase bağlanmadan önce arayüz testi içindir.",
           noAccount: "Hesabın yok mu?",
           createAccount: "Hesap oluştur",
-          formNote: "Bu sürüm demo giriş için yerel tarayıcı depolamasını kullanır. Gerçek kimlik doğrulama daha sonra bağlanabilir.",
-          invalidEmail: "Geçerli bir e-posta adresi gir.",
-          passwordMin: "Şifre en az 6 karakter olmalı.",
-          wrongPassword: "Şifre bu yerel hesapla eşleşmiyor.",
-          success: "Giriş başarılı. Hesabına yönlendiriliyorsun...",
-          demoCreated: "Yerel hesap bulunamadı, bu yüzden demo hesabı oluşturuldu.",
-          alreadyLogged: "Zaten giriş yaptın.",
-          goAccount: "Hesaba git",
-          logout: "Çıkış yap",
-          logoutDone: "Çıkış yapıldı.",
-          resetTitle: "Şifre sıfırla",
-          resetText: "E-postanı gir. Bu front-end sürümünde sıfırlama yerel olarak simüle edilir.",
-          resetEmail: "Hesap e-postası",
-          sendReset: "Sıfırlama gönder",
-          close: "Kapat",
-          resetDone: "Şifre sıfırlama isteği yerel olarak kaydedildi."
-        },
-
-        fr: {},
-        es: {},
-        it: {},
-        pt: {},
-        nl: {}
+          emptyFields: "E-posta ve şifre gir.",
+          accountNotFound: "Hesap bulunamadı. Önce hesap oluştur veya demo kullan.",
+          wrongPassword: "Yanlış şifre.",
+          loginSuccess: "Giriş başarılı.",
+          demoSuccess: "Demo hesap açıldı.",
+          firebaseLocal: "Firebase henüz ayarlı değil. Giriş localStorage kullanıyor.",
+          firebaseConfigured: "Firebase ayarı bulundu. Auth sonraki adımda bağlanabilir.",
+          googleUnavailable: "Google girişi için önce Firebase Authentication gerekir.",
+          showPassword: "Şifreyi göster",
+          hidePassword: "Şifreyi gizle"
+        }
       };
 
-      DICT.fr = DICT.en;
-      DICT.es = DICT.en;
-      DICT.it = DICT.en;
-      DICT.pt = DICT.en;
-      DICT.nl = DICT.en;
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
-      function currentLang() {
-        return String(localStorage.getItem(STORAGE.lang) || "en").slice(0, 2).toLowerCase();
+      function lang() {
+        return String(localStorage.getItem("amg_country_lang") || document.documentElement.lang || "en")
+          .slice(0, 2)
+          .toLowerCase();
       }
 
       function t(key) {
-        const lang = currentLang();
-        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+        const selected = lang();
+        return (PAGE_DICT[selected] && PAGE_DICT[selected][key]) || PAGE_DICT.en[key] || key;
+      }
+
+      function translatePage() {
+        $$("[data-page-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.pageI18n);
+        });
+
+        $$("[data-page-placeholder]").forEach((el) => {
+          el.setAttribute("placeholder", t(el.dataset.pagePlaceholder));
+        });
+
+        const toggleBtn = $("#togglePassword");
+        const password = $("#password");
+
+        if (toggleBtn && password) {
+          toggleBtn.setAttribute(
+            "aria-label",
+            password.type === "password" ? t("showPassword") : t("hidePassword")
+          );
+        }
+
+        updateFirebaseStatus();
       }
 
       function readJson(key, fallback) {
         try {
-          const value = JSON.parse(localStorage.getItem(key) || "");
-          return value || fallback;
+          return JSON.parse(localStorage.getItem(key)) || fallback;
         } catch {
           return fallback;
         }
@@ -1348,89 +718,7 @@
         localStorage.setItem(key, JSON.stringify(value));
       }
 
-      function getCountries() {
-        const external = window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
-        return Array.isArray(external) && external.length ? external : FALLBACK_COUNTRIES;
-      }
-
-      function countryCode(country) {
-        return country?.code || country?.id || country?.iso2 || country?.value || "";
-      }
-
-      function countryLang(country) {
-        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
-      }
-
-      function localText(obj, fallback = "") {
-        const lang = currentLang();
-
-        if (!obj) return fallback;
-        if (typeof obj === "string") return obj;
-
-        if (obj.labels) return obj.labels[lang] || obj.labels.en || obj.labels.ar || fallback;
-        if (obj.names) return obj.names[lang] || obj.names.en || obj.names.ar || fallback;
-
-        return obj.name || fallback;
-      }
-
-      function getCountryByCode(code) {
-        const clean = String(code || "").toUpperCase();
-        return getCountries().find((country) => String(countryCode(country)).toUpperCase() === clean) || getCountries()[0];
-      }
-
-      function fillCountries() {
-        const select = $("#countrySelect");
-        const countries = getCountries();
-
-        if (!select || !countries.length) return;
-
-        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
-
-        select.innerHTML = "";
-
-        countries.forEach((country) => {
-          const option = document.createElement("option");
-          option.value = countryCode(country);
-          option.textContent = localText(country, countryCode(country));
-          select.appendChild(option);
-        });
-
-        select.value = saved;
-      }
-
-      function applyCountry(code) {
-        const country = getCountryByCode(code);
-        if (!country) return;
-
-        const codeValue = countryCode(country);
-        const label = localText(country, codeValue);
-
-        localStorage.setItem(STORAGE.country, codeValue);
-        localStorage.setItem(STORAGE.countryLabel, label);
-
-        if (!localStorage.getItem(STORAGE.lang)) {
-          localStorage.setItem(STORAGE.lang, countryLang(country));
-        }
-
-        const lang = currentLang();
-        const dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
-
-        document.documentElement.lang = lang;
-        document.documentElement.dir = dir;
-        document.body.setAttribute("dir", dir);
-
-        fillCountries();
-        applyTranslations();
-        renderLoggedState();
-      }
-
-      function applyTranslations() {
-        $$("[data-i18n]").forEach((el) => {
-          el.textContent = t(el.dataset.i18n);
-        });
-      }
-
-      function showAlert(type, text) {
+      function showAlert(type, message) {
         const errorBox = $("#errorBox");
         const successBox = $("#successBox");
 
@@ -1438,221 +726,181 @@
         successBox.classList.remove("show");
 
         if (type === "error") {
-          errorBox.textContent = text;
+          errorBox.textContent = message;
           errorBox.classList.add("show");
         } else {
-          successBox.textContent = text;
+          successBox.textContent = message;
           successBox.classList.add("show");
         }
       }
 
-      function showToast(text) {
-        const toast = $("#toast");
-        toast.textContent = text;
-        toast.classList.add("show");
+      function getNextPage() {
+        const params = new URLSearchParams(window.location.search);
+        const next = params.get("next");
 
-        setTimeout(() => {
-          toast.classList.remove("show");
-        }, 2200);
+        if (!next) return "account.html";
+
+        if (next.includes("://") || next.includes("//")) return "account.html";
+
+        return next;
       }
 
-      function validateEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
-      }
-
-      function buildUser(email, password) {
-        const name = String(email).split("@")[0].replace(/[._-]+/g, " ");
-        const countryCodeValue = localStorage.getItem(STORAGE.country) || "SE";
-        const countryLabel = localStorage.getItem(STORAGE.countryLabel) || "";
-
-        return {
-          id: "user-" + Date.now(),
-          name: name || "HK User",
-          email,
-          password,
-          phone: "",
-          city: "",
-          countryCode: countryCodeValue,
-          countryLabel,
-          role: "member",
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        };
-      }
-
-      function loginUser(user, remember) {
-        const session = {
-          loggedIn: true,
-          userId: user.id,
+      function saveSession(user, remember) {
+        const safeUser = {
+          id: user.id || "user-" + Date.now(),
+          name: user.name || user.displayName || user.email.split("@")[0],
           email: user.email,
-          remember: Boolean(remember),
-          loginAt: new Date().toISOString()
+          phone: user.phone || "",
+          countryCode: user.countryCode || localStorage.getItem("amg_country_code") || "",
+          countryLabel: user.countryLabel || localStorage.getItem("amg_country_label") || "",
+          role: user.role || "user",
+          createdAt: user.createdAt || new Date().toISOString(),
+          lastLoginAt: new Date().toISOString()
         };
 
-        writeJson(STORAGE.currentUser, user);
-        writeJson(STORAGE.session, session);
+        writeJson(STORAGE.currentUser, safeUser);
 
-        localStorage.setItem("amg_user", JSON.stringify(user));
-        localStorage.setItem("hk_global_user", JSON.stringify(user));
+        writeJson(STORAGE.session, {
+          loggedIn: true,
+          remember: Boolean(remember),
+          userId: safeUser.id,
+          email: safeUser.email,
+          loginAt: new Date().toISOString()
+        });
+
+        localStorage.setItem("amg_user", JSON.stringify(safeUser));
+        localStorage.setItem("hk_global_user", JSON.stringify(safeUser));
+
+        return safeUser;
       }
 
-      function handleLogin(event) {
-        event.preventDefault();
-
-        const email = $("#email").value.trim().toLowerCase();
-        const password = $("#password").value;
-        const remember = $("#remember").checked;
-
-        if (!validateEmail(email)) {
-          showAlert("error", t("invalidEmail"));
-          return;
-        }
-
-        if (password.length < 6) {
-          showAlert("error", t("passwordMin"));
-          return;
-        }
-
+      function findAccount(email) {
         const accounts = readJson(STORAGE.accounts, []);
-        const existing = accounts.find((account) => String(account.email || "").toLowerCase() === email);
+        return accounts.find((account) => String(account.email).toLowerCase() === email.toLowerCase());
+      }
 
-        let user = existing;
-        let message = t("success");
+      function localLogin(email, password, remember) {
+        const account = findAccount(email);
 
-        if (existing && existing.password && existing.password !== password) {
+        if (!account) {
+          showAlert("error", t("accountNotFound"));
+          return;
+        }
+
+        if (String(account.password || "") !== String(password)) {
           showAlert("error", t("wrongPassword"));
           return;
         }
 
-        if (!existing) {
-          user = buildUser(email, password);
-          accounts.push(user);
+        saveSession(account, remember);
+        showAlert("success", t("loginSuccess"));
+
+        window.setTimeout(() => {
+          window.location.href = getNextPage();
+        }, 700);
+      }
+
+      function demoLogin() {
+        const demoUser = {
+          id: "demo-user",
+          name: "Demo User",
+          email: "demo@hk-global.test",
+          phone: "",
+          role: "demo",
+          countryCode: localStorage.getItem("amg_country_code") || "SE",
+          countryLabel: localStorage.getItem("amg_country_label") || "Sweden",
+          createdAt: new Date().toISOString()
+        };
+
+        const accounts = readJson(STORAGE.accounts, []);
+        const exists = accounts.some((account) => account.email === demoUser.email);
+
+        if (!exists) {
+          accounts.push({
+            ...demoUser,
+            password: "123456"
+          });
+
           writeJson(STORAGE.accounts, accounts);
-          message = t("demoCreated");
         }
 
-        loginUser(user, remember);
-        showAlert("success", message);
-        showToast(message);
-        renderLoggedState();
+        saveSession(demoUser, true);
+        showAlert("success", t("demoSuccess"));
 
-        setTimeout(() => {
-          window.location.href = "account.html";
-        }, 900);
+        window.setTimeout(() => {
+          window.location.href = getNextPage();
+        }, 700);
       }
 
-      function renderLoggedState() {
-        const session = readJson(STORAGE.session, null);
-        const user = readJson(STORAGE.currentUser, null);
-        const box = $("#loggedBox");
-        const text = $("#loggedUserText");
+      function updateFirebaseStatus() {
+        const box = $("#firebaseStatusText");
+        if (!box) return;
 
-        if (session?.loggedIn && user?.email) {
-          box.classList.add("show");
-          text.textContent = user.email;
+        const status = window.HK_FIREBASE_STATUS;
+
+        if (status && status.status === "configured") {
+          box.textContent = t("firebaseConfigured");
         } else {
-          box.classList.remove("show");
-          text.textContent = "";
+          box.textContent = t("firebaseLocal");
         }
       }
 
-      function logout() {
-        localStorage.removeItem(STORAGE.session);
-        localStorage.removeItem(STORAGE.currentUser);
-        localStorage.removeItem("amg_user");
-        localStorage.removeItem("hk_global_user");
+      function initPasswordToggle() {
+        const button = $("#togglePassword");
+        const input = $("#password");
 
-        renderLoggedState();
-        showToast(t("logoutDone"));
-      }
-
-      function handleReset() {
-        const email = $("#resetEmail").value.trim().toLowerCase() || $("#email").value.trim().toLowerCase();
-
-        if (!validateEmail(email)) {
-          showAlert("error", t("invalidEmail"));
-          return;
-        }
-
-        writeJson("hk_global_password_reset_request", {
-          email,
-          requestedAt: new Date().toISOString()
-        });
-
-        showAlert("success", t("resetDone"));
-        showToast(t("resetDone"));
-        $("#resetPanel").classList.remove("show");
-      }
-
-      function initMenu() {
-        const toggle = $("#menuToggle");
-        const sidebar = $("#sidebar");
-        const close = $("#sidebarClose");
-        const backdrop = $("#sidebarBackdrop");
-
-        function open() {
-          sidebar.classList.add("open");
-          backdrop.classList.add("open");
-          document.body.classList.add("menu-open");
-        }
-
-        function shut() {
-          sidebar.classList.remove("open");
-          backdrop.classList.remove("open");
-          document.body.classList.remove("menu-open");
-        }
-
-        toggle.addEventListener("click", open);
-        close.addEventListener("click", shut);
-        backdrop.addEventListener("click", shut);
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") shut();
-        });
-      }
-
-      function initEvents() {
-        $("#countrySelect").addEventListener("change", (event) => {
-          localStorage.removeItem(STORAGE.lang);
-          applyCountry(event.target.value);
-        });
-
-        $("#loginForm").addEventListener("submit", handleLogin);
-
-        $("#togglePassword").addEventListener("click", () => {
-          const input = $("#password");
-          const icon = $("#togglePassword i");
+        button.addEventListener("click", () => {
           const isPassword = input.type === "password";
 
           input.type = isPassword ? "text" : "password";
-          icon.className = isPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+          button.innerHTML = isPassword
+            ? '<i class="fa-solid fa-eye-slash"></i>'
+            : '<i class="fa-solid fa-eye"></i>';
+
+          button.setAttribute("aria-label", isPassword ? t("hidePassword") : t("showPassword"));
+        });
+      }
+
+      function initForm() {
+        $("#loginForm").addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const email = $("#email").value.trim();
+          const password = $("#password").value;
+          const remember = $("#rememberMe").checked;
+
+          if (!email || !password) {
+            showAlert("error", t("emptyFields"));
+            return;
+          }
+
+          localLogin(email, password, remember);
         });
 
-        $("#forgotBtn").addEventListener("click", () => {
-          $("#resetPanel").classList.toggle("show");
-          $("#resetEmail").value = $("#email").value.trim();
-        });
+        $("#demoLoginBtn").addEventListener("click", demoLogin);
 
-        $("#closeResetBtn").addEventListener("click", () => {
-          $("#resetPanel").classList.remove("show");
+        $("#googleLoginBtn").addEventListener("click", () => {
+          showAlert("error", t("googleUnavailable"));
         });
+      }
 
-        $("#sendResetBtn").addEventListener("click", handleReset);
-        $("#logoutBtn").addEventListener("click", logout);
+      function redirectIfAlreadyLoggedIn() {
+        const session = readJson(STORAGE.session, null);
+        const user = readJson(STORAGE.currentUser, null);
+
+        if (session && session.loggedIn && user && user.email) {
+          window.location.href = getNextPage();
+        }
       }
 
       function init() {
-        initMenu();
-        fillCountries();
+        redirectIfAlreadyLoggedIn();
+        initPasswordToggle();
+        initForm();
+        translatePage();
 
-        const countries = getCountries();
-        const startCountry =
-          localStorage.getItem(STORAGE.country) ||
-          $("#countrySelect")?.value ||
-          countryCode(countries[0]);
-
-        applyCountry(startCountry);
-        initEvents();
+        window.addEventListener("hk-app-country-applied", translatePage);
+        window.addEventListener("hk-country-change", translatePage);
       }
 
       document.addEventListener("DOMContentLoaded", init);
