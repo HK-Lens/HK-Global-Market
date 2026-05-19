@@ -1,760 +1,901 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>HK Global Market & Services | Buy, Sell and Find Services Worldwide</title>
+  <meta name="description" content="HK Global Market & Services is a global marketplace for products, vehicles, real estate, maintenance, education, digital services, transport, and local services by country." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0f172a;
+      --ink-2: #1e293b;
+      --muted: #64748b;
+      --soft: #f8fafc;
+      --soft-2: #eef2f7;
+      --card: rgba(255, 255, 255, 0.88);
+      --border: rgba(148, 163, 184, 0.26);
+      --accent: #f58220;
+      --accent-2: #ffb15c;
+      --accent-dark: #d96500;
+      --blue: #2563eb;
+      --green: #16a34a;
+      --violet: #7c3aed;
+      --danger: #dc2626;
+      --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow: 0 24px 70px rgba(15, 23, 42, 0.14);
+      --radius: 28px;
+      --radius-sm: 18px;
+      --max: 1180px;
+    }
 
-  <meta
-    name="description"
-    content="HK Global Market & Services is a worldwide platform for products, real estate, vehicles, personal services, digital services, education, maintenance centers, home services, company services, shops, and agricultural lands."
-  />
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(245, 130, 32, .18), transparent 32%),
+        radial-gradient(circle at 92% 4%, rgba(37, 99, 235, .13), transparent 34%),
+        linear-gradient(180deg, #fbfdff 0%, #eef2f7 58%, #f8fafc 100%);
+      overflow-x: hidden;
+    }
 
-  <link rel="stylesheet" href="assets/css/style.css" />
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  />
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -80px;
+      background: var(--ink);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 999px;
+      z-index: 1000;
+      transition: .2s ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(22px);
+      border-bottom: 1px solid rgba(226, 232, 240, .78);
+    }
+    .nav-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 950;
+      letter-spacing: -.055em;
+      font-size: 1.28rem;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background:
+        linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 14px 34px rgba(245, 130, 32, .30);
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: -45% -20% auto auto;
+      width: 42px;
+      height: 88px;
+      background: rgba(255, 255, 255, .42);
+      transform: rotate(35deg);
+    }
+    .brand-mark span { position: relative; z-index: 1; font-size: .95rem; letter-spacing: -.03em; }
+    .brand small { display: block; font-size: .67rem; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-top: -2px; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-link {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: #334155;
+      font-size: .88rem;
+      font-weight: 800;
+      transition: .22s ease;
+    }
+    .nav-link:hover { color: var(--accent-dark); background: rgba(245, 130, 32, .10); }
+    .nav-link.primary {
+      background: var(--ink);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, .18);
+    }
+    .nav-link.primary:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+    .menu-btn {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 1.2rem;
+    }
+
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 74px 22px 36px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(330px, .95fr);
+      gap: 34px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .82);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      color: var(--accent-dark);
+      font-size: .82rem;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+    .eyebrow-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 99px;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(22, 163, 74, .12);
+    }
+    h1 {
+      font-size: clamp(2.6rem, 6vw, 5.7rem);
+      line-height: .93;
+      letter-spacing: -.085em;
+      font-weight: 950;
+      color: var(--ink);
+      max-width: 850px;
+    }
+    .highlight {
+      color: transparent;
+      background: linear-gradient(135deg, var(--accent), #f97316 42%, #7c3aed);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .hero-copy {
+      max-width: 710px;
+      margin-top: 22px;
+      color: #475569;
+      font-size: clamp(1rem, 1.5vw, 1.18rem);
+      line-height: 1.78;
+      font-weight: 560;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+    .btn {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 14px 20px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      font-weight: 900;
+      box-shadow: var(--shadow-sm);
+      transition: .24s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn.accent { background: var(--accent); color: white; border-color: rgba(245, 130, 32, .2); }
+    .btn.accent:hover { background: var(--accent-dark); }
+    .trust-row {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 750;
+    }
+    .trust-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, .62);
+      border: 1px solid rgba(226, 232, 240, .88);
+      border-radius: 999px;
+    }
+
+    .hero-panel {
+      position: relative;
+      min-height: 610px;
+      border-radius: 38px;
+      padding: 18px;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, .95), rgba(30, 41, 59, .92)),
+        radial-gradient(circle at 90% 0%, rgba(245, 130, 32, .36), transparent 32%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      color: #fff;
+      isolation: isolate;
+    }
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -70px;
+      top: -70px;
+      border-radius: 999px;
+      background: rgba(245, 130, 32, .42);
+      filter: blur(14px);
+      z-index: -1;
+    }
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      left: -120px;
+      bottom: -100px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, .32);
+      filter: blur(12px);
+      z-index: -1;
+    }
+    .finder-card {
+      background: rgba(255, 255, 255, .98);
+      color: var(--ink);
+      border-radius: 30px;
+      padding: 22px;
+      box-shadow: 0 22px 70px rgba(0, 0, 0, .16);
+    }
+    .finder-card h2 {
+      font-size: 1.45rem;
+      letter-spacing: -.04em;
+      margin-bottom: 6px;
+      font-weight: 950;
+    }
+    .finder-card p { color: var(--muted); font-size: .92rem; font-weight: 650; line-height: 1.6; margin-bottom: 18px; }
+    .form-grid { display: grid; gap: 12px; }
+    .field label {
+      display: block;
+      color: #475569;
+      font-size: .74rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 7px;
+    }
+    .field input, .field select {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 17px;
+      border: 1px solid #dbe3ef;
+      background: #f8fafc;
+      color: var(--ink);
+      padding: 0 14px;
+      outline: none;
+      font-weight: 750;
+      transition: .22s ease;
+    }
+    .field input:focus, .field select:focus { background: #fff; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(245, 130, 32, .12); }
+    .finder-submit {
+      min-height: 56px;
+      width: 100%;
+      border: 0;
+      border-radius: 18px;
+      margin-top: 4px;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      font-weight: 950;
+      box-shadow: 0 16px 36px rgba(245, 130, 32, .25);
+    }
+    .panel-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .panel-stat {
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .10);
+      border-radius: 22px;
+      padding: 16px 12px;
+      backdrop-filter: blur(10px);
+    }
+    .panel-stat strong { display: block; font-size: 1.45rem; font-weight: 950; letter-spacing: -.05em; }
+    .panel-stat span { color: rgba(255, 255, 255, .72); font-size: .72rem; font-weight: 800; }
+    .mini-feed {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .feed-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid rgba(255, 255, 255, .14);
+      backdrop-filter: blur(10px);
+    }
+    .feed-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, .16);
+      flex: 0 0 auto;
+    }
+    .feed-item strong { display: block; font-size: .92rem; font-weight: 900; }
+    .feed-item small { display: block; margin-top: 2px; color: rgba(255, 255, 255, .68); font-weight: 700; }
+
+    section { max-width: var(--max); margin: 0 auto; padding: 46px 22px; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 20px;
+    }
+    .section-kicker {
+      display: inline-flex;
+      color: var(--accent-dark);
+      font-size: .78rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-bottom: 10px;
+    }
+    .section-head h2 {
+      font-size: clamp(1.9rem, 3vw, 3.1rem);
+      line-height: 1.02;
+      letter-spacing: -.065em;
+      font-weight: 950;
+      max-width: 720px;
+    }
+    .section-head p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 650;
+      max-width: 420px;
+    }
+
+    .quick-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 0 18px;
+      scrollbar-width: thin;
+    }
+    .quick-tabs a {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border: 1px solid rgba(226, 232, 240, .95);
+      background: rgba(255, 255, 255, .74);
+      border-radius: 999px;
+      color: #334155;
+      font-size: .87rem;
+      font-weight: 900;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, .04);
+    }
+    .quick-tabs a:hover { color: var(--accent-dark); border-color: rgba(245, 130, 32, .36); }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .category-card {
+      min-height: 198px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 19px;
+      border-radius: 26px;
+      border: 1px solid rgba(226, 232, 240, .92);
+      background: rgba(255, 255, 255, .82);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: .24s ease;
+    }
+    .category-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: rgba(245, 130, 32, .32); }
+    .category-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -36px -44px auto;
+      width: 118px;
+      height: 118px;
+      border-radius: 999px;
+      background: rgba(245, 130, 32, .12);
+    }
+    .cat-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: #fff7ed;
+      color: var(--accent-dark);
+      font-size: 1.4rem;
+    }
+    .category-card h3 { margin-top: 18px; font-size: 1.1rem; letter-spacing: -.035em; font-weight: 950; }
+    .category-card p { margin-top: 8px; color: var(--muted); line-height: 1.55; font-size: .9rem; font-weight: 650; }
+    .cat-link { margin-top: 16px; color: var(--accent-dark); font-weight: 950; font-size: .86rem; }
+
+    .country-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .country-panel, .safety-panel {
+      border-radius: 32px;
+      border: 1px solid rgba(226, 232, 240, .9);
+      background: rgba(255, 255, 255, .78);
+      box-shadow: var(--shadow-sm);
+      padding: 24px;
+      overflow: hidden;
+    }
+    .map-dots {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .country-chip {
+      padding: 12px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(226, 232, 240, .95);
+      font-weight: 900;
+      font-size: .84rem;
+      color: #334155;
+      text-align: center;
+    }
+    .safety-list { display: grid; gap: 12px; margin-top: 18px; }
+    .safety-item { display: flex; gap: 12px; align-items: start; padding: 13px; border-radius: 18px; background: #fff; border: 1px solid rgba(226, 232, 240, .9); }
+    .safety-item span { width: 28px; height: 28px; border-radius: 10px; display: grid; place-items: center; background: rgba(22, 163, 74, .10); color: var(--green); font-weight: 950; flex: 0 0 auto; }
+    .safety-item strong { display: block; font-size: .94rem; font-weight: 950; }
+    .safety-item small { display: block; color: var(--muted); line-height: 1.55; margin-top: 3px; font-weight: 650; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .step-card {
+      padding: 24px;
+      border-radius: 30px;
+      background: var(--ink);
+      color: #fff;
+      min-height: 260px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card:nth-child(2) { background: linear-gradient(135deg, #1e293b, #334155); }
+    .step-card:nth-child(3) { background: linear-gradient(135deg, var(--accent-dark), var(--accent)); }
+    .step-no {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, .13);
+      font-size: 1.2rem;
+      font-weight: 950;
+      margin-bottom: 44px;
+    }
+    .step-card h3 { font-size: 1.34rem; letter-spacing: -.045em; font-weight: 950; margin-bottom: 10px; }
+    .step-card p { color: rgba(255, 255, 255, .76); line-height: 1.65; font-weight: 650; }
+
+    .cta {
+      max-width: var(--max);
+      margin: 44px auto 0;
+      padding: 0 22px 64px;
+    }
+    .cta-card {
+      min-height: 330px;
+      border-radius: 42px;
+      padding: 36px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, .96), rgba(15, 23, 42, .84)),
+        radial-gradient(circle at 90% 20%, rgba(245, 130, 32, .5), transparent 34%);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .cta-card h2 { font-size: clamp(2rem, 4vw, 4rem); line-height: .98; letter-spacing: -.075em; font-weight: 950; }
+    .cta-card p { margin-top: 16px; max-width: 690px; color: rgba(255, 255, 255, .76); line-height: 1.75; font-weight: 650; }
+    .cta-buttons { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .cta-visual {
+      display: grid;
+      gap: 12px;
+    }
+    .cta-mini {
+      padding: 16px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .10);
+      border: 1px solid rgba(255, 255, 255, .14);
+      backdrop-filter: blur(10px);
+    }
+    .cta-mini strong { display: block; font-weight: 950; }
+    .cta-mini span { display: block; margin-top: 3px; color: rgba(255, 255, 255, .68); font-size: .86rem; font-weight: 700; }
+
+    .site-footer {
+      border-top: 1px solid rgba(226, 232, 240, .85);
+      background: rgba(255, 255, 255, .75);
+    }
+    .footer-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-weight: 720;
+    }
+    .footer-links { display: flex; gap: 14px; flex-wrap: wrap; }
+    .footer-links a { color: #334155; font-weight: 850; }
+    .footer-links a:hover { color: var(--accent-dark); }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; padding-top: 46px; }
+      .hero-panel { min-height: auto; }
+      .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .country-strip { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .cta-card { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-wrap { padding: 12px 16px; }
+      .brand { font-size: 1.1rem; }
+      .brand small { display: none; }
+      .menu-btn { display: grid; place-items: center; }
+      .nav-links {
+        position: fixed;
+        left: 14px;
+        right: 14px;
+        top: 72px;
+        padding: 12px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, .96);
+        border: 1px solid rgba(226, 232, 240, .95);
+        box-shadow: var(--shadow);
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links.open { display: flex; }
+      .nav-link { justify-content: flex-start; width: 100%; }
+      .hero { padding: 34px 16px 26px; }
+      section { padding: 36px 16px; }
+      .hero-actions .btn { width: 100%; }
+      .panel-stats { grid-template-columns: 1fr; }
+      .category-grid { grid-template-columns: 1fr; }
+      .country-panel, .safety-panel { padding: 20px; }
+      .map-dots { grid-template-columns: repeat(2, 1fr); }
+      .cta { padding: 0 16px 46px; }
+      .cta-card { padding: 24px; border-radius: 32px; }
+      .cta-buttons .btn { width: 100%; }
+      .footer-wrap { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
 </head>
-
 <body>
-  <!-- Topbar -->
-  <header class="site-topbar">
-    <div class="site-topbar-inner">
-      <div class="topbar-left">
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false"
-        >
-          <i class="fa-solid fa-bars"></i>
-        </button>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-        <a class="logo" href="index.html" aria-label="HK Global Market & Services home">
-          HK <span>Global</span>
-        </a>
-      </div>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" aria-label="HK Global home">
+        <span class="brand-mark"><span>HK</span></span>
+        <span>HK Global<small>Market & Services</small></span>
+      </a>
 
-      <div class="topbar-right">
-        <select
-          class="category-select"
-          id="categorySelect"
-          name="category"
-          aria-label="Choose category"
-        ></select>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
 
-        <select
-          class="country-select"
-          id="countrySelect"
-          name="country"
-          aria-label="Choose country"
-        ></select>
-      </div>
+      <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="results.html">Search listings</a>
+        <a class="nav-link primary" href="sell.html">Post an ad</a>
+        <a class="nav-link" href="my-account.html">My account</a>
+        <a class="nav-link" href="messages.html">Messages</a>
+        <a class="nav-link" href="login.html">Login</a>
+        <a class="nav-link" href="register.html">Create account</a>
+      </nav>
     </div>
   </header>
 
-  <!-- Sidebar backdrop -->
-  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar" aria-label="Main menu">
-    <div class="sidebar-header">
-      <div class="sidebar-title">
-        HK <span>Global</span>
-      </div>
-
-      <button
-        class="sidebar-close"
-        id="sidebarClose"
-        type="button"
-        aria-label="Close menu"
-      >
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-
-    <nav class="sidebar-nav" aria-label="Main navigation">
-      <a class="sidebar-link active" href="index.html">
-        <i class="fa-solid fa-house"></i>
-        <span data-home-i18n="navHome">Home</span>
-      </a>
-
-      <a class="sidebar-link" href="search.html">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-home-i18n="navSearch">Search listings</span>
-      </a>
-
-      <a class="sidebar-link" href="sell.html">
-        <i class="fa-solid fa-circle-plus"></i>
-        <span data-home-i18n="navPost">Post an ad</span>
-      </a>
-
-      <div class="sidebar-divider"></div>
-
-      <a class="sidebar-link" href="account.html">
-        <i class="fa-solid fa-user"></i>
-        <span data-home-i18n="navAccount">My account</span>
-      </a>
-
-      <a class="sidebar-link" href="favorites.html">
-        <i class="fa-solid fa-heart"></i>
-        <span data-home-i18n="navFavorites">Favorites</span>
-      </a>
-
-      <a class="sidebar-link" href="messages.html">
-        <i class="fa-solid fa-envelope"></i>
-        <span data-home-i18n="navMessages">Messages</span>
-      </a>
-
-      <a class="sidebar-link" href="dashboard.html">
-        <i class="fa-solid fa-chart-line"></i>
-        <span data-home-i18n="navDashboard">Dashboard</span>
-      </a>
-
-      <div class="sidebar-divider"></div>
-
-      <a class="sidebar-link" href="terms.html">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span data-home-i18n="navTerms">Terms</span>
-      </a>
-
-      <a class="sidebar-link" href="login.html">
-        <i class="fa-solid fa-right-to-bracket"></i>
-        <span data-home-i18n="navLogin">Login</span>
-      </a>
-
-      <a class="sidebar-link" href="register.html">
-        <i class="fa-solid fa-user-plus"></i>
-        <span data-home-i18n="navRegister">Create account</span>
-      </a>
-    </nav>
-
-    <div class="sidebar-footer">
-      HK Global Market & Services · 2026
-    </div>
-  </aside>
-
-  <main>
-    <!-- Hero -->
-    <section class="home-hero">
-      <div class="hero-bg-shape shape-one"></div>
-      <div class="hero-bg-shape shape-two"></div>
-
-      <div class="hero-inner">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <i class="fa-solid fa-earth-europe"></i>
-            <span data-home-i18n="badge">Global marketplace and services platform</span>
-          </div>
-
-          <h1 class="hero-title">
-            <span data-home-i18n="heroLine1">Buy, sell and find</span>
-            <span data-home-i18n="heroLine2">services worldwide</span>
-          </h1>
-
-          <p class="hero-subtitle" data-home-i18n="heroSubtitle">
-            Choose your country and category, then browse products, real estate,
-            vehicles, businesses, personal services, digital services, education,
-            maintenance centers, home services, and company services.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="search.html">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <span data-home-i18n="searchButton">Search listings</span>
-            </a>
-
-            <a class="btn btn-secondary" href="sell.html">
-              <i class="fa-solid fa-circle-plus"></i>
-              <span data-home-i18n="postButton">Post an ad</span>
-            </a>
-          </div>
-
-          <div class="hero-trust">
-            <div>
-              <strong>195</strong>
-              <span data-home-i18n="countries">Countries</span>
-            </div>
-
-            <div>
-              <strong>16+</strong>
-              <span data-home-i18n="categories">Categories</span>
-            </div>
-
-            <div>
-              <strong data-home-i18n="local">Local</strong>
-              <span data-home-i18n="languageSupport">Country language support</span>
-            </div>
-          </div>
+  <main id="main">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>Global marketplace · country-based listings</div>
+        <h1>Buy, sell and find <span class="highlight">trusted services</span> worldwide.</h1>
+        <p class="hero-copy">
+          A modern international marketplace for vehicles, real estate, products, maintenance centers, education, digital work, company services, transport, cleaning and local services — organized by country, language and category.
+        </p>
+        <div class="hero-actions">
+          <a class="btn accent" href="results.html">Search listings →</a>
+          <a class="btn" href="sell.html">Publish a new ad</a>
         </div>
-
-        <div class="hero-panel">
-          <div class="market-card main-market-card">
-            <div class="market-card-top">
-              <div class="market-icon">
-                <i class="fa-solid fa-location-dot"></i>
-              </div>
-
-              <div>
-                <p data-home-i18n="selectedCountry">Selected country</p>
-                <h2 id="selectedCountryName" data-selected-country>
-                  Sweden - Sverige
-                </h2>
-              </div>
-            </div>
-
-            <div class="market-card-line"></div>
-
-            <div class="market-info-grid">
-              <div>
-                <span data-home-i18n="selectedCategoryText">Selected category</span>
-                <strong id="selectedCategory" data-selected-category>
-                  Cars
-                </strong>
-              </div>
-
-              <div>
-                <span data-home-i18n="marketMode">Market mode</span>
-                <strong data-home-i18n="localMarket">Local market</strong>
-              </div>
-            </div>
-          </div>
-
-          <div class="floating-card floating-card-one">
-            <i class="fa-solid fa-screwdriver-wrench"></i>
-            <span data-home-i18n="floatMaintenance">Maintenance</span>
-          </div>
-
-          <div class="floating-card floating-card-two">
-            <i class="fa-solid fa-code"></i>
-            <span data-home-i18n="floatDigital">Digital services</span>
-          </div>
-
-          <div class="floating-card floating-card-three">
-            <i class="fa-solid fa-house"></i>
-            <span data-home-i18n="floatRealEstate">Real estate</span>
-          </div>
+        <div class="trust-row" aria-label="Platform highlights">
+          <span>🌍 195 countries</span>
+          <span>🧩 16+ categories</span>
+          <span>💬 Local language support</span>
         </div>
       </div>
-    </section>
 
-    <!-- Main category groups -->
-    <section class="category-section">
+      <aside class="hero-panel" aria-label="Marketplace search panel">
+        <form class="finder-card" id="heroSearchForm">
+          <h2>Find anything faster</h2>
+          <p>Select your country, category and keyword. Results open in the search page with the selected filters.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="countrySelect">Country</label>
+              <select id="countrySelect" name="country">
+                <option value="sweden">Sweden - Sverige</option>
+                <option value="germany">Germany - Deutschland</option>
+                <option value="turkey">Türkiye</option>
+                <option value="uae">United Arab Emirates</option>
+                <option value="saudi-arabia">Saudi Arabia</option>
+                <option value="global">Global market</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="categorySelect">Category</label>
+              <select id="categorySelect" name="category">
+                <option value="cars">Cars</option>
+                <option value="real-estate">Houses & apartments</option>
+                <option value="electronics">Electronics</option>
+                <option value="maintenance-centers">Maintenance centers</option>
+                <option value="digital-services">Digital services</option>
+                <option value="education">Education</option>
+                <option value="transport-delivery">Transport & delivery</option>
+                <option value="personal-services">Personal services</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="keywordInput">Keyword</label>
+              <input id="keywordInput" name="q" type="search" placeholder="Example: BMW, apartment, repair..." autocomplete="off" />
+            </div>
+            <button class="finder-submit" type="submit">Search now</button>
+          </div>
+        </form>
+
+        <div class="panel-stats">
+          <div class="panel-stat"><strong>195</strong><span>Countries</span></div>
+          <div class="panel-stat"><strong>16+</strong><span>Main sections</span></div>
+          <div class="panel-stat"><strong>24/7</strong><span>Accessible</span></div>
+        </div>
+
+        <div class="mini-feed" aria-label="Featured marketplace modes">
+          <div class="feed-item"><div class="feed-icon">🚗</div><div><strong>Vehicles marketplace</strong><small>Cars, motorcycles, bicycles and transport listings.</small></div></div>
+          <div class="feed-item"><div class="feed-icon">🛠️</div><div><strong>Maintenance & local services</strong><small>Service centers, home work and company support.</small></div></div>
+          <div class="feed-item"><div class="feed-icon">💼</div><div><strong>Business and digital services</strong><small>Design, programming, marketing, training and more.</small></div></div>
+        </div>
+      </aside>
+    </div>
+
+    <section aria-labelledby="quickLinksTitle">
       <div class="section-head">
         <div>
-          <p class="section-kicker">
-            <i class="fa-solid fa-layer-group"></i>
-            <span data-home-i18n="categoryKicker">Main sections</span>
-          </p>
-
-          <h2 data-home-i18n="categoryTitle">Everything in one global platform</h2>
+          <span class="section-kicker">Quick access</span>
+          <h2 id="quickLinksTitle">Main marketplace sections</h2>
         </div>
-
-        <a href="search.html" class="section-link">
-          <span data-home-i18n="viewAll">View all listings</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
+        <p>Use direct category paths so visitors can reach the correct market quickly without confusion.</p>
+      </div>
+      <div class="quick-tabs">
+        <a href="results.html?category=cars">🚗 Cars</a>
+        <a href="results.html?category=real-estate">🏠 Real estate</a>
+        <a href="results.html?category=maintenance-centers">🛠️ Maintenance</a>
+        <a href="results.html?category=digital-services">💻 Digital services</a>
+        <a href="results.html?category=education">🎓 Education</a>
+        <a href="results.html?category=transport-delivery">🚚 Transport</a>
+        <a href="results.html?category=cleaning-services">🧼 Cleaning</a>
       </div>
 
       <div class="category-grid">
-        <a class="category-card" href="search.html?category=cars">
-          <i class="fa-solid fa-car"></i>
-          <h3 data-home-i18n="carsTitle">Cars</h3>
-          <p data-home-i18n="carsText">New and used cars by country.</p>
+        <a class="category-card" href="results.html?category=cars">
+          <div><div class="cat-icon">🚗</div><h3>Cars</h3><p>New and used cars by country with local market filtering.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=houses">
-          <i class="fa-solid fa-house"></i>
-          <h3 data-home-i18n="housesTitle">Houses & apartments</h3>
-          <p data-home-i18n="housesText">Homes, apartments, and properties.</p>
+        <a class="category-card" href="results.html?category=real-estate">
+          <div><div class="cat-icon">🏠</div><h3>Houses & apartments</h3><p>Homes, apartments, rental offers and properties.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=electronics">
-          <i class="fa-solid fa-laptop"></i>
-          <h3 data-home-i18n="electronicsTitle">Electronics</h3>
-          <p data-home-i18n="electronicsText">Phones, computers, and devices.</p>
+        <a class="category-card" href="results.html?category=electronics">
+          <div><div class="cat-icon">📱</div><h3>Electronics</h3><p>Phones, computers, devices and accessories.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=home-items">
-          <i class="fa-solid fa-couch"></i>
-          <h3 data-home-i18n="homeItemsTitle">Home items</h3>
-          <p data-home-i18n="homeItemsText">Furniture, tools, and appliances.</p>
+        <a class="category-card" href="results.html?category=home-items">
+          <div><div class="cat-icon">🛋️</div><h3>Home items</h3><p>Furniture, tools, appliances and home products.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=motorcycles">
-          <i class="fa-solid fa-motorcycle"></i>
-          <h3 data-home-i18n="motorcyclesTitle">Motorcycles</h3>
-          <p data-home-i18n="motorcyclesText">Motorbikes and related items.</p>
+        <a class="category-card" href="results.html?category=motorcycles">
+          <div><div class="cat-icon">🏍️</div><h3>Motorcycles</h3><p>Motorbikes, parts, accessories and local sellers.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=bicycles">
-          <i class="fa-solid fa-bicycle"></i>
-          <h3 data-home-i18n="bicyclesTitle">Bicycles</h3>
-          <p data-home-i18n="bicyclesText">City bikes, sport bikes, and parts.</p>
+        <a class="category-card" href="results.html?category=bicycles">
+          <div><div class="cat-icon">🚲</div><h3>Bicycles</h3><p>City bikes, sport bikes, e-bikes and parts.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=shops">
-          <i class="fa-solid fa-store"></i>
-          <h3 data-home-i18n="shopsTitle">Commercial shops</h3>
-          <p data-home-i18n="shopsText">Stores, businesses, and commercial spaces.</p>
+        <a class="category-card" href="results.html?category=commercial-shops">
+          <div><div class="cat-icon">🏬</div><h3>Commercial shops</h3><p>Stores, businesses and commercial spaces.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=agricultural-lands">
-          <i class="fa-solid fa-seedling"></i>
-          <h3 data-home-i18n="landsTitle">Agricultural lands</h3>
-          <p data-home-i18n="landsText">Farms, lands, and rural properties.</p>
+        <a class="category-card" href="results.html?category=agricultural-lands">
+          <div><div class="cat-icon">🌾</div><h3>Agricultural lands</h3><p>Farms, lands and rural investment properties.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=maintenance-centers">
-          <i class="fa-solid fa-screwdriver-wrench"></i>
-          <h3 data-home-i18n="maintenanceTitle">Maintenance centers</h3>
-          <p data-home-i18n="maintenanceText">Car, device, machine, and equipment service centers.</p>
+        <a class="category-card" href="results.html?category=maintenance-centers">
+          <div><div class="cat-icon">🧰</div><h3>Maintenance centers</h3><p>Car, device, machine and equipment service centers.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=home-maintenance">
-          <i class="fa-solid fa-house-chimney-crack"></i>
-          <h3 data-home-i18n="homeMaintenanceTitle">Home maintenance</h3>
-          <p data-home-i18n="homeMaintenanceText">Plumbing, electricity, painting, repair, and home work.</p>
+        <a class="category-card" href="results.html?category=home-maintenance">
+          <div><div class="cat-icon">🔧</div><h3>Home maintenance</h3><p>Plumbing, electricity, painting and repairs.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=company-maintenance">
-          <i class="fa-solid fa-building-user"></i>
-          <h3 data-home-i18n="companyMaintenanceTitle">Company maintenance</h3>
-          <p data-home-i18n="companyMaintenanceText">Technical and maintenance services for companies.</p>
+        <a class="category-card" href="results.html?category=education">
+          <div><div class="cat-icon">🎓</div><h3>Education</h3><p>Courses, private lessons, tutoring and training.</p></div><span class="cat-link">View listings →</span>
         </a>
-
-        <a class="category-card" href="search.html?category=education">
-          <i class="fa-solid fa-graduation-cap"></i>
-          <h3 data-home-i18n="educationTitle">Education</h3>
-          <p data-home-i18n="educationText">Courses, private lessons, tutoring, and training.</p>
-        </a>
-
-        <a class="category-card" href="search.html?category=digital-services">
-          <i class="fa-solid fa-code"></i>
-          <h3 data-home-i18n="digitalTitle">Digital services</h3>
-          <p data-home-i18n="digitalText">Websites, design, programming, marketing, and online work.</p>
-        </a>
-
-        <a class="category-card" href="search.html?category=personal-services">
-          <i class="fa-solid fa-user-check"></i>
-          <h3 data-home-i18n="personalTitle">Personal services</h3>
-          <p data-home-i18n="personalText">Daily personal services, assistance, and local support.</p>
-        </a>
-
-        <a class="category-card" href="search.html?category=cleaning-services">
-          <i class="fa-solid fa-broom"></i>
-          <h3 data-home-i18n="cleaningTitle">Cleaning services</h3>
-          <p data-home-i18n="cleaningText">Home, office, shop, and building cleaning services.</p>
-        </a>
-
-        <a class="category-card" href="search.html?category=transport-delivery">
-          <i class="fa-solid fa-truck-fast"></i>
-          <h3 data-home-i18n="transportTitle">Transport & delivery</h3>
-          <p data-home-i18n="transportText">Moving, delivery, transport, and logistics services.</p>
+        <a class="category-card" href="results.html?category=digital-services">
+          <div><div class="cat-icon">💻</div><h3>Digital services</h3><p>Websites, design, programming and marketing.</p></div><span class="cat-link">View listings →</span>
         </a>
       </div>
     </section>
 
-    <!-- How it works -->
-    <section class="how-section">
-      <div class="section-head centered">
-        <p class="section-kicker">
-          <i class="fa-solid fa-route"></i>
-          <span data-home-i18n="stepsKicker">Simple process</span>
-        </p>
-
-        <h2 data-home-i18n="stepsTitle">How the platform works</h2>
-      </div>
-
-      <div class="steps-grid">
-        <div class="step-card">
-          <span>01</span>
-          <i class="fa-solid fa-globe"></i>
-          <h3 data-home-i18n="step1Title">Select country</h3>
-          <p data-home-i18n="step1Text">
-            Choose the country to display local language, currency, and listings.
-          </p>
+    <section aria-labelledby="countryTitle">
+      <div class="country-strip">
+        <div class="country-panel">
+          <span class="section-kicker">Country-first experience</span>
+          <div class="section-head" style="margin-bottom:0;">
+            <div><h2 id="countryTitle">Local market, global reach</h2></div>
+          </div>
+          <p style="color:var(--muted);line-height:1.72;font-weight:650;margin-top:12px;">Each visitor should start from the country, language and category that match their market. This makes posting ads and searching results more accurate.</p>
+          <div class="map-dots" aria-label="Example countries">
+            <span class="country-chip">🇸🇪 Sweden</span>
+            <span class="country-chip">🇩🇪 Germany</span>
+            <span class="country-chip">🇹🇷 Türkiye</span>
+            <span class="country-chip">🇦🇪 UAE</span>
+            <span class="country-chip">🇸🇦 Saudi</span>
+            <span class="country-chip">🌍 Global</span>
+            <span class="country-chip">🇬🇧 UK</span>
+            <span class="country-chip">🇺🇸 USA</span>
+            <span class="country-chip">🇳🇴 Norway</span>
+            <span class="country-chip">🇫🇷 France</span>
+          </div>
         </div>
 
-        <div class="step-card">
-          <span>02</span>
-          <i class="fa-solid fa-list"></i>
-          <h3 data-home-i18n="step2Title">Choose category</h3>
-          <p data-home-i18n="step2Text">
-            Select products, real estate, vehicles, businesses, or services.
-          </p>
-        </div>
-
-        <div class="step-card">
-          <span>03</span>
-          <i class="fa-solid fa-message"></i>
-          <h3 data-home-i18n="step3Title">Contact or publish</h3>
-          <p data-home-i18n="step3Text">
-            Contact sellers and service providers, or publish your own ad.
-          </p>
+        <div class="safety-panel">
+          <span class="section-kicker">Trust & clarity</span>
+          <h2 style="font-size:clamp(1.8rem,3vw,2.8rem);line-height:1.04;letter-spacing:-.06em;font-weight:950;">Designed for real publishing, not only display.</h2>
+          <div class="safety-list">
+            <div class="safety-item"><span>✓</span><div><strong>Clear category paths</strong><small>Products, vehicles, real estate and services are separated clearly.</small></div></div>
+            <div class="safety-item"><span>✓</span><div><strong>Strong call-to-action</strong><small>Visitors can immediately search or publish an ad.</small></div></div>
+            <div class="safety-item"><span>✓</span><div><strong>Mobile-first layout</strong><small>The design stays clean on phone, tablet and desktop.</small></div></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="cta-section">
-      <div class="cta-content">
-        <p class="section-kicker">
-          <i class="fa-solid fa-bolt"></i>
-          <span data-home-i18n="ctaKicker">Start now</span>
-        </p>
-
-        <h2 data-home-i18n="ctaTitle">Publish your first ad today</h2>
-
-        <p data-home-i18n="ctaText">
-          Add your product, property, vehicle, business, or service.
-          Choose the correct country and category so people can find you easily.
-        </p>
+    <section aria-labelledby="howTitle">
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Simple process</span>
+          <h2 id="howTitle">How the platform works</h2>
+        </div>
+        <p>A clean three-step path helps both buyers and service providers understand what to do next.</p>
       </div>
-
-      <a href="sell.html" class="btn btn-primary">
-        <i class="fa-solid fa-circle-plus"></i>
-        <span data-home-i18n="ctaButton">Post an ad</span>
-      </a>
+      <div class="steps">
+        <article class="step-card"><div class="step-no">01</div><h3>Select country</h3><p>Choose the country to display local language, currency and listings.</p></article>
+        <article class="step-card"><div class="step-no">02</div><h3>Choose category</h3><p>Select products, real estate, vehicles, businesses, education or services.</p></article>
+        <article class="step-card"><div class="step-no">03</div><h3>Contact or publish</h3><p>Contact sellers and service providers, or publish your own ad in the right section.</p></article>
+      </div>
     </section>
+
+    <div class="cta">
+      <div class="cta-card">
+        <div>
+          <span class="section-kicker" style="color:#fed7aa;">Start now</span>
+          <h2>Publish your first ad today.</h2>
+          <p>Add your product, property, vehicle, business or service. Choose the correct country and category so people can find you easily.</p>
+          <div class="cta-buttons">
+            <a class="btn accent" href="sell.html">Post an ad</a>
+            <a class="btn" href="results.html">Browse listings</a>
+          </div>
+        </div>
+        <div class="cta-visual">
+          <div class="cta-mini"><strong>For sellers</strong><span>Structured publishing for different ad types.</span></div>
+          <div class="cta-mini"><strong>For buyers</strong><span>Fast filtering by country and category.</span></div>
+          <div class="cta-mini"><strong>For services</strong><span>Maintenance, company work and local support sections.</span></div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
-    <div class="site-footer-inner">
-      <div>
-        © 2026 HK Global Market & Services. All rights reserved.
-      </div>
-
+    <div class="footer-wrap">
+      <div>© 2026 HK Global Market & Services. All rights reserved.</div>
       <div class="footer-links">
-        <a href="terms.html" data-home-i18n="navTerms">Terms</a>
-        <a href="search.html" data-home-i18n="navSearch">Search listings</a>
-        <a href="sell.html" data-home-i18n="navPost">Post an ad</a>
+        <a href="terms.html">Terms</a>
+        <a href="results.html">Search listings</a>
+        <a href="sell.html">Post an ad</a>
+        <a href="dashboard.html">Dashboard</a>
       </div>
     </div>
   </footer>
 
-  <!-- Important: countries first, categories second -->
-  <script src="assets/js/countries.js"></script>
-  <script src="assets/js/categories.js"></script>
-
   <script>
-    /* Index page language text */
-    const HOME_TEXT = {
-      en: {
-        navHome: "Home",
-        navSearch: "Search listings",
-        navPost: "Post an ad",
-        navAccount: "My account",
-        navFavorites: "Favorites",
-        navMessages: "Messages",
-        navDashboard: "Dashboard",
-        navTerms: "Terms",
-        navLogin: "Login",
-        navRegister: "Create account",
-
-        badge: "Global marketplace and services platform",
-        heroLine1: "Buy, sell and find",
-        heroLine2: "services worldwide",
-        heroSubtitle: "Choose your country and category, then browse products, real estate, vehicles, businesses, personal services, digital services, education, maintenance centers, home services, and company services.",
-        searchButton: "Search listings",
-        postButton: "Post an ad",
-
-        countries: "Countries",
-        categories: "Categories",
-        local: "Local",
-        languageSupport: "Country language support",
-
-        selectedCountry: "Selected country",
-        selectedCategoryText: "Selected category",
-        marketMode: "Market mode",
-        localMarket: "Local market",
-
-        floatMaintenance: "Maintenance",
-        floatDigital: "Digital services",
-        floatRealEstate: "Real estate",
-
-        categoryKicker: "Main sections",
-        categoryTitle: "Everything in one global platform",
-        viewAll: "View all listings",
-
-        carsTitle: "Cars",
-        carsText: "New and used cars by country.",
-        housesTitle: "Houses & apartments",
-        housesText: "Homes, apartments, and properties.",
-        electronicsTitle: "Electronics",
-        electronicsText: "Phones, computers, and devices.",
-        homeItemsTitle: "Home items",
-        homeItemsText: "Furniture, tools, and appliances.",
-        motorcyclesTitle: "Motorcycles",
-        motorcyclesText: "Motorbikes and related items.",
-        bicyclesTitle: "Bicycles",
-        bicyclesText: "City bikes, sport bikes, and parts.",
-        shopsTitle: "Commercial shops",
-        shopsText: "Stores, businesses, and commercial spaces.",
-        landsTitle: "Agricultural lands",
-        landsText: "Farms, lands, and rural properties.",
-        maintenanceTitle: "Maintenance centers",
-        maintenanceText: "Car, device, machine, and equipment service centers.",
-        homeMaintenanceTitle: "Home maintenance",
-        homeMaintenanceText: "Plumbing, electricity, painting, repair, and home work.",
-        companyMaintenanceTitle: "Company maintenance",
-        companyMaintenanceText: "Technical and maintenance services for companies.",
-        educationTitle: "Education",
-        educationText: "Courses, private lessons, tutoring, and training.",
-        digitalTitle: "Digital services",
-        digitalText: "Websites, design, programming, marketing, and online work.",
-        personalTitle: "Personal services",
-        personalText: "Daily personal services, assistance, and local support.",
-        cleaningTitle: "Cleaning services",
-        cleaningText: "Home, office, shop, and building cleaning services.",
-        transportTitle: "Transport & delivery",
-        transportText: "Moving, delivery, transport, and logistics services.",
-
-        stepsKicker: "Simple process",
-        stepsTitle: "How the platform works",
-        step1Title: "Select country",
-        step1Text: "Choose the country to display local language, currency, and listings.",
-        step2Title: "Choose category",
-        step2Text: "Select products, real estate, vehicles, businesses, or services.",
-        step3Title: "Contact or publish",
-        step3Text: "Contact sellers and service providers, or publish your own ad.",
-
-        ctaKicker: "Start now",
-        ctaTitle: "Publish your first ad today",
-        ctaText: "Add your product, property, vehicle, business, or service. Choose the correct country and category so people can find you easily.",
-        ctaButton: "Post an ad"
-      },
-
-      ar: {
-        navHome: "الرئيسية",
-        navSearch: "بحث الإعلانات",
-        navPost: "نشر إعلان",
-        navAccount: "حسابي",
-        navFavorites: "المفضلة",
-        navMessages: "الرسائل",
-        navDashboard: "لوحة التحكم",
-        navTerms: "الشروط",
-        navLogin: "تسجيل الدخول",
-        navRegister: "إنشاء حساب",
-
-        badge: "منصة عالمية للسوق والخدمات",
-        heroLine1: "اشترِ، بِع، وابحث عن",
-        heroLine2: "الخدمات حول العالم",
-        heroSubtitle: "اختر الدولة والقسم، ثم تصفّح المنتجات، العقارات، المركبات، الأعمال، الخدمات الشخصية، الخدمات الرقمية، التعليم، مراكز الصيانة، خدمات المنازل، وخدمات الشركات.",
-        searchButton: "بحث الإعلانات",
-        postButton: "نشر إعلان",
-
-        countries: "دولة",
-        categories: "قسم",
-        local: "محلي",
-        languageSupport: "دعم لغة الدولة",
-
-        selectedCountry: "الدولة المختارة",
-        selectedCategoryText: "القسم المختار",
-        marketMode: "نمط السوق",
-        localMarket: "سوق محلي",
-
-        floatMaintenance: "الصيانة",
-        floatDigital: "الخدمات الرقمية",
-        floatRealEstate: "العقارات",
-
-        categoryKicker: "الأقسام الرئيسية",
-        categoryTitle: "كل شيء في منصة عالمية واحدة",
-        viewAll: "عرض كل الإعلانات",
-
-        carsTitle: "السيارات",
-        carsText: "سيارات جديدة ومستعملة حسب الدولة.",
-        housesTitle: "المنازل والشقق",
-        housesText: "منازل، شقق، وعقارات.",
-        electronicsTitle: "الإلكترونيات",
-        electronicsText: "هواتف، حواسيب، وأجهزة.",
-        homeItemsTitle: "أدوات وأثاث منزلي",
-        homeItemsText: "أثاث، أدوات، وأجهزة منزلية.",
-        motorcyclesTitle: "الدراجات النارية",
-        motorcyclesText: "دراجات نارية وملحقاتها.",
-        bicyclesTitle: "الدراجات الهوائية",
-        bicyclesText: "دراجات مدينة، رياضية، وقطع غيار.",
-        shopsTitle: "المحلات التجارية",
-        shopsText: "محلات، أعمال، ومساحات تجارية.",
-        landsTitle: "الأراضي الزراعية",
-        landsText: "مزارع، أراضٍ، وعقارات ريفية.",
-        maintenanceTitle: "مراكز الصيانة",
-        maintenanceText: "مراكز صيانة للسيارات، الأجهزة، الآلات، والمعدات.",
-        homeMaintenanceTitle: "صيانة المنازل",
-        homeMaintenanceText: "سباكة، كهرباء، دهان، إصلاح، وأعمال منزلية.",
-        companyMaintenanceTitle: "صيانة الشركات",
-        companyMaintenanceText: "خدمات تقنية وصيانة للشركات.",
-        educationTitle: "التعليم",
-        educationText: "دورات، دروس خصوصية، تدريب وتعليم.",
-        digitalTitle: "الخدمات الرقمية",
-        digitalText: "مواقع، تصميم، برمجة، تسويق، وأعمال أونلاين.",
-        personalTitle: "الخدمات الشخصية",
-        personalText: "خدمات يومية، مساعدة شخصية، ودعم محلي.",
-        cleaningTitle: "خدمات التنظيف",
-        cleaningText: "تنظيف المنازل، المكاتب، المحلات، والمباني.",
-        transportTitle: "النقل والتوصيل",
-        transportText: "نقل، توصيل، شحن، وخدمات لوجستية.",
-
-        stepsKicker: "خطوات بسيطة",
-        stepsTitle: "كيف تعمل المنصة",
-        step1Title: "اختر الدولة",
-        step1Text: "اختر الدولة لعرض اللغة المحلية والعملة والإعلانات.",
-        step2Title: "اختر القسم",
-        step2Text: "اختر المنتجات، العقارات، المركبات، الأعمال، أو الخدمات.",
-        step3Title: "تواصل أو انشر",
-        step3Text: "تواصل مع البائعين ومقدمي الخدمات، أو انشر إعلانك.",
-
-        ctaKicker: "ابدأ الآن",
-        ctaTitle: "انشر أول إعلان لك اليوم",
-        ctaText: "أضف منتجك، عقارك، مركبتك، عملك، أو خدمتك. اختر الدولة والقسم الصحيح حتى يجدك الناس بسهولة.",
-        ctaButton: "نشر إعلان"
-      },
-
-      sv: {
-        navHome: "Hem",
-        navSearch: "Sök annonser",
-        navPost: "Publicera annons",
-        navAccount: "Mitt konto",
-        navFavorites: "Favoriter",
-        navMessages: "Meddelanden",
-        navDashboard: "Panel",
-        navTerms: "Villkor",
-        navLogin: "Logga in",
-        navRegister: "Skapa konto",
-
-        badge: "Global marknadsplats och tjänsteplattform",
-        heroLine1: "Köp, sälj och hitta",
-        heroLine2: "tjänster globalt",
-        heroSubtitle: "Välj land och kategori och bläddra bland produkter, fastigheter, fordon, företag, personliga tjänster, digitala tjänster, utbildning, servicecenter, hemtjänster och företagstjänster.",
-        searchButton: "Sök annonser",
-        postButton: "Publicera annons",
-
-        countries: "Länder",
-        categories: "Kategorier",
-        local: "Lokal",
-        languageSupport: "Språkstöd per land",
-
-        selectedCountry: "Valt land",
-        selectedCategoryText: "Vald kategori",
-        marketMode: "Marknadsläge",
-        localMarket: "Lokal marknad",
-
-        floatMaintenance: "Underhåll",
-        floatDigital: "Digitala tjänster",
-        floatRealEstate: "Fastigheter",
-
-        categoryKicker: "Huvudsektioner",
-        categoryTitle: "Allt i en global plattform",
-        viewAll: "Visa alla annonser",
-
-        carsTitle: "Bilar",
-        carsText: "Nya och begagnade bilar per land.",
-        housesTitle: "Hus och lägenheter",
-        housesText: "Hem, lägenheter och fastigheter.",
-        electronicsTitle: "Elektronik",
-        electronicsText: "Telefoner, datorer och enheter.",
-        homeItemsTitle: "Hemartiklar",
-        homeItemsText: "Möbler, verktyg och apparater.",
-        motorcyclesTitle: "Motorcyklar",
-        motorcyclesText: "Motorcyklar och tillbehör.",
-        bicyclesTitle: "Cyklar",
-        bicyclesText: "Stadscyklar, sportcyklar och delar.",
-        shopsTitle: "Butiker",
-        shopsText: "Butiker, företag och kommersiella lokaler.",
-        landsTitle: "Jordbruksmark",
-        landsText: "Gårdar, mark och landsbygdsfastigheter.",
-        maintenanceTitle: "Servicecenter",
-        maintenanceText: "Servicecenter för bilar, enheter, maskiner och utrustning.",
-        homeMaintenanceTitle: "Hemservice",
-        homeMaintenanceText: "VVS, el, målning, reparation och hemarbete.",
-        companyMaintenanceTitle: "Företagsservice",
-        companyMaintenanceText: "Tekniska tjänster och underhåll för företag.",
-        educationTitle: "Utbildning",
-        educationText: "Kurser, privatlektioner, handledning och träning.",
-        digitalTitle: "Digitala tjänster",
-        digitalText: "Webbplatser, design, programmering, marknadsföring och onlinearbete.",
-        personalTitle: "Personliga tjänster",
-        personalText: "Dagliga personliga tjänster, hjälp och lokalt stöd.",
-        cleaningTitle: "Städtjänster",
-        cleaningText: "Städning för hem, kontor, butiker och byggnader.",
-        transportTitle: "Transport och leverans",
-        transportText: "Flytt, leverans, transport och logistik.",
-
-        stepsKicker: "Enkel process",
-        stepsTitle: "Så fungerar plattformen",
-        step1Title: "Välj land",
-        step1Text: "Välj land för att visa lokalt språk, valuta och annonser.",
-        step2Title: "Välj kategori",
-        step2Text: "Välj produkter, fastigheter, fordon, företag eller tjänster.",
-        step3Title: "Kontakta eller publicera",
-        step3Text: "Kontakta säljare och tjänsteleverantörer eller publicera din egen annons.",
-
-        ctaKicker: "Börja nu",
-        ctaTitle: "Publicera din första annons idag",
-        ctaText: "Lägg till din produkt, fastighet, fordon, verksamhet eller tjänst. Välj rätt land och kategori så att människor lätt hittar dig.",
-        ctaButton: "Publicera annons"
-      }
-    };
-
-    function getHomeLang() {
-      const lang = (document.documentElement.lang || localStorage.getItem("amg_country_lang") || "en").slice(0, 2);
-      return HOME_TEXT[lang] ? lang : "en";
-    }
-
-    function applyHomeLanguage() {
-      const lang = getHomeLang();
-      const dictionary = HOME_TEXT[lang] || HOME_TEXT.en;
-
-      document.querySelectorAll("[data-home-i18n]").forEach((element) => {
-        const key = element.getAttribute("data-home-i18n");
-        element.textContent = dictionary[key] || HOME_TEXT.en[key] || element.textContent;
-      });
-    }
-
-    function setupHomeSidebar() {
-      const menuToggle = document.getElementById("menuToggle");
-      const sidebar = document.getElementById("sidebar");
-      const sidebarClose = document.getElementById("sidebarClose");
-      const sidebarBackdrop = document.getElementById("sidebarBackdrop");
-
-      function openSidebar() {
-        sidebar.classList.add("open");
-        sidebarBackdrop.classList.add("open");
-        document.body.classList.add("menu-open");
-        menuToggle.setAttribute("aria-expanded", "true");
-      }
-
-      function closeSidebar() {
-        sidebar.classList.remove("open");
-        sidebarBackdrop.classList.remove("open");
-        document.body.classList.remove("menu-open");
-        menuToggle.setAttribute("aria-expanded", "false");
-      }
-
-      menuToggle.addEventListener("click", openSidebar);
-      sidebarClose.addEventListener("click", closeSidebar);
-      sidebarBackdrop.addEventListener("click", closeSidebar);
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          closeSidebar();
-        }
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      setupHomeSidebar();
-      applyHomeLanguage();
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn?.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      menuBtn.textContent = isOpen ? '×' : '☰';
     });
 
-    window.addEventListener("amg:countrychange", applyHomeLanguage);
-    window.addEventListener("amg:categorychange", applyHomeLanguage);
+    document.getElementById('heroSearchForm')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const country = document.getElementById('countrySelect').value;
+      const category = document.getElementById('categorySelect').value;
+      const q = document.getElementById('keywordInput').value.trim();
+      const params = new URLSearchParams();
+      if (country) params.set('country', country);
+      if (category) params.set('category', category);
+      if (q) params.set('q', q);
+      window.location.href = `results.html?${params.toString()}`;
+    });
   </script>
 </body>
 </html>
