@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Favorites | AutoMarket Global</title>
-
-  <meta
-    name="description"
-    content="View and manage your favorite cars on AutoMarket Global."
-  />
+  <title>Favorites | HK Global Market & Services</title>
+  <meta name="description" content="Manage saved favorite ads across countries and categories." />
 
   <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -17,60 +13,750 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
+
+  <style>
+    :root {
+      --orange: #ff8b26;
+      --orange-dark: #e87512;
+      --dark: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.1);
+      --soft: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(46, 144, 250, 0.1), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      color: var(--dark);
+    }
+
+    body[dir="rtl"] {
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      height: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle,
+    .sidebar-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--dark);
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--orange);
+    }
+
+    .top-country {
+      min-width: 220px;
+      max-width: 320px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.42);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 320px;
+      background: #fff;
+      z-index: 90;
+      transform: translateX(-105%);
+      transition: 0.25s ease;
+      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      transform: translateX(105%);
+      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .sidebar-title span {
+      color: var(--orange);
+    }
+
+    .sidebar-nav {
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 800;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 34px 18px 80px;
+    }
+
+    .hero {
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(16, 24, 40, 0.94), rgba(16, 24, 40, 0.78)),
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.35), transparent 38%);
+      color: #fff;
+      padding: 34px;
+      box-shadow: 0 32px 90px rgba(16, 24, 40, 0.24);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 24px;
+      align-items: end;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      right: -110px;
+      top: -130px;
+      background: rgba(255, 139, 38, 0.2);
+      filter: blur(4px);
+    }
+
+    body[dir="rtl"] .hero::after {
+      right: auto;
+      left: -110px;
+    }
+
+    .hero-content,
+    .hero-box {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd2aa;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 6vw, 70px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.8;
+      font-size: 17px;
+      max-width: 720px;
+    }
+
+    .hero-box {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-box i {
+      width: 62px;
+      height: 62px;
+      border-radius: 22px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .hero-box strong {
+      display: block;
+      font-size: 34px;
+      margin-bottom: 6px;
+    }
+
+    .hero-box span {
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .toolbar {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px 180px;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: var(--muted);
+    }
+
+    body[dir="rtl"] .search-box i {
+      left: auto;
+      right: 16px;
+    }
+
+    .search-box input,
+    .toolbar select {
+      width: 100%;
+      height: 48px;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-box input {
+      padding: 0 16px 0 44px;
+    }
+
+    body[dir="rtl"] .search-box input {
+      padding: 0 44px 0 16px;
+    }
+
+    .toolbar select {
+      padding: 0 14px;
+    }
+
+    .search-box input:focus,
+    .toolbar select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
+    }
+
+    .clear-btn {
+      height: 48px;
+      border-radius: 999px;
+      border: 1px solid #fecdca;
+      background: #fef3f2;
+      color: #b42318;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+    }
+
+    .content-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .count-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 15px;
+      border-radius: 999px;
+      background: #fff4ea;
+      color: var(--orange-dark);
+      font-weight: 900;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .favorites-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .fav-card {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 18px 55px rgba(16, 24, 40, 0.08);
+      transition: 0.22s ease;
+    }
+
+    .fav-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 70px rgba(16, 24, 40, 0.12);
+    }
+
+    .fav-image {
+      height: 170px;
+      background:
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.24), transparent 35%),
+        linear-gradient(135deg, #f2f4f7, #ffffff);
+      display: grid;
+      place-items: center;
+      color: var(--orange);
+      font-size: 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fav-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .fav-badge {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--orange-dark);
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: 0 8px 24px rgba(16, 24, 40, 0.1);
+    }
+
+    body[dir="rtl"] .fav-badge {
+      left: auto;
+      right: 14px;
+    }
+
+    .fav-body {
+      padding: 18px;
+    }
+
+    .fav-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .fav-title {
+      margin: 0 0 10px;
+      font-size: 20px;
+      letter-spacing: -0.035em;
+      line-height: 1.25;
+    }
+
+    .fav-desc {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+      min-height: 45px;
+    }
+
+    .fav-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .price {
+      font-size: 19px;
+      font-weight: 950;
+      color: var(--dark);
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .action-btn,
+    .details-link {
+      min-height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--dark);
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .details-link {
+      background: var(--dark);
+      border-color: var(--dark);
+      color: #fff;
+    }
+
+    .action-btn.remove {
+      background: #fef3f2;
+      border-color: #fecdca;
+      color: #b42318;
+    }
+
+    .empty-state {
+      display: none;
+      min-height: 380px;
+      border: 1px dashed rgba(16, 24, 40, 0.18);
+      border-radius: 28px;
+      background: #fff;
+      text-align: center;
+      padding: 42px 20px;
+      place-items: center;
+      color: var(--muted);
+    }
+
+    .empty-state.show {
+      display: grid;
+    }
+
+    .empty-state i {
+      display: block;
+      font-size: 54px;
+      color: var(--orange);
+      margin-bottom: 14px;
+    }
+
+    .empty-state h3 {
+      margin: 0 0 8px;
+      color: var(--dark);
+      font-size: 26px;
+      letter-spacing: -0.04em;
+    }
+
+    .empty-state p {
+      margin: 0 0 20px;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .primary-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 16px 40px rgba(255, 139, 38, 0.3);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 120;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 900;
+      box-shadow: 0 18px 55px rgba(16, 24, 40, 0.22);
+      transition: 0.25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .favorites-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .top-country {
+        min-width: 150px;
+        max-width: 180px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .page {
+        padding-top: 24px;
+      }
+
+      .hero {
+        padding: 22px;
+        border-radius: 28px;
+      }
+
+      .favorites-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .fav-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .actions {
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="site-topbar">
-    <div class="site-topbar-inner">
-      <div class="topbar-left">
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false"
-        >
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
-          AutoMarket <span>Global</span>
-        </a>
+        <a class="brand" href="index.html">HK <span>Global</span></a>
       </div>
 
-      <div class="topbar-right">
-        <select
-          class="country-select"
-          id="countrySelect"
-          aria-label="Choose country"
-        ></select>
+      <div class="top-right">
+        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
       </div>
     </div>
   </header>
 
-  <!-- Sidebar backdrop -->
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-title">
-        AutoMarket <span>Global</span>
-      </div>
+      <div class="sidebar-title">HK <span>Global</span></div>
 
-      <button
-        class="sidebar-close"
-        id="sidebarClose"
-        type="button"
-        aria-label="Close menu"
-      >
+      <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <nav class="sidebar-nav" aria-label="Main navigation">
+    <nav class="sidebar-nav">
       <a class="sidebar-link" href="index.html">
         <i class="fa-solid fa-house"></i>
         <span data-i18n="home">Home</span>
@@ -78,15 +764,13 @@
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
+        <span data-i18n="search">Search</span>
       </a>
 
       <a class="sidebar-link" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
+        <span data-i18n="postAd">Post ad</span>
       </a>
-
-      <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
@@ -126,54 +810,715 @@
       </a>
     </nav>
 
-    <div class="sidebar-footer">
-      AutoMarket Global · 2026
-    </div>
+    <div class="sidebar-footer">HK Global Market & Services · 2026</div>
   </aside>
 
-  <!-- Main page -->
   <main class="page">
-    <section class="page-header">
-      <p class="eyebrow">
-        <i class="fa-solid fa-heart"></i>
-        <span data-i18n="favorites">Favorites</span>
-      </p>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">
+          <i class="fa-solid fa-heart"></i>
+          <span data-i18n="favoritesCenter">Favorites center</span>
+        </div>
 
-      <h1 data-i18n="favoritesTitle">Favorites</h1>
+        <h1>
+          <span data-i18n="heroTitleA">Your saved</span>
+          <span data-i18n="heroTitleB">market ads</span>
+        </h1>
 
-      <p class="subtitle" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
-      </p>
-    </section>
-
-    <section>
-      <div class="car-grid" id="favoritesGrid"></div>
-
-      <div class="empty-state" id="emptyState" style="display: none;">
-        <i class="fa-regular fa-heart"></i>
-        <h3 data-i18n="noCars">No cars found</h3>
-        <p data-i18n="noCarsText">
-          Try changing the country or removing some filters.
+        <p data-i18n="heroText">
+          Keep important listings in one place and return to them quickly across vehicles, real estate, electronics, services, education, and digital work.
         </p>
       </div>
+
+      <div class="hero-box">
+        <i class="fa-solid fa-heart-circle-check"></i>
+        <strong id="heroCount">0</strong>
+        <span data-i18n="savedItems">Saved favorite items</span>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="keyword" type="search" />
+      </div>
+
+      <select id="categoryFilter"></select>
+
+      <button class="clear-btn" id="clearAllBtn" type="button">
+        <i class="fa-solid fa-trash"></i>
+        <span data-i18n="clearAll">Clear all</span>
+      </button>
+    </section>
+
+    <section class="content-card">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="favoritesTitle">Favorite listings</h2>
+          <p data-i18n="favoritesText">Saved ads are stored locally in this browser.</p>
+        </div>
+
+        <div class="count-pill">
+          <i class="fa-solid fa-heart"></i>
+          <span id="resultCount">0</span>
+        </div>
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        <div>
+          <i class="fa-solid fa-heart-crack"></i>
+          <h3 data-i18n="emptyTitle">No favorites yet</h3>
+          <p data-i18n="emptyText">Browse ads and save the listings you want to return to later.</p>
+
+          <a class="primary-link" href="search.html">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span data-i18n="browseAds">Browse ads</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="favorites-grid" id="favoritesGrid"></div>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <div>
-        © 2026 AutoMarket Global. All rights reserved.
-      </div>
+  <div class="toast" id="toast"></div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 HK Global Market & Services.</div>
 
       <div class="footer-links">
         <a href="terms.html" data-i18n="terms">Terms</a>
-        <a href="search.html" data-i18n="searchCars">Search cars</a>
-        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+        <a href="search.html" data-i18n="search">Search</a>
+        <a href="sell.html" data-i18n="postAd">Post ad</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/core.js"></script>
+  <script src="assets/js/countries.js"></script>
+  <script src="assets/js/categories.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE = {
+        country: "amg_country_code",
+        countryLabel: "amg_country_label",
+        lang: "amg_country_lang",
+        favorites: "hk_global_favorites",
+        listings: "hk_global_market_listings"
+      };
+
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+      const DICT = {
+        en: {
+          home: "Home",
+          search: "Search",
+          postAd: "Post ad",
+          account: "My account",
+          favorites: "Favorites",
+          messages: "Messages",
+          dashboard: "Dashboard",
+          terms: "Terms",
+          login: "Login",
+          register: "Create account",
+          favoritesCenter: "Favorites center",
+          heroTitleA: "Your saved",
+          heroTitleB: "market ads",
+          heroText: "Keep important listings in one place and return to them quickly across vehicles, real estate, electronics, services, education, and digital work.",
+          savedItems: "Saved favorite items",
+          clearAll: "Clear all",
+          favoritesTitle: "Favorite listings",
+          favoritesText: "Saved ads are stored locally in this browser.",
+          emptyTitle: "No favorites yet",
+          emptyText: "Browse ads and save the listings you want to return to later.",
+          browseAds: "Browse ads",
+          allCategories: "All categories",
+          searchPlaceholder: "Search in favorites...",
+          details: "Details",
+          remove: "Remove",
+          noPrice: "Ask price",
+          removed: "Removed from favorites",
+          cleared: "All favorites cleared",
+          results: "items"
+        },
+
+        ar: {
+          home: "الرئيسية",
+          search: "البحث",
+          postAd: "نشر إعلان",
+          account: "حسابي",
+          favorites: "المفضلة",
+          messages: "الرسائل",
+          dashboard: "لوحة التحكم",
+          terms: "الشروط",
+          login: "تسجيل الدخول",
+          register: "إنشاء حساب",
+          favoritesCenter: "مركز المفضلة",
+          heroTitleA: "إعلاناتك",
+          heroTitleB: "المحفوظة",
+          heroText: "احتفظ بالإعلانات المهمة في مكان واحد وارجع إليها بسرعة ضمن المركبات والعقارات والإلكترونيات والخدمات والتعليم والخدمات الرقمية.",
+          savedItems: "عناصر محفوظة في المفضلة",
+          clearAll: "مسح الكل",
+          favoritesTitle: "الإعلانات المفضلة",
+          favoritesText: "الإعلانات المحفوظة تُخزن محلياً في هذا المتصفح.",
+          emptyTitle: "لا توجد مفضلة بعد",
+          emptyText: "تصفح الإعلانات واحفظ الإعلانات التي تريد الرجوع إليها لاحقاً.",
+          browseAds: "تصفح الإعلانات",
+          allCategories: "كل الفئات",
+          searchPlaceholder: "ابحث في المفضلة...",
+          details: "التفاصيل",
+          remove: "إزالة",
+          noPrice: "السعر عند التواصل",
+          removed: "تمت الإزالة من المفضلة",
+          cleared: "تم مسح كل المفضلة",
+          results: "عناصر"
+        },
+
+        sv: {
+          home: "Hem",
+          search: "Sök",
+          postAd: "Lägg upp annons",
+          account: "Mitt konto",
+          favorites: "Favoriter",
+          messages: "Meddelanden",
+          dashboard: "Panel",
+          terms: "Villkor",
+          login: "Logga in",
+          register: "Skapa konto",
+          favoritesCenter: "Favoritcenter",
+          heroTitleA: "Dina sparade",
+          heroTitleB: "marknadsannonser",
+          heroText: "Spara viktiga annonser på ett ställe och återvänd snabbt till fordon, bostäder, elektronik, tjänster, utbildning och digitalt arbete.",
+          savedItems: "Sparade favoriter",
+          clearAll: "Rensa alla",
+          favoritesTitle: "Favoritannonser",
+          favoritesText: "Sparade annonser lagras lokalt i denna webbläsare.",
+          emptyTitle: "Inga favoriter ännu",
+          emptyText: "Bläddra bland annonser och spara de annonser du vill återvända till senare.",
+          browseAds: "Bläddra annonser",
+          allCategories: "Alla kategorier",
+          searchPlaceholder: "Sök i favoriter...",
+          details: "Detaljer",
+          remove: "Ta bort",
+          noPrice: "Fråga pris",
+          removed: "Borttagen från favoriter",
+          cleared: "Alla favoriter rensade",
+          results: "objekt"
+        },
+
+        de: {},
+        tr: {},
+        fr: {},
+        es: {},
+        it: {},
+        pt: {},
+        nl: {}
+      };
+
+      DICT.de = DICT.en;
+      DICT.tr = DICT.en;
+      DICT.fr = DICT.en;
+      DICT.es = DICT.en;
+      DICT.it = DICT.en;
+      DICT.pt = DICT.en;
+      DICT.nl = DICT.en;
+
+      const FALLBACK_COUNTRIES = [
+        { code: "SE", labels: { en: "Sweden", ar: "السويد", sv: "Sverige" }, lang: "sv", currency: "SEK" },
+        { code: "DE", labels: { en: "Germany", ar: "ألمانيا", sv: "Tyskland" }, lang: "de", currency: "EUR" },
+        { code: "SY", labels: { en: "Syria", ar: "سوريا", sv: "Syrien" }, lang: "ar", currency: "USD" },
+        { code: "TR", labels: { en: "Türkiye", ar: "تركيا", sv: "Turkiet" }, lang: "tr", currency: "TRY" },
+        { code: "AE", labels: { en: "United Arab Emirates", ar: "الإمارات", sv: "Förenade Arabemiraten" }, lang: "ar", currency: "AED" }
+      ];
+
+      const FALLBACK_CATEGORIES = [
+        { id: "private-cars", group: "vehicles", labels: { en: "Private cars", ar: "سيارات خاصة", sv: "Personbilar" }, icon: "fa-car" },
+        { id: "rental-cars", group: "vehicles", labels: { en: "Rental cars", ar: "سيارات للإيجار", sv: "Hyrbilar" }, icon: "fa-key" },
+        { id: "motorcycles", group: "vehicles", labels: { en: "Motorcycles", ar: "دراجات نارية", sv: "Motorcyklar" }, icon: "fa-motorcycle" },
+        { id: "bicycles", group: "vehicles", labels: { en: "Bicycles", ar: "دراجات هوائية", sv: "Cyklar" }, icon: "fa-bicycle" },
+        { id: "small-trucks", group: "vehicles", labels: { en: "Small trucks", ar: "شاحنات صغيرة", sv: "Små lastbilar" }, icon: "fa-truck-pickup" },
+        { id: "heavy-trucks", group: "vehicles", labels: { en: "Heavy trucks", ar: "شاحنات كبيرة", sv: "Tunga lastbilar" }, icon: "fa-truck" },
+        { id: "vehicle-parts", group: "vehicles", labels: { en: "Vehicle parts", ar: "قطع غيار مركبات", sv: "Fordonsdelar" }, icon: "fa-gears" },
+
+        { id: "property-sale", group: "realEstate", labels: { en: "Property for sale", ar: "عقار للبيع", sv: "Bostad till salu" }, icon: "fa-house" },
+        { id: "property-rent", group: "realEstate", labels: { en: "Property for rent", ar: "عقار للإيجار", sv: "Bostad att hyra" }, icon: "fa-building" },
+        { id: "rooms", group: "realEstate", labels: { en: "Rooms", ar: "غرف", sv: "Rum" }, icon: "fa-door-open" },
+        { id: "commercial-property", group: "realEstate", labels: { en: "Commercial property", ar: "عقار تجاري", sv: "Kommersiell fastighet" }, icon: "fa-warehouse" },
+        { id: "lands", group: "realEstate", labels: { en: "Land", ar: "أراضي", sv: "Mark" }, icon: "fa-map" },
+        { id: "farms", group: "realEstate", labels: { en: "Farms", ar: "أراضٍ زراعية", sv: "Jordbruksmark" }, icon: "fa-tractor" },
+
+        { id: "phones", group: "electronics", labels: { en: "Phones", ar: "هواتف", sv: "Telefoner" }, icon: "fa-mobile-screen" },
+        { id: "computers", group: "electronics", labels: { en: "Computers", ar: "كمبيوترات", sv: "Datorer" }, icon: "fa-computer" },
+        { id: "tv-audio", group: "electronics", labels: { en: "TV and audio", ar: "تلفزيون وصوتيات", sv: "TV och ljud" }, icon: "fa-tv" },
+        { id: "gaming", group: "electronics", labels: { en: "Gaming", ar: "ألعاب", sv: "Gaming" }, icon: "fa-gamepad" },
+
+        { id: "furniture", group: "home", labels: { en: "Furniture", ar: "أثاث", sv: "Möbler" }, icon: "fa-couch" },
+        { id: "appliances", group: "home", labels: { en: "Appliances", ar: "أجهزة منزلية", sv: "Vitvaror" }, icon: "fa-blender" },
+        { id: "home-tools", group: "home", labels: { en: "Home tools", ar: "أدوات منزلية", sv: "Hemverktyg" }, icon: "fa-screwdriver" },
+        { id: "garden", group: "home", labels: { en: "Garden", ar: "حديقة", sv: "Trädgård" }, icon: "fa-seedling" },
+
+        { id: "shops", group: "business", labels: { en: "Shops", ar: "محلات", sv: "Butiker" }, icon: "fa-store" },
+        { id: "restaurants", group: "business", labels: { en: "Restaurants and cafés", ar: "مطاعم ومقاهي", sv: "Restauranger och caféer" }, icon: "fa-utensils" },
+        { id: "business-sale", group: "business", labels: { en: "Business for sale", ar: "مشروع للبيع", sv: "Företag till salu" }, icon: "fa-handshake" },
+
+        { id: "vehicle-service", group: "services", labels: { en: "Vehicle service", ar: "صيانة مركبات", sv: "Fordonsservice" }, icon: "fa-car-burst" },
+        { id: "home-maintenance", group: "services", labels: { en: "Home maintenance", ar: "صيانة منازل", sv: "Hemunderhåll" }, icon: "fa-house-circle-check" },
+        { id: "company-maintenance", group: "services", labels: { en: "Company maintenance", ar: "صيانة شركات", sv: "Företagsunderhåll" }, icon: "fa-building-circle-check" },
+        { id: "device-repair", group: "services", labels: { en: "Device repair", ar: "إصلاح أجهزة", sv: "Enhetsreparation" }, icon: "fa-screwdriver-wrench" },
+        { id: "cleaning", group: "services", labels: { en: "Cleaning", ar: "تنظيف", sv: "Städning" }, icon: "fa-broom" },
+        { id: "transport", group: "services", labels: { en: "Transport and delivery", ar: "نقل وتوصيل", sv: "Transport och leverans" }, icon: "fa-truck-fast" },
+
+        { id: "private-lessons", group: "education", labels: { en: "Private lessons", ar: "دروس خصوصية", sv: "Privatlektioner" }, icon: "fa-chalkboard-user" },
+        { id: "language-courses", group: "education", labels: { en: "Language courses", ar: "دورات لغات", sv: "Språkkurser" }, icon: "fa-language" },
+        { id: "online-courses", group: "education", labels: { en: "Online courses", ar: "دورات أونلاين", sv: "Onlinekurser" }, icon: "fa-laptop-file" },
+
+        { id: "web-design", group: "digital", labels: { en: "Web design", ar: "تصميم مواقع", sv: "Webbdesign" }, icon: "fa-globe" },
+        { id: "programming", group: "digital", labels: { en: "Programming", ar: "برمجة", sv: "Programmering" }, icon: "fa-code" },
+        { id: "graphic-design", group: "digital", labels: { en: "Graphic design", ar: "تصميم جرافيك", sv: "Grafisk design" }, icon: "fa-pen-nib" },
+        { id: "marketing", group: "digital", labels: { en: "Digital marketing", ar: "تسويق رقمي", sv: "Digital marknadsföring" }, icon: "fa-bullhorn" }
+      ];
+
+      function currentLang() {
+        return String(localStorage.getItem(STORAGE.lang) || "en").slice(0, 2).toLowerCase();
+      }
+
+      function t(key) {
+        const lang = currentLang();
+        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+      }
+
+      function readJson(key, fallback) {
+        try {
+          const value = JSON.parse(localStorage.getItem(key) || "");
+          return value || fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function writeJson(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+
+      function getCountries() {
+        const external = window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+        return external.length ? external : FALLBACK_COUNTRIES;
+      }
+
+      function getCategories() {
+        const external = window.AMG_CATEGORIES || window.CATEGORIES || window.categories || [];
+        return external.length ? external.concat(FALLBACK_CATEGORIES) : FALLBACK_CATEGORIES;
+      }
+
+      function countryCode(country) {
+        return country?.code || country?.id || country?.iso2 || country?.value || "";
+      }
+
+      function countryLang(country) {
+        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
+      }
+
+      function localText(obj, fallback = "") {
+        const lang = currentLang();
+
+        if (!obj) return fallback;
+        if (typeof obj === "string") return obj;
+
+        if (obj.labels) return obj.labels[lang] || obj.labels.en || obj.labels.ar || fallback;
+        if (obj.names) return obj.names[lang] || obj.names.en || obj.names.ar || fallback;
+        if (obj.name) return obj.name;
+
+        return fallback;
+      }
+
+      function getCountryByCode(code) {
+        const clean = String(code || "").toUpperCase();
+        return getCountries().find((country) => String(countryCode(country)).toUpperCase() === clean) || getCountries()[0];
+      }
+
+      function getCategory(id) {
+        return getCategories().find((category) => category.id === id) || FALLBACK_CATEGORIES[0];
+      }
+
+      function categoryLabel(id) {
+        return localText(getCategory(id), id || "-");
+      }
+
+      function categoryIcon(id) {
+        return getCategory(id)?.icon || "fa-layer-group";
+      }
+
+      function fillCountries() {
+        const select = $("#countrySelect");
+        const countries = getCountries();
+
+        if (!select || !countries.length) return;
+
+        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
+
+        select.innerHTML = "";
+
+        countries.forEach((country) => {
+          const option = document.createElement("option");
+          option.value = countryCode(country);
+          option.textContent = localText(country, countryCode(country));
+          select.appendChild(option);
+        });
+
+        select.value = saved;
+      }
+
+      function applyCountry(code) {
+        const country = getCountryByCode(code);
+
+        if (!country) return;
+
+        const codeValue = countryCode(country);
+        const label = localText(country, codeValue);
+
+        localStorage.setItem(STORAGE.country, codeValue);
+        localStorage.setItem(STORAGE.countryLabel, label);
+
+        if (!localStorage.getItem(STORAGE.lang)) {
+          localStorage.setItem(STORAGE.lang, countryLang(country));
+        }
+
+        document.documentElement.lang = currentLang();
+        document.documentElement.dir = currentLang() === "ar" ? "rtl" : "ltr";
+        document.body.setAttribute("dir", currentLang() === "ar" ? "rtl" : "ltr");
+
+        fillCountries();
+        applyTranslations();
+        fillCategoryFilter();
+        renderFavorites();
+      }
+
+      function applyTranslations() {
+        $$("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+
+        $("#keyword").placeholder = t("searchPlaceholder");
+      }
+
+      function fillCategoryFilter() {
+        const select = $("#categoryFilter");
+        const favorites = getFavoriteObjects();
+        const ids = [...new Set(favorites.map((item) => item.categoryId).filter(Boolean))];
+
+        select.innerHTML = "";
+
+        const all = document.createElement("option");
+        all.value = "";
+        all.textContent = t("allCategories");
+        select.appendChild(all);
+
+        ids.forEach((id) => {
+          const option = document.createElement("option");
+          option.value = id;
+          option.textContent = categoryLabel(id);
+          select.appendChild(option);
+        });
+      }
+
+      function getListings() {
+        const keys = [
+          STORAGE.listings,
+          "amg_listings",
+          "amg_ads",
+          "automarket_listings",
+          "automarket_ads",
+          "hk_global_ads"
+        ];
+
+        let listings = [];
+
+        keys.forEach((key) => {
+          const value = readJson(key, []);
+          if (Array.isArray(value)) listings = listings.concat(value);
+        });
+
+        return listings.map(normalizeListing);
+      }
+
+      function getRawFavorites() {
+        const keys = [
+          STORAGE.favorites,
+          "amg_favorites",
+          "automarket_favorites",
+          "hk_global_saved"
+        ];
+
+        let favorites = [];
+
+        keys.forEach((key) => {
+          const value = readJson(key, []);
+          if (Array.isArray(value)) favorites = favorites.concat(value);
+        });
+
+        return favorites;
+      }
+
+      function getFavoriteObjects() {
+        const rawFavorites = getRawFavorites();
+        const listings = getListings();
+
+        const objects = rawFavorites.map((fav) => {
+          if (typeof fav === "object" && fav !== null) {
+            return normalizeListing(fav);
+          }
+
+          const found = listings.find((item) => String(item.id) === String(fav));
+          return found || null;
+        }).filter(Boolean);
+
+        const unique = [];
+        const seen = new Set();
+
+        objects.forEach((item) => {
+          if (!seen.has(String(item.id))) {
+            seen.add(String(item.id));
+            unique.push(item);
+          }
+        });
+
+        return unique;
+      }
+
+      function normalizeListing(item, index) {
+        const country = getCountryByCode(item.countryCode || item.country || item.country_code);
+        const categoryId = item.categoryId || item.category || item.type || "private-cars";
+        const images = Array.isArray(item.images)
+          ? item.images
+          : item.image
+            ? [item.image]
+            : item.imageUrl
+              ? [item.imageUrl]
+              : [];
+
+        return {
+          id: item.id || "fav-" + Math.random().toString(36).slice(2),
+          title: item.title || item.name || "Untitled ad",
+          city: item.city || item.location || "",
+          countryCode: item.countryCode || item.country || item.country_code || countryCode(country),
+          countryLabel: item.countryLabel || localText(country, item.countryCode || ""),
+          categoryId,
+          categoryLabel: item.categoryLabel || categoryLabel(categoryId),
+          icon: item.icon || categoryIcon(categoryId),
+          price: Number(item.price || 0),
+          currency: item.currency || country?.currency || "",
+          listingType: item.listingType || item.type || "",
+          description: item.description || item.details || "",
+          image: images[0] || "",
+          createdAt: item.createdAt || item.date || new Date().toISOString()
+        };
+      }
+
+      function saveFavorites(favorites) {
+        writeJson(STORAGE.favorites, favorites);
+      }
+
+      function removeFavorite(id) {
+        const current = getFavoriteObjects().filter((item) => String(item.id) !== String(id));
+        saveFavorites(current);
+        showToast(t("removed"));
+        fillCategoryFilter();
+        renderFavorites();
+      }
+
+      function clearAllFavorites() {
+        saveFavorites([]);
+        localStorage.removeItem("amg_favorites");
+        localStorage.removeItem("automarket_favorites");
+        localStorage.removeItem("hk_global_saved");
+        showToast(t("cleared"));
+        fillCategoryFilter();
+        renderFavorites();
+      }
+
+      function getFilteredFavorites() {
+        const keyword = $("#keyword").value.trim().toLowerCase();
+        const category = $("#categoryFilter").value;
+
+        return getFavoriteObjects().filter((item) => {
+          const keywordText = [
+            item.title,
+            item.description,
+            item.city,
+            item.countryLabel,
+            item.categoryLabel,
+            item.listingType
+          ].join(" ").toLowerCase();
+
+          const keywordOk = !keyword || keywordText.includes(keyword);
+          const categoryOk = !category || item.categoryId === category;
+
+          return keywordOk && categoryOk;
+        });
+      }
+
+      function formatPrice(item) {
+        if (!Number(item.price)) return t("noPrice");
+
+        return new Intl.NumberFormat(undefined, {
+          maximumFractionDigits: 0
+        }).format(Number(item.price)) + " " + (item.currency || "");
+      }
+
+      function shortText(text, limit) {
+        const clean = String(text || "").replace(/\s+/g, " ").trim();
+
+        if (clean.length <= limit) return clean;
+
+        return clean.slice(0, limit) + "...";
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function renderCard(item) {
+        const imageContent = item.image
+          ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">`
+          : `<i class="fa-solid ${escapeHtml(item.icon || "fa-layer-group")}"></i>`;
+
+        return `
+          <article class="fav-card">
+            <div class="fav-image">
+              ${imageContent}
+
+              <div class="fav-badge">
+                <i class="fa-solid ${escapeHtml(item.icon || "fa-layer-group")}"></i>
+                ${escapeHtml(item.categoryLabel || "")}
+              </div>
+            </div>
+
+            <div class="fav-body">
+              <div class="fav-meta">
+                <span><i class="fa-solid fa-location-dot"></i> ${escapeHtml(item.city || "-")}</span>
+                <span>${escapeHtml(item.countryLabel || item.countryCode || "")}</span>
+              </div>
+
+              <h3 class="fav-title">${escapeHtml(item.title)}</h3>
+
+              <p class="fav-desc">${escapeHtml(shortText(item.description || "", 110))}</p>
+
+              <div class="fav-footer">
+                <div class="price">${escapeHtml(formatPrice(item))}</div>
+
+                <div class="actions">
+                  <a class="details-link" href="details.html?id=${encodeURIComponent(item.id)}">
+                    <i class="fa-solid fa-eye"></i>
+                    ${escapeHtml(t("details"))}
+                  </a>
+
+                  <button class="action-btn remove" type="button" data-remove="${escapeHtml(item.id)}">
+                    <i class="fa-solid fa-heart-crack"></i>
+                    ${escapeHtml(t("remove"))}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderFavorites() {
+        const all = getFavoriteObjects();
+        const filtered = getFilteredFavorites();
+
+        $("#heroCount").textContent = all.length;
+        $("#resultCount").textContent = filtered.length + " " + t("results");
+
+        $("#emptyState").classList.toggle("show", filtered.length === 0);
+        $("#favoritesGrid").innerHTML = filtered.map(renderCard).join("");
+
+        $("#clearAllBtn").disabled = all.length === 0;
+      }
+
+      function showToast(text) {
+        const toast = $("#toast");
+        toast.textContent = text;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      function initMenu() {
+        const toggle = $("#menuToggle");
+        const sidebar = $("#sidebar");
+        const close = $("#sidebarClose");
+        const backdrop = $("#sidebarBackdrop");
+
+        function open() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document.body.classList.add("menu-open");
+        }
+
+        function shut() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        }
+
+        toggle.addEventListener("click", open);
+        close.addEventListener("click", shut);
+        backdrop.addEventListener("click", shut);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") shut();
+        });
+      }
+
+      function initEvents() {
+        $("#countrySelect").addEventListener("change", (event) => {
+          localStorage.removeItem(STORAGE.lang);
+          applyCountry(event.target.value);
+        });
+
+        $("#keyword").addEventListener("input", renderFavorites);
+        $("#categoryFilter").addEventListener("change", renderFavorites);
+
+        $("#clearAllBtn").addEventListener("click", clearAllFavorites);
+
+        $("#favoritesGrid").addEventListener("click", (event) => {
+          const btn = event.target.closest("[data-remove]");
+          if (!btn) return;
+
+          removeFavorite(btn.dataset.remove);
+        });
+      }
+
+      function init() {
+        initMenu();
+
+        fillCountries();
+
+        const countries = getCountries();
+        const startCountry =
+          localStorage.getItem(STORAGE.country) ||
+          $("#countrySelect")?.value ||
+          countryCode(countries[0]);
+
+        applyCountry(startCountry);
+        initEvents();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
 </body>
 </html>
