@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Search Cars | AutoMarket Global</title>
-
-  <meta
-    name="description"
-    content="Search cars by country, brand, price, year, fuel type, and mileage on AutoMarket Global."
-  />
+  <title>Search | HK Global Market & Services</title>
+  <meta name="description" content="Search listings by country, category, city, price, and service type." />
 
   <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -17,60 +13,734 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
+
+  <style>
+    :root {
+      --orange: #ff8b26;
+      --orange-dark: #e87512;
+      --dark: #101828;
+      --text: #344054;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.1);
+      --soft: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(46, 144, 250, 0.1), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      color: var(--dark);
+    }
+
+    body[dir="rtl"] {
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      height: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle,
+    .sidebar-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--dark);
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--orange);
+    }
+
+    .top-country {
+      min-width: 220px;
+      max-width: 320px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.42);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 320px;
+      background: #fff;
+      z-index: 90;
+      transform: translateX(-105%);
+      transition: 0.25s ease;
+      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      transform: translateX(105%);
+      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .sidebar-title span {
+      color: var(--orange);
+    }
+
+    .sidebar-nav {
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 800;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 54px 18px 24px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(16, 24, 40, 0.92), rgba(16, 24, 40, 0.78)),
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.35), transparent 38%);
+      color: #fff;
+      padding: 36px;
+      min-height: 260px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 24px;
+      align-items: end;
+      box-shadow: 0 32px 90px rgba(16, 24, 40, 0.24);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      right: -100px;
+      top: -120px;
+      background: rgba(255, 139, 38, 0.2);
+      filter: blur(4px);
+    }
+
+    body[dir="rtl"] .hero-card::after {
+      right: auto;
+      left: -100px;
+    }
+
+    .hero-content,
+    .hero-stats {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd2aa;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 6vw, 72px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.8;
+      font-size: 17px;
+      max-width: 720px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .stat-card {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 20px;
+      backdrop-filter: blur(14px);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .stat-card span {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .page-layout {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 18px 80px;
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .filters {
+      position: sticky;
+      top: 84px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .filters h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .filters p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .filter-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 13px;
+      font-weight: 900;
+      color: #344054;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      height: 46px;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 15px;
+      padding: 0 14px;
+      outline: none;
+      color: var(--dark);
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
+    }
+
+    .filter-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .search-btn,
+    .clear-btn {
+      height: 48px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+    }
+
+    .search-btn {
+      background: var(--orange);
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(255, 139, 38, 0.35);
+    }
+
+    .clear-btn {
+      background: #fff;
+      color: var(--dark);
+      border: 1px solid var(--line);
+    }
+
+    .results-shell {
+      display: grid;
+      gap: 18px;
+    }
+
+    .results-top {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .results-top h2 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .results-top p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .sort-select {
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      outline: none;
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 0 2px;
+      scrollbar-width: none;
+    }
+
+    .category-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #344054;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .pill.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+      border-color: rgba(255, 139, 38, 0.3);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .listing-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 18px 55px rgba(16, 24, 40, 0.08);
+      transition: 0.22s ease;
+    }
+
+    .listing-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 70px rgba(16, 24, 40, 0.12);
+    }
+
+    .listing-image {
+      height: 190px;
+      background:
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.24), transparent 35%),
+        linear-gradient(135deg, #f2f4f7, #ffffff);
+      display: grid;
+      place-items: center;
+      color: var(--orange);
+      font-size: 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .listing-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .listing-badge {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--orange-dark);
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: 0 8px 24px rgba(16, 24, 40, 0.1);
+    }
+
+    body[dir="rtl"] .listing-badge {
+      left: auto;
+      right: 14px;
+    }
+
+    .listing-body {
+      padding: 18px;
+    }
+
+    .listing-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .listing-title {
+      margin: 0 0 10px;
+      font-size: 20px;
+      letter-spacing: -0.035em;
+      line-height: 1.25;
+    }
+
+    .listing-desc {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+      min-height: 45px;
+    }
+
+    .listing-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: 950;
+      color: var(--dark);
+    }
+
+    .details-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 10px 13px;
+      background: var(--dark);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .empty-state {
+      display: none;
+      background: #fff;
+      border: 1px dashed rgba(16, 24, 40, 0.18);
+      border-radius: 28px;
+      padding: 34px;
+      text-align: center;
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+
+    .empty-state.show {
+      display: block;
+    }
+
+    .empty-state i {
+      display: block;
+      font-size: 42px;
+      color: var(--orange);
+      margin-bottom: 14px;
+    }
+
+    .empty-state h3 {
+      margin: 0 0 8px;
+      color: var(--dark);
+      font-size: 22px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 980px) {
+      .hero-card,
+      .page-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        position: static;
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .top-country {
+        min-width: 150px;
+        max-width: 180px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .hero {
+        padding-top: 30px;
+      }
+
+      .hero-card {
+        padding: 22px;
+        border-radius: 28px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-row {
+        grid-template-columns: 1fr;
+      }
+
+      .listing-footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="site-topbar">
-    <div class="site-topbar-inner">
-      <div class="topbar-left">
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false"
-        >
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
-          AutoMarket <span>Global</span>
-        </a>
+        <a class="brand" href="index.html">HK <span>Global</span></a>
       </div>
 
-      <div class="topbar-right">
-        <select
-          class="country-select"
-          id="countrySelect"
-          aria-label="Choose country"
-        ></select>
+      <div class="top-right">
+        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
       </div>
     </div>
   </header>
 
-  <!-- Sidebar backdrop -->
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-title">
-        AutoMarket <span>Global</span>
-      </div>
+      <div class="sidebar-title">HK <span>Global</span></div>
 
-      <button
-        class="sidebar-close"
-        id="sidebarClose"
-        type="button"
-        aria-label="Close menu"
-      >
+      <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <nav class="sidebar-nav" aria-label="Main navigation">
+    <nav class="sidebar-nav">
       <a class="sidebar-link" href="index.html">
         <i class="fa-solid fa-house"></i>
         <span data-i18n="home">Home</span>
@@ -78,15 +748,13 @@
 
       <a class="sidebar-link active" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
+        <span data-i18n="search">Search</span>
       </a>
 
       <a class="sidebar-link" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
+        <span data-i18n="postAd">Post ad</span>
       </a>
-
-      <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
@@ -126,168 +794,930 @@
       </a>
     </nav>
 
-    <div class="sidebar-footer">
-      AutoMarket Global · 2026
-    </div>
+    <div class="sidebar-footer">HK Global Market & Services · 2026</div>
   </aside>
 
-  <!-- Main page -->
-  <main class="page">
-    <section class="page-header">
-      <p class="eyebrow">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
-      </p>
+  <main>
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-content">
+          <div class="badge">
+            <i class="fa-solid fa-magnifying-glass-location"></i>
+            <span data-i18n="marketSearch">Global market search</span>
+          </div>
 
-      <h1 data-i18n="findNextCar">Find your next car</h1>
+          <h1>
+            <span data-i18n="heroTitleA">Search anything</span>
+            <span data-i18n="heroTitleB">by country and category</span>
+          </h1>
 
-      <p class="subtitle" data-i18n="searchSubtitle">
-        Choose a country and filter cars by brand, price, year, fuel type, and mileage.
-      </p>
+          <p data-i18n="heroText">
+            Choose the country, category, city, price range, and listing type. Results will adapt to vehicles, real estate, electronics, businesses, education, digital services, and personal services.
+          </p>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <strong id="statCountries">195</strong>
+            <span data-i18n="countriesAvailable">Countries supported</span>
+          </div>
+
+          <div class="stat-card">
+            <strong id="statCategories">40+</strong>
+            <span data-i18n="categoriesAvailable">Categories and services</span>
+          </div>
+
+          <div class="stat-card">
+            <strong id="statSelectedCountry">-</strong>
+            <span data-i18n="selectedCountry">Selected country</span>
+          </div>
+
+          <div class="stat-card">
+            <strong id="statResults">0</strong>
+            <span data-i18n="resultsFound">Results found</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="search-layout">
-      <!-- Filters -->
-      <aside class="filter-card">
-        <h2 data-i18n="filters">Filters</h2>
+    <section class="page-layout">
+      <aside class="filters">
+        <h2 data-i18n="filtersTitle">Search filters</h2>
+        <p data-i18n="filtersText">Use accurate filters so the visitor reaches the right advertisement quickly.</p>
 
-        <div class="form-group">
-          <label for="filterCountry" data-i18n="country">Country</label>
-          <select id="filterCountry" data-country-select></select>
-        </div>
+        <div class="filter-grid">
+          <div class="field">
+            <label for="filterCountry" data-i18n="country">Country</label>
+            <select id="filterCountry"></select>
+          </div>
 
-        <div class="form-group">
-          <label for="filterBrand" data-i18n="brand">Brand</label>
-          <select id="filterBrand" data-filter>
-            <option value="" data-i18n="allBrands">All brands</option>
-            <option value="Toyota">Toyota</option>
-            <option value="BMW">BMW</option>
-            <option value="Mercedes-Benz">Mercedes-Benz</option>
-            <option value="Volvo">Volvo</option>
-            <option value="Hyundai">Hyundai</option>
-            <option value="Kia">Kia</option>
-            <option value="Tesla">Tesla</option>
-          </select>
-        </div>
+          <div class="field">
+            <label for="keyword" data-i18n="keyword">Keyword</label>
+            <input id="keyword" type="search" placeholder="Toyota, apartment, repair..." />
+          </div>
 
-        <div class="form-group">
-          <label for="filterFuel" data-i18n="fuel">Fuel</label>
-          <select id="filterFuel" data-filter>
-            <option value="" data-i18n="allFuel">All fuel types</option>
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Hybrid">Hybrid</option>
-            <option value="Electric">Electric</option>
-          </select>
-        </div>
+          <div class="field">
+            <label for="mainGroupSelect" data-i18n="mainCategory">Main category</label>
+            <select id="mainGroupSelect"></select>
+          </div>
 
-        <div class="form-group">
-          <label for="minPrice" data-i18n="minPrice">Min price</label>
-          <input
-            id="minPrice"
-            data-filter
-            type="number"
-            min="0"
-            placeholder="5000"
-          />
-        </div>
+          <div class="field">
+            <label for="categorySelect" data-i18n="subCategory">Subcategory</label>
+            <select id="categorySelect"></select>
+          </div>
 
-        <div class="form-group">
-          <label for="maxPrice" data-i18n="maxPrice">Max price</label>
-          <input
-            id="maxPrice"
-            data-filter
-            type="number"
-            min="0"
-            placeholder="50000"
-          />
-        </div>
+          <div class="field">
+            <label for="listingType" data-i18n="listingType">Listing type</label>
+            <select id="listingType"></select>
+          </div>
 
-        <div class="form-group">
-          <label for="minYear" data-i18n="minYear">Min year</label>
-          <input
-            id="minYear"
-            data-filter
-            type="number"
-            min="1980"
-            max="2030"
-            placeholder="2018"
-          />
-        </div>
+          <div class="field">
+            <label for="city" data-i18n="city">City</label>
+            <input id="city" type="text" />
+          </div>
 
-        <div class="form-group">
-          <label for="maxMileage" data-i18n="maxMileage">Max mileage</label>
-          <input
-            id="maxMileage"
-            data-filter
-            type="number"
-            min="0"
-            placeholder="120000"
-          />
-        </div>
+          <div class="filter-row">
+            <div class="field">
+              <label for="minPrice" data-i18n="minPrice">Min price</label>
+              <input id="minPrice" type="number" min="0" />
+            </div>
 
-        <div class="filter-actions">
-          <button
-            class="btn btn-primary"
-            id="applyFilters"
-            type="button"
-            onclick="renderSearchPage()"
-          >
-            <i class="fa-solid fa-filter"></i>
-            <span data-i18n="applyFilters">Apply filters</span>
+            <div class="field">
+              <label for="maxPrice" data-i18n="maxPrice">Max price</label>
+              <input id="maxPrice" type="number" min="0" />
+            </div>
+          </div>
+
+          <button class="search-btn" id="searchBtn" type="button">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span data-i18n="searchNow">Search now</span>
           </button>
 
-          <button class="btn btn-secondary" id="resetFilters" type="button">
+          <button class="clear-btn" id="clearBtn" type="button">
             <i class="fa-solid fa-rotate-left"></i>
-            <span data-i18n="reset">Reset</span>
+            <span data-i18n="clearFilters">Clear filters</span>
           </button>
         </div>
       </aside>
 
-      <!-- Results -->
-      <section>
+      <section class="results-shell">
         <div class="results-top">
           <div>
-            <strong id="resultsCount">0 cars</strong>
-            <div class="results-country" id="resultsCountry">
-              Selected country
-            </div>
+            <h2 data-i18n="resultsTitle">Search results</h2>
+            <p id="resultsSummary">0 results</p>
           </div>
 
-          <a href="sell.html" class="btn btn-primary">
-            <i class="fa-solid fa-plus"></i>
-            <span data-i18n="sellCar">Sell a car</span>
-          </a>
+          <select class="sort-select" id="sortSelect">
+            <option value="newest" data-i18n="sortNewest">Newest first</option>
+            <option value="priceLow" data-i18n="sortPriceLow">Price: low to high</option>
+            <option value="priceHigh" data-i18n="sortPriceHigh">Price: high to low</option>
+            <option value="title" data-i18n="sortTitle">Title A-Z</option>
+          </select>
         </div>
 
-        <div class="car-grid" id="carGrid"></div>
+        <div class="category-pills" id="categoryPills"></div>
 
-        <div class="empty-state" id="emptyState" style="display: none;">
-          <i class="fa-solid fa-car-side"></i>
-          <h3 data-i18n="noCars">No cars found</h3>
-          <p data-i18n="noCarsText">
-            Try changing the country or removing some filters.
-          </p>
+        <div class="empty-state" id="emptyState">
+          <i class="fa-solid fa-folder-open"></i>
+          <h3 data-i18n="emptyTitle">No matching results</h3>
+          <p data-i18n="emptyText">Try changing country, category, city, or price range.</p>
         </div>
+
+        <div class="results-grid" id="resultsGrid"></div>
       </section>
     </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <div>
-        © 2026 AutoMarket Global. All rights reserved.
-      </div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 HK Global Market & Services.</div>
 
       <div class="footer-links">
         <a href="terms.html" data-i18n="terms">Terms</a>
-        <a href="search.html" data-i18n="searchCars">Search cars</a>
-        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+        <a href="search.html" data-i18n="search">Search</a>
+        <a href="sell.html" data-i18n="postAd">Post ad</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/core.js"></script>
+  <script src="assets/js/countries.js"></script>
+  <script src="assets/js/categories.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE = {
+        country: "amg_country_code",
+        countryLabel: "amg_country_label",
+        lang: "amg_country_lang",
+        category: "amg_selected_category",
+        categoryLabel: "amg_category_label"
+      };
+
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+      const DICT = {
+        en: {
+          home: "Home", search: "Search", postAd: "Post ad", account: "My account", favorites: "Favorites",
+          messages: "Messages", dashboard: "Dashboard", terms: "Terms", login: "Login", register: "Create account",
+          marketSearch: "Global market search", heroTitleA: "Search anything", heroTitleB: "by country and category",
+          heroText: "Choose the country, category, city, price range, and listing type. Results will adapt to vehicles, real estate, electronics, businesses, education, digital services, and personal services.",
+          countriesAvailable: "Countries supported", categoriesAvailable: "Categories and services", selectedCountry: "Selected country",
+          resultsFound: "Results found", filtersTitle: "Search filters", filtersText: "Use accurate filters so the visitor reaches the right advertisement quickly.",
+          country: "Country", keyword: "Keyword", mainCategory: "Main category", subCategory: "Subcategory",
+          listingType: "Listing type", city: "City", minPrice: "Min price", maxPrice: "Max price",
+          searchNow: "Search now", clearFilters: "Clear filters", resultsTitle: "Search results",
+          emptyTitle: "No matching results", emptyText: "Try changing country, category, city, or price range.",
+          sortNewest: "Newest first", sortPriceLow: "Price: low to high", sortPriceHigh: "Price: high to low",
+          sortTitle: "Title A-Z", all: "All", details: "Details", noPrice: "Ask price", results: "results",
+          groups_vehicles: "Vehicles", groups_realEstate: "Real estate", groups_electronics: "Electronics", groups_home: "Home items",
+          groups_business: "Business", groups_services: "Services", groups_education: "Education", groups_digital: "Digital services",
+          privateCars: "Private cars", rentalCars: "Rental cars", motorcycles: "Motorcycles", bicycles: "Bicycles",
+          smallTrucks: "Small trucks", heavyTrucks: "Heavy trucks", vehicleParts: "Vehicle parts",
+          propertySale: "Property for sale", propertyRent: "Property for rent", rooms: "Rooms", commercialProperty: "Commercial property",
+          lands: "Land", farms: "Farms", phones: "Phones", computers: "Computers", tvAudio: "TV and audio", gaming: "Gaming",
+          furniture: "Furniture", appliances: "Appliances", tools: "Home tools", garden: "Garden", shops: "Shops",
+          restaurants: "Restaurants and cafés", businessSale: "Business for sale", businessEquipment: "Business equipment",
+          vehicleService: "Vehicle service", homeMaintenance: "Home maintenance", companyMaintenance: "Company maintenance",
+          deviceRepair: "Device repair", cleaning: "Cleaning", transport: "Transport and delivery", personalCare: "Personal care",
+          eventServices: "Event services", privateLessons: "Private lessons", languageCourses: "Language courses",
+          onlineCourses: "Online courses", webDesign: "Web design", programming: "Programming", graphicDesign: "Graphic design",
+          marketing: "Digital marketing", translationWriting: "Translation and writing"
+        },
+
+        ar: {
+          home: "الرئيسية", search: "البحث", postAd: "نشر إعلان", account: "حسابي", favorites: "المفضلة",
+          messages: "الرسائل", dashboard: "لوحة التحكم", terms: "الشروط", login: "تسجيل الدخول", register: "إنشاء حساب",
+          marketSearch: "بحث عالمي في السوق", heroTitleA: "ابحث عن أي شيء", heroTitleB: "حسب الدولة والفئة",
+          heroText: "اختر الدولة والفئة والمدينة ونطاق السعر ونوع الإعلان. النتائج تتغير لتناسب المركبات والعقارات والإلكترونيات والأعمال والتعليم والخدمات الرقمية والشخصية.",
+          countriesAvailable: "دولة مدعومة", categoriesAvailable: "فئات وخدمات", selectedCountry: "الدولة المختارة",
+          resultsFound: "نتائج موجودة", filtersTitle: "فلاتر البحث", filtersText: "استخدم فلاتر دقيقة حتى يصل الزائر إلى الإعلان المناسب بسرعة.",
+          country: "الدولة", keyword: "كلمة البحث", mainCategory: "الفئة الرئيسية", subCategory: "الفئة الفرعية",
+          listingType: "نوع الإعلان", city: "المدينة", minPrice: "أقل سعر", maxPrice: "أعلى سعر",
+          searchNow: "ابحث الآن", clearFilters: "مسح الفلاتر", resultsTitle: "نتائج البحث",
+          emptyTitle: "لا توجد نتائج مطابقة", emptyText: "جرّب تغيير الدولة أو الفئة أو المدينة أو نطاق السعر.",
+          sortNewest: "الأحدث أولاً", sortPriceLow: "السعر من الأقل للأعلى", sortPriceHigh: "السعر من الأعلى للأقل",
+          sortTitle: "العنوان A-Z", all: "الكل", details: "التفاصيل", noPrice: "السعر عند التواصل", results: "نتائج",
+          groups_vehicles: "مركبات", groups_realEstate: "عقارات", groups_electronics: "إلكترونيات", groups_home: "أدوات منزلية",
+          groups_business: "أعمال ومحلات", groups_services: "خدمات", groups_education: "تعليم", groups_digital: "خدمات رقمية",
+          privateCars: "سيارات خاصة", rentalCars: "سيارات للإيجار", motorcycles: "دراجات نارية", bicycles: "دراجات هوائية",
+          smallTrucks: "شاحنات صغيرة", heavyTrucks: "شاحنات كبيرة", vehicleParts: "قطع غيار مركبات",
+          propertySale: "عقار للبيع", propertyRent: "عقار للإيجار", rooms: "غرف", commercialProperty: "عقار تجاري",
+          lands: "أراضي", farms: "أراضٍ زراعية", phones: "هواتف", computers: "كمبيوترات", tvAudio: "تلفزيون وصوتيات", gaming: "ألعاب",
+          furniture: "أثاث", appliances: "أجهزة منزلية", tools: "أدوات منزلية", garden: "حديقة", shops: "محلات",
+          restaurants: "مطاعم ومقاهي", businessSale: "مشروع للبيع", businessEquipment: "معدات تجارية",
+          vehicleService: "صيانة مركبات", homeMaintenance: "صيانة منازل", companyMaintenance: "صيانة شركات",
+          deviceRepair: "إصلاح أجهزة", cleaning: "تنظيف", transport: "نقل وتوصيل", personalCare: "خدمات شخصية",
+          eventServices: "خدمات مناسبات", privateLessons: "دروس خصوصية", languageCourses: "دورات لغات",
+          onlineCourses: "دورات أونلاين", webDesign: "تصميم مواقع", programming: "برمجة", graphicDesign: "تصميم جرافيك",
+          marketing: "تسويق رقمي", translationWriting: "ترجمة وكتابة"
+        },
+
+        sv: {
+          home: "Hem", search: "Sök", postAd: "Lägg upp annons", account: "Mitt konto", favorites: "Favoriter",
+          messages: "Meddelanden", dashboard: "Panel", terms: "Villkor", login: "Logga in", register: "Skapa konto",
+          marketSearch: "Global marknadssökning", heroTitleA: "Sök allt", heroTitleB: "efter land och kategori",
+          heroText: "Välj land, kategori, stad, prisintervall och annonstyp. Resultaten anpassas för fordon, bostäder, elektronik, företag, utbildning och tjänster.",
+          countriesAvailable: "Länder stöds", categoriesAvailable: "Kategorier och tjänster", selectedCountry: "Valt land",
+          resultsFound: "Resultat hittade", filtersTitle: "Sökfilter", filtersText: "Använd exakta filter så besökaren snabbt hittar rätt annons.",
+          country: "Land", keyword: "Sökord", mainCategory: "Huvudkategori", subCategory: "Underkategori",
+          listingType: "Annonstyp", city: "Stad", minPrice: "Min pris", maxPrice: "Max pris",
+          searchNow: "Sök nu", clearFilters: "Rensa filter", resultsTitle: "Sökresultat",
+          emptyTitle: "Inga matchande resultat", emptyText: "Försök ändra land, kategori, stad eller pris.",
+          sortNewest: "Nyast först", sortPriceLow: "Pris: lågt till högt", sortPriceHigh: "Pris: högt till lågt",
+          sortTitle: "Titel A-Z", all: "Alla", details: "Detaljer", noPrice: "Fråga pris", results: "resultat",
+          groups_vehicles: "Fordon", groups_realEstate: "Fastigheter", groups_electronics: "Elektronik", groups_home: "Hemartiklar",
+          groups_business: "Företag", groups_services: "Tjänster", groups_education: "Utbildning", groups_digital: "Digitala tjänster",
+          privateCars: "Personbilar", rentalCars: "Hyrbilar", motorcycles: "Motorcyklar", bicycles: "Cyklar",
+          smallTrucks: "Små lastbilar", heavyTrucks: "Tunga lastbilar", vehicleParts: "Fordonsdelar",
+          propertySale: "Bostad till salu", propertyRent: "Bostad att hyra", rooms: "Rum", commercialProperty: "Kommersiell fastighet",
+          lands: "Mark", farms: "Jordbruksmark", phones: "Telefoner", computers: "Datorer", tvAudio: "TV och ljud", gaming: "Gaming",
+          furniture: "Möbler", appliances: "Vitvaror", tools: "Hemverktyg", garden: "Trädgård", shops: "Butiker",
+          restaurants: "Restauranger och caféer", businessSale: "Företag till salu", businessEquipment: "Företagsutrustning",
+          vehicleService: "Fordonsservice", homeMaintenance: "Hemunderhåll", companyMaintenance: "Företagsunderhåll",
+          deviceRepair: "Enhetsreparation", cleaning: "Städning", transport: "Transport och leverans", personalCare: "Personliga tjänster",
+          eventServices: "Eventtjänster", privateLessons: "Privatlektioner", languageCourses: "Språkkurser",
+          onlineCourses: "Onlinekurser", webDesign: "Webbdesign", programming: "Programmering", graphicDesign: "Grafisk design",
+          marketing: "Digital marknadsföring", translationWriting: "Översättning och skrivande"
+        },
+
+        de: {},
+        tr: {},
+        fr: {},
+        es: {},
+        it: {},
+        pt: {},
+        nl: {}
+      };
+
+      DICT.de = DICT.en;
+      DICT.tr = DICT.en;
+      DICT.fr = DICT.en;
+      DICT.es = DICT.en;
+      DICT.it = DICT.en;
+      DICT.pt = DICT.en;
+      DICT.nl = DICT.en;
+
+      const GROUPS = [
+        { id: "vehicles", key: "groups_vehicles", icon: "fa-car" },
+        { id: "realEstate", key: "groups_realEstate", icon: "fa-building" },
+        { id: "electronics", key: "groups_electronics", icon: "fa-laptop" },
+        { id: "home", key: "groups_home", icon: "fa-couch" },
+        { id: "business", key: "groups_business", icon: "fa-store" },
+        { id: "services", key: "groups_services", icon: "fa-screwdriver-wrench" },
+        { id: "education", key: "groups_education", icon: "fa-graduation-cap" },
+        { id: "digital", key: "groups_digital", icon: "fa-code" }
+      ];
+
+      const FALLBACK_CATEGORIES = [
+        { id: "private-cars", group: "vehicles", key: "privateCars", icon: "fa-car" },
+        { id: "rental-cars", group: "vehicles", key: "rentalCars", icon: "fa-key" },
+        { id: "motorcycles", group: "vehicles", key: "motorcycles", icon: "fa-motorcycle" },
+        { id: "bicycles", group: "vehicles", key: "bicycles", icon: "fa-bicycle" },
+        { id: "small-trucks", group: "vehicles", key: "smallTrucks", icon: "fa-truck-pickup" },
+        { id: "heavy-trucks", group: "vehicles", key: "heavyTrucks", icon: "fa-truck" },
+        { id: "vehicle-parts", group: "vehicles", key: "vehicleParts", icon: "fa-gears" },
+
+        { id: "property-sale", group: "realEstate", key: "propertySale", icon: "fa-house" },
+        { id: "property-rent", group: "realEstate", key: "propertyRent", icon: "fa-building" },
+        { id: "rooms", group: "realEstate", key: "rooms", icon: "fa-door-open" },
+        { id: "commercial-property", group: "realEstate", key: "commercialProperty", icon: "fa-warehouse" },
+        { id: "lands", group: "realEstate", key: "lands", icon: "fa-map" },
+        { id: "farms", group: "realEstate", key: "farms", icon: "fa-tractor" },
+
+        { id: "phones", group: "electronics", key: "phones", icon: "fa-mobile-screen" },
+        { id: "computers", group: "electronics", key: "computers", icon: "fa-computer" },
+        { id: "tv-audio", group: "electronics", key: "tvAudio", icon: "fa-tv" },
+        { id: "gaming", group: "electronics", key: "gaming", icon: "fa-gamepad" },
+
+        { id: "furniture", group: "home", key: "furniture", icon: "fa-couch" },
+        { id: "appliances", group: "home", key: "appliances", icon: "fa-blender" },
+        { id: "home-tools", group: "home", key: "tools", icon: "fa-screwdriver" },
+        { id: "garden", group: "home", key: "garden", icon: "fa-seedling" },
+
+        { id: "shops", group: "business", key: "shops", icon: "fa-store" },
+        { id: "restaurants", group: "business", key: "restaurants", icon: "fa-utensils" },
+        { id: "business-sale", group: "business", key: "businessSale", icon: "fa-handshake" },
+        { id: "business-equipment", group: "business", key: "businessEquipment", icon: "fa-cash-register" },
+
+        { id: "vehicle-service", group: "services", key: "vehicleService", icon: "fa-car-burst" },
+        { id: "home-maintenance", group: "services", key: "homeMaintenance", icon: "fa-house-circle-check" },
+        { id: "company-maintenance", group: "services", key: "companyMaintenance", icon: "fa-building-circle-check" },
+        { id: "device-repair", group: "services", key: "deviceRepair", icon: "fa-screwdriver-wrench" },
+        { id: "cleaning", group: "services", key: "cleaning", icon: "fa-broom" },
+        { id: "transport", group: "services", key: "transport", icon: "fa-truck-fast" },
+        { id: "personal-care", group: "services", key: "personalCare", icon: "fa-user-check" },
+        { id: "event-services", group: "services", key: "eventServices", icon: "fa-calendar-check" },
+
+        { id: "private-lessons", group: "education", key: "privateLessons", icon: "fa-chalkboard-user" },
+        { id: "language-courses", group: "education", key: "languageCourses", icon: "fa-language" },
+        { id: "online-courses", group: "education", key: "onlineCourses", icon: "fa-laptop-file" },
+
+        { id: "web-design", group: "digital", key: "webDesign", icon: "fa-globe" },
+        { id: "programming", group: "digital", key: "programming", icon: "fa-code" },
+        { id: "graphic-design", group: "digital", key: "graphicDesign", icon: "fa-pen-nib" },
+        { id: "marketing", group: "digital", key: "marketing", icon: "fa-bullhorn" },
+        { id: "translation-writing", group: "digital", key: "translationWriting", icon: "fa-file-pen" }
+      ];
+
+      const SAMPLE_LISTINGS = [
+        {
+          id: "sample-car-1",
+          countryCode: "SE",
+          categoryId: "private-cars",
+          title: "Volvo XC60 2021",
+          city: "Stockholm",
+          price: 245000,
+          currency: "SEK",
+          listingType: "Vehicle for sale",
+          description: "Well maintained family car with automatic transmission and full service history.",
+          createdAt: "2026-01-20T10:00:00Z"
+        },
+        {
+          id: "sample-home-1",
+          countryCode: "SE",
+          categoryId: "property-rent",
+          title: "Apartment for rent",
+          city: "Göteborg",
+          price: 9500,
+          currency: "SEK",
+          listingType: "Property for rent",
+          description: "Bright apartment close to public transport, shops, and services.",
+          createdAt: "2026-01-18T10:00:00Z"
+        },
+        {
+          id: "sample-service-1",
+          countryCode: "SE",
+          categoryId: "home-maintenance",
+          title: "Home maintenance service",
+          city: "Malmö",
+          price: 450,
+          currency: "SEK",
+          listingType: "I provide this service",
+          description: "Professional repair and maintenance for homes and small offices.",
+          createdAt: "2026-01-17T10:00:00Z"
+        },
+        {
+          id: "sample-phone-1",
+          countryCode: "DE",
+          categoryId: "phones",
+          title: "iPhone 14 Pro",
+          city: "Berlin",
+          price: 680,
+          currency: "EUR",
+          listingType: "For sale",
+          description: "Excellent condition, original box, charger, and invoice available.",
+          createdAt: "2026-01-19T10:00:00Z"
+        },
+        {
+          id: "sample-digital-1",
+          countryCode: "SY",
+          categoryId: "web-design",
+          title: "تصميم موقع احترافي",
+          city: "Damascus",
+          price: 150,
+          currency: "USD",
+          listingType: "Digital service",
+          description: "تصميم مواقع حديثة ومتجاوبة للشركات والمتاجر والخدمات.",
+          createdAt: "2026-01-21T10:00:00Z"
+        }
+      ];
+
+      const LISTING_TYPES = {
+        default: ["For sale", "For rent", "Wanted", "Exchange", "Service offer"],
+        vehicles: ["Vehicle for sale", "Vehicle for rent", "Leasing", "Wanted vehicle", "Parts / accessories"],
+        realEstate: ["Property for sale", "Property for rent", "Daily rent", "Wanted property"],
+        services: ["I provide this service", "I need this service", "Consultation", "Contract work"],
+        digital: ["Digital service", "Project work", "Consultation", "Subscription"],
+        education: ["Course offer", "Private lesson", "Online lesson", "Looking for teacher"],
+        business: ["Business for sale", "Partnership", "Equipment for sale", "Commercial rent"]
+      };
+
+      function currentLang() {
+        const lang = localStorage.getItem(STORAGE.lang) || document.documentElement.lang || "en";
+        return String(lang).slice(0, 2).toLowerCase();
+      }
+
+      function t(key) {
+        const lang = currentLang();
+        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+      }
+
+      function localText(obj, fallback = "") {
+        const lang = currentLang();
+
+        if (!obj) return fallback;
+        if (typeof obj === "string") return obj;
+
+        if (obj.labels) {
+          return obj.labels[lang] || obj.labels.en || obj.labels.ar || obj.name || fallback;
+        }
+
+        if (obj.names) {
+          return obj.names[lang] || obj.names.en || obj.names.ar || obj.name || fallback;
+        }
+
+        if (obj.key) return t(obj.key);
+
+        return obj.label || obj.name || fallback;
+      }
+
+      function getCountries() {
+        return window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+      }
+
+      function countryCode(country) {
+        return country?.code || country?.id || country?.iso2 || country?.value || "";
+      }
+
+      function countryLang(country) {
+        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
+      }
+
+      function countryCurrency(country) {
+        return country?.currency || country?.currencyCode || "";
+      }
+
+      function getCountryByCode(code) {
+        const clean = String(code || "").toUpperCase();
+        return getCountries().find((c) => String(countryCode(c)).toUpperCase() === clean) || getCountries()[0] || null;
+      }
+
+      function getCategories() {
+        const external = window.AMG_CATEGORIES || window.CATEGORIES || window.categories || [];
+        return external.length ? external : FALLBACK_CATEGORIES;
+      }
+
+      function getCategory(id) {
+        return getCategories().find((c) => c.id === id) || getCategories()[0] || FALLBACK_CATEGORIES[0];
+      }
+
+      function categoryGroup(category) {
+        return category?.group || "vehicles";
+      }
+
+      function categoryLabel(category) {
+        return localText(category, category?.id || "");
+      }
+
+      function categoryIcon(category) {
+        return category?.icon || "fa-layer-group";
+      }
+
+      function getGroupById(id) {
+        return GROUPS.find((group) => group.id === id) || GROUPS[0];
+      }
+
+      function groupLabel(id) {
+        const group = getGroupById(id);
+        return t(group.key);
+      }
+
+      function fillCountrySelects() {
+        const countries = getCountries();
+        const selects = [$("#countrySelect"), $("#filterCountry")].filter(Boolean);
+
+        if (!countries.length) return;
+
+        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
+
+        selects.forEach((select) => {
+          select.innerHTML = "";
+
+          countries.forEach((country) => {
+            const option = document.createElement("option");
+            option.value = countryCode(country);
+            option.textContent = localText(country, countryCode(country));
+            select.appendChild(option);
+          });
+
+          select.value = saved;
+        });
+
+        $("#statCountries").textContent = countries.length || "195";
+      }
+
+      function applyCountry(code) {
+        const country = getCountryByCode(code);
+        if (!country) return;
+
+        const codeValue = countryCode(country);
+        const lang = countryLang(country);
+        const label = localText(country, codeValue);
+
+        localStorage.setItem(STORAGE.country, codeValue);
+        localStorage.setItem(STORAGE.countryLabel, label);
+        localStorage.setItem(STORAGE.lang, lang);
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.body.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+
+        $("#countrySelect").value = codeValue;
+        $("#filterCountry").value = codeValue;
+        $("#statSelectedCountry").textContent = label;
+
+        applyTranslations();
+        fillCountrySelects();
+        fillGroups();
+        fillSubcategories($("#mainGroupSelect").value || "vehicles");
+        fillPills();
+        renderResults();
+      }
+
+      function applyTranslations() {
+        $$("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+
+        $("#keyword").placeholder = currentLang() === "ar"
+          ? "سيارة، شقة، صيانة، هاتف..."
+          : "Toyota, apartment, repair, phone...";
+
+        $("#city").placeholder = currentLang() === "ar"
+          ? "اكتب المدينة"
+          : "Enter city";
+      }
+
+      function fillGroups() {
+        const select = $("#mainGroupSelect");
+        const current = select.value || localStorage.getItem("amg_main_group") || "vehicles";
+
+        select.innerHTML = "";
+
+        GROUPS.forEach((group) => {
+          const option = document.createElement("option");
+          option.value = group.id;
+          option.textContent = t(group.key);
+          select.appendChild(option);
+        });
+
+        select.value = current;
+      }
+
+      function fillSubcategories(groupId) {
+        const select = $("#categorySelect");
+        const categories = getCategories().filter((category) => categoryGroup(category) === groupId);
+
+        const saved = localStorage.getItem(STORAGE.category);
+        const selectedStillExists = categories.some((category) => category.id === saved);
+
+        select.innerHTML = "";
+
+        const all = document.createElement("option");
+        all.value = "";
+        all.textContent = t("all");
+        select.appendChild(all);
+
+        categories.forEach((category) => {
+          const option = document.createElement("option");
+          option.value = category.id;
+          option.textContent = categoryLabel(category);
+          select.appendChild(option);
+        });
+
+        select.value = selectedStillExists ? saved : "";
+        fillListingTypes(groupId);
+      }
+
+      function fillListingTypes(groupId) {
+        const select = $("#listingType");
+        const options = LISTING_TYPES[groupId] || LISTING_TYPES.default;
+
+        select.innerHTML = "";
+
+        const all = document.createElement("option");
+        all.value = "";
+        all.textContent = t("all");
+        select.appendChild(all);
+
+        options.forEach((item) => {
+          const option = document.createElement("option");
+          option.value = item;
+          option.textContent = item;
+          select.appendChild(option);
+        });
+      }
+
+      function fillPills() {
+        const wrap = $("#categoryPills");
+        wrap.innerHTML = "";
+
+        const allBtn = document.createElement("button");
+        allBtn.className = "pill active";
+        allBtn.type = "button";
+        allBtn.dataset.group = "all";
+        allBtn.textContent = t("all");
+        wrap.appendChild(allBtn);
+
+        GROUPS.forEach((group) => {
+          const btn = document.createElement("button");
+          btn.className = "pill";
+          btn.type = "button";
+          btn.dataset.group = group.id;
+          btn.innerHTML = `<i class="fa-solid ${group.icon}"></i> ${t(group.key)}`;
+          wrap.appendChild(btn);
+        });
+      }
+
+      function readStoredListings() {
+        const keys = [
+          "amg_listings",
+          "amg_ads",
+          "automarket_listings",
+          "automarket_ads",
+          "hk_global_ads"
+        ];
+
+        let listings = [];
+
+        keys.forEach((key) => {
+          try {
+            const value = JSON.parse(localStorage.getItem(key) || "[]");
+            if (Array.isArray(value)) listings = listings.concat(value);
+          } catch (error) {}
+        });
+
+        const normalized = listings.map((item, index) => {
+          const categoryId = item.categoryId || item.category || item.type || "private-cars";
+          const category = getCategory(categoryId);
+
+          return {
+            id: item.id || "stored-" + index,
+            countryCode: item.countryCode || item.country || item.country_code || localStorage.getItem(STORAGE.country),
+            categoryId: categoryId,
+            title: item.title || item.name || "Untitled ad",
+            city: item.city || item.location || "",
+            price: Number(item.price || 0),
+            currency: item.currency || countryCurrency(getCountryByCode(item.countryCode)) || "",
+            listingType: item.listingType || item.type || "",
+            description: item.description || item.details || "",
+            image: item.image || item.imageUrl || item.thumbnail || "",
+            createdAt: item.createdAt || item.date || new Date().toISOString(),
+            icon: categoryIcon(category)
+          };
+        });
+
+        return normalized;
+      }
+
+      function allListings() {
+        return [...readStoredListings(), ...SAMPLE_LISTINGS].map((listing) => {
+          const category = getCategory(listing.categoryId);
+          return {
+            ...listing,
+            group: categoryGroup(category),
+            categoryLabel: categoryLabel(category),
+            icon: categoryIcon(category)
+          };
+        });
+      }
+
+      function getFilters() {
+        return {
+          country: $("#filterCountry").value,
+          keyword: $("#keyword").value.trim().toLowerCase(),
+          group: $("#mainGroupSelect").value,
+          category: $("#categorySelect").value,
+          listingType: $("#listingType").value,
+          city: $("#city").value.trim().toLowerCase(),
+          minPrice: Number($("#minPrice").value || 0),
+          maxPrice: Number($("#maxPrice").value || 0),
+          sort: $("#sortSelect").value
+        };
+      }
+
+      function filterListings() {
+        const filters = getFilters();
+
+        let data = allListings().filter((listing) => {
+          const countryOk = !filters.country || String(listing.countryCode).toUpperCase() === String(filters.country).toUpperCase();
+          const groupOk = !filters.group || listing.group === filters.group;
+          const categoryOk = !filters.category || listing.categoryId === filters.category;
+          const typeOk = !filters.listingType || listing.listingType === filters.listingType;
+
+          const keywordText = [
+            listing.title,
+            listing.description,
+            listing.city,
+            listing.categoryLabel,
+            listing.listingType
+          ].join(" ").toLowerCase();
+
+          const keywordOk = !filters.keyword || keywordText.includes(filters.keyword);
+          const cityOk = !filters.city || String(listing.city || "").toLowerCase().includes(filters.city);
+          const minOk = !filters.minPrice || Number(listing.price || 0) >= filters.minPrice;
+          const maxOk = !filters.maxPrice || Number(listing.price || 0) <= filters.maxPrice;
+
+          return countryOk && groupOk && categoryOk && typeOk && keywordOk && cityOk && minOk && maxOk;
+        });
+
+        if (filters.sort === "priceLow") {
+          data.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
+        } else if (filters.sort === "priceHigh") {
+          data.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
+        } else if (filters.sort === "title") {
+          data.sort((a, b) => String(a.title).localeCompare(String(b.title)));
+        } else {
+          data.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        }
+
+        return data;
+      }
+
+      function formatPrice(listing) {
+        const price = Number(listing.price || 0);
+
+        if (!price) return t("noPrice");
+
+        return new Intl.NumberFormat(undefined, {
+          maximumFractionDigits: 0
+        }).format(price) + " " + (listing.currency || "");
+      }
+
+      function renderCard(listing) {
+        const imageContent = listing.image
+          ? `<img src="${escapeHtml(listing.image)}" alt="${escapeHtml(listing.title)}">`
+          : `<i class="fa-solid ${escapeHtml(listing.icon || "fa-layer-group")}"></i>`;
+
+        return `
+          <article class="listing-card">
+            <div class="listing-image">
+              ${imageContent}
+              <div class="listing-badge">
+                <i class="fa-solid ${escapeHtml(listing.icon || "fa-layer-group")}"></i>
+                ${escapeHtml(listing.categoryLabel || "")}
+              </div>
+            </div>
+
+            <div class="listing-body">
+              <div class="listing-meta">
+                <span><i class="fa-solid fa-location-dot"></i> ${escapeHtml(listing.city || "-")}</span>
+                <span>${escapeHtml(listing.listingType || "")}</span>
+              </div>
+
+              <h3 class="listing-title">${escapeHtml(listing.title)}</h3>
+
+              <p class="listing-desc">${escapeHtml(shortText(listing.description || "", 120))}</p>
+
+              <div class="listing-footer">
+                <div class="price">${escapeHtml(formatPrice(listing))}</div>
+
+                <a class="details-link" href="details.html?id=${encodeURIComponent(listing.id)}">
+                  <span>${t("details")}</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderResults() {
+        const results = filterListings();
+        const grid = $("#resultsGrid");
+        const empty = $("#emptyState");
+
+        grid.innerHTML = results.map(renderCard).join("");
+
+        empty.classList.toggle("show", results.length === 0);
+
+        $("#statResults").textContent = results.length;
+        $("#resultsSummary").textContent = `${results.length} ${t("results")}`;
+
+        const currentGroup = $("#mainGroupSelect").value;
+        $$(".pill").forEach((pill) => {
+          pill.classList.toggle(
+            "active",
+            pill.dataset.group === currentGroup || (!currentGroup && pill.dataset.group === "all")
+          );
+        });
+      }
+
+      function shortText(text, limit) {
+        const clean = String(text || "").replace(/\s+/g, " ").trim();
+
+        if (clean.length <= limit) return clean;
+
+        return clean.slice(0, limit) + "...";
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function clearFilters() {
+        $("#keyword").value = "";
+        $("#city").value = "";
+        $("#minPrice").value = "";
+        $("#maxPrice").value = "";
+        $("#listingType").value = "";
+        $("#mainGroupSelect").value = "vehicles";
+        fillSubcategories("vehicles");
+        $("#categorySelect").value = "";
+        renderResults();
+      }
+
+      function initMenu() {
+        const toggle = $("#menuToggle");
+        const sidebar = $("#sidebar");
+        const close = $("#sidebarClose");
+        const backdrop = $("#sidebarBackdrop");
+
+        function open() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document.body.classList.add("menu-open");
+        }
+
+        function shut() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        }
+
+        toggle.addEventListener("click", open);
+        close.addEventListener("click", shut);
+        backdrop.addEventListener("click", shut);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") shut();
+        });
+      }
+
+      function init() {
+        initMenu();
+
+        fillCountrySelects();
+
+        const countries = getCountries();
+        const startCountry =
+          localStorage.getItem(STORAGE.country) ||
+          $("#countrySelect")?.value ||
+          countryCode(countries[0]);
+
+        $("#statCategories").textContent = getCategories().length + "+";
+
+        applyCountry(startCountry);
+
+        $("#countrySelect").addEventListener("change", (event) => {
+          applyCountry(event.target.value);
+        });
+
+        $("#filterCountry").addEventListener("change", (event) => {
+          applyCountry(event.target.value);
+        });
+
+        $("#mainGroupSelect").addEventListener("change", (event) => {
+          localStorage.setItem("amg_main_group", event.target.value);
+          fillSubcategories(event.target.value);
+          renderResults();
+        });
+
+        $("#categorySelect").addEventListener("change", () => {
+          localStorage.setItem(STORAGE.category, $("#categorySelect").value);
+          renderResults();
+        });
+
+        $("#listingType").addEventListener("change", renderResults);
+        $("#sortSelect").addEventListener("change", renderResults);
+        $("#searchBtn").addEventListener("click", renderResults);
+        $("#clearBtn").addEventListener("click", clearFilters);
+
+        ["keyword", "city", "minPrice", "maxPrice"].forEach((id) => {
+          $("#" + id).addEventListener("input", renderResults);
+        });
+
+        $("#categoryPills").addEventListener("click", (event) => {
+          const btn = event.target.closest(".pill");
+          if (!btn) return;
+
+          if (btn.dataset.group === "all") {
+            $("#mainGroupSelect").value = "";
+            $("#categorySelect").innerHTML = `<option value="">${t("all")}</option>`;
+            $("#listingType").innerHTML = `<option value="">${t("all")}</option>`;
+          } else {
+            $("#mainGroupSelect").value = btn.dataset.group;
+            fillSubcategories(btn.dataset.group);
+          }
+
+          renderResults();
+        });
+
+        renderResults();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
+
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
