@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Dashboard | AutoMarket Global</title>
-
-  <meta
-    name="description"
-    content="View AutoMarket Global dashboard statistics, listings, favorites, and selected country information."
-  />
+  <title>Dashboard | HK Global Market & Services</title>
+  <meta name="description" content="Professional dashboard for ads, messages, favorites, categories, and account activity." />
 
   <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -17,57 +13,854 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
+
+  <style>
+    :root {
+      --orange: #ff8b26;
+      --orange-dark: #e87512;
+      --dark: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.1);
+      --soft: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+      --radius: 28px;
+      --success: #027a48;
+      --danger: #b42318;
+      --blue: #175cd3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(46, 144, 250, 0.1), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      color: var(--dark);
+    }
+
+    body[dir="rtl"] {
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      height: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle,
+    .sidebar-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--dark);
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--orange);
+    }
+
+    .top-country {
+      min-width: 220px;
+      max-width: 320px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.42);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 320px;
+      background: #fff;
+      z-index: 90;
+      transform: translateX(-105%);
+      transition: 0.25s ease;
+      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      transform: translateX(105%);
+      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .sidebar-title span {
+      color: var(--orange);
+    }
+
+    .sidebar-nav {
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 800;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 34px 18px 80px;
+    }
+
+    .hero {
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(16, 24, 40, 0.94), rgba(16, 24, 40, 0.78)),
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.35), transparent 38%);
+      color: #fff;
+      padding: 34px;
+      box-shadow: 0 32px 90px rgba(16, 24, 40, 0.24);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 24px;
+      align-items: end;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      right: -110px;
+      top: -130px;
+      background: rgba(255, 139, 38, 0.2);
+      filter: blur(4px);
+    }
+
+    body[dir="rtl"] .hero::after {
+      right: auto;
+      left: -110px;
+    }
+
+    .hero-content,
+    .hero-panel {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd2aa;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 6vw, 70px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.8;
+      font-size: 17px;
+      max-width: 720px;
+    }
+
+    .hero-panel {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-panel i {
+      width: 64px;
+      height: 64px;
+      border-radius: 22px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .hero-panel strong {
+      display: block;
+      font-size: 34px;
+      margin-bottom: 6px;
+    }
+
+    .hero-panel span {
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .quick-link {
+      min-height: 48px;
+      border-radius: 999px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+
+    .quick-link.primary {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(255, 139, 38, 0.3);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card,
+    .panel {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 116px;
+    }
+
+    .stat-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+
+    .stat-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 30px;
+      letter-spacing: -0.045em;
+      line-height: 1;
+    }
+
+    .stat-card small {
+      display: block;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(340px, 0.65fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .panel-head h2 {
+      margin: 0 0 6px;
+      font-size: 25px;
+      letter-spacing: -0.04em;
+    }
+
+    .panel-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      background: #fff4ea;
+      color: var(--orange-dark);
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .filter-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: var(--muted);
+    }
+
+    body[dir="rtl"] .search-box i {
+      left: auto;
+      right: 16px;
+    }
+
+    .search-box input,
+    .filter-row select {
+      width: 100%;
+      height: 48px;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-box input {
+      padding: 0 16px 0 44px;
+    }
+
+    body[dir="rtl"] .search-box input {
+      padding: 0 44px 0 16px;
+    }
+
+    .filter-row select {
+      padding: 0 14px;
+    }
+
+    .search-box input:focus,
+    .filter-row select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
+    }
+
+    .ads-table {
+      display: grid;
+      gap: 12px;
+    }
+
+    .ad-row {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 22px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 60px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .row-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+    }
+
+    .ad-row h3 {
+      margin: 0 0 5px;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .ad-row p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .row-price {
+      font-weight: 950;
+      color: var(--dark);
+      white-space: nowrap;
+      margin-bottom: 8px;
+      text-align: end;
+    }
+
+    .row-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      cursor: pointer;
+      font-weight: 900;
+      background: #fff;
+      color: var(--dark);
+      font-size: 13px;
+    }
+
+    .btn.primary {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 14px 34px rgba(255, 139, 38, 0.24);
+    }
+
+    .btn.dark {
+      background: var(--dark);
+      border-color: var(--dark);
+      color: #fff;
+    }
+
+    .btn.danger {
+      background: #fef3f2;
+      border-color: #fecdca;
+      color: var(--danger);
+    }
+
+    .category-bars {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bar-item {
+      display: grid;
+      gap: 8px;
+    }
+
+    .bar-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .bar-track {
+      height: 12px;
+      background: #f2f4f7;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--orange), #ffb36c);
+      transition: width 0.4s ease;
+    }
+
+    .activity-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .activity-item {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 22px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .activity-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+    }
+
+    .activity-item h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .activity-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mini-card {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    .mini-card i {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .mini-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .empty-state {
+      border: 1px dashed rgba(16, 24, 40, 0.18);
+      background: #fff;
+      border-radius: 26px;
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 34px 20px;
+      color: var(--muted);
+    }
+
+    .empty-state i {
+      display: block;
+      color: var(--orange);
+      font-size: 50px;
+      margin-bottom: 14px;
+    }
+
+    .empty-state h3 {
+      margin: 0 0 8px;
+      color: var(--dark);
+      font-size: 25px;
+      letter-spacing: -0.04em;
+    }
+
+    .empty-state p {
+      margin: 0 0 20px;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 1050px) {
+      .hero,
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .top-country {
+        min-width: 150px;
+        max-width: 180px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .page {
+        padding-top: 24px;
+      }
+
+      .hero {
+        padding: 22px;
+        border-radius: 28px;
+      }
+
+      .stats-grid,
+      .filter-row,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ad-row {
+        grid-template-columns: 1fr;
+      }
+
+      .row-price,
+      .row-actions {
+        text-align: start;
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <header class="site-topbar">
-    <div class="site-topbar-inner">
-      <div class="topbar-left">
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false"
-        >
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
-          AutoMarket <span>Global</span>
-        </a>
+        <a class="brand" href="index.html">HK <span>Global</span></a>
       </div>
 
-      <div class="topbar-right">
-        <select
-          class="country-select"
-          id="countrySelect"
-          aria-label="Choose country"
-        ></select>
+      <div class="top-right">
+        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
       </div>
     </div>
   </header>
 
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-title">
-        AutoMarket <span>Global</span>
-      </div>
+      <div class="sidebar-title">HK <span>Global</span></div>
 
-      <button
-        class="sidebar-close"
-        id="sidebarClose"
-        type="button"
-        aria-label="Close menu"
-      >
+      <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <nav class="sidebar-nav" aria-label="Main navigation">
+    <nav class="sidebar-nav">
       <a class="sidebar-link" href="index.html">
         <i class="fa-solid fa-house"></i>
         <span data-i18n="home">Home</span>
@@ -75,15 +868,13 @@
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
+        <span data-i18n="search">Search</span>
       </a>
 
       <a class="sidebar-link" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
+        <span data-i18n="postAd">Post ad</span>
       </a>
-
-      <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
@@ -123,86 +914,956 @@
       </a>
     </nav>
 
-    <div class="sidebar-footer">
-      AutoMarket Global · 2026
-    </div>
+    <div class="sidebar-footer">HK Global Market & Services · 2026</div>
   </aside>
 
   <main class="page">
-    <section class="page-header">
-      <p class="eyebrow">
-        <i class="fa-solid fa-chart-line"></i>
-        <span data-i18n="dashboard">Dashboard</span>
-      </p>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">
+          <i class="fa-solid fa-chart-line"></i>
+          <span data-i18n="dashboardCenter">Dashboard center</span>
+        </div>
 
-      <h1 data-i18n="dashboardTitle">Dashboard</h1>
+        <h1>
+          <span data-i18n="heroTitleA">Control your</span>
+          <span data-i18n="heroTitleB">global market</span>
+        </h1>
 
-      <p class="subtitle" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
-      </p>
-    </section>
+        <p data-i18n="heroText">
+          Track your ads, messages, favorites, categories, countries, and customer activity from one professional dashboard.
+        </p>
 
-    <section class="dashboard-grid">
-      <div class="stat-card">
-        <i class="fa-solid fa-car"></i>
-        <h3 id="statTotal">0</h3>
-        <p>Total cars</p>
+        <div class="quick-actions">
+          <a class="quick-link primary" href="sell.html">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span data-i18n="postAd">Post ad</span>
+          </a>
+
+          <a class="quick-link" href="search.html">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span data-i18n="search">Search</span>
+          </a>
+
+          <a class="quick-link" href="messages.html">
+            <i class="fa-solid fa-envelope"></i>
+            <span data-i18n="messages">Messages</span>
+          </a>
+        </div>
       </div>
 
-      <div class="stat-card">
+      <div class="hero-panel">
         <i class="fa-solid fa-globe"></i>
-        <h3 id="statCountry">0</h3>
-        <p data-i18n="selectedCountry">Selected country</p>
-      </div>
-
-      <div class="stat-card">
-        <i class="fa-solid fa-heart"></i>
-        <h3 id="statFavorites">0</h3>
-        <p data-i18n="favorites">Favorites</p>
+        <strong id="heroCountry">-</strong>
+        <span data-i18n="heroCountryText">Current working country and language are applied across the platform.</span>
       </div>
     </section>
 
-    <section class="quick-links">
-      <a href="search.html" class="quick-card">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <h3 data-i18n="searchCars">Search cars</h3>
-        <p data-i18n="quickSearchText">
-          Find cars available in your selected country.
-        </p>
-      </a>
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fa-solid fa-rectangle-ad"></i>
+        </div>
 
-      <a href="sell.html" class="quick-card">
-        <i class="fa-solid fa-circle-plus"></i>
-        <h3 data-i18n="sellCar">Sell a car</h3>
-        <p data-i18n="quickSellText">
-          Create a listing and publish your car online.
-        </p>
-      </a>
+        <div>
+          <span data-i18n="totalAds">Total ads</span>
+          <strong id="adsCount">0</strong>
+          <small data-i18n="totalAdsHint">Published in this browser</small>
+        </div>
+      </div>
 
-      <a href="favorites.html" class="quick-card">
-        <i class="fa-solid fa-heart"></i>
-        <h3 data-i18n="favorites">Favorites</h3>
-        <p data-i18n="demoNotice">
-          Demo version: data is saved only in this browser until Firebase is connected.
-        </p>
-      </a>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+
+        <div>
+          <span data-i18n="savedFavorites">Saved favorites</span>
+          <strong id="favoritesCount">0</strong>
+          <small data-i18n="favoritesHint">Saved market items</small>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+
+        <div>
+          <span data-i18n="totalMessages">Messages</span>
+          <strong id="messagesCount">0</strong>
+          <small id="unreadHint">0 unread</small>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
+
+        <div>
+          <span data-i18n="activeCategories">Active categories</span>
+          <strong id="categoriesCount">0</strong>
+          <small data-i18n="categoriesHint">Used by your ads</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-layout">
+      <div class="left-column">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2 data-i18n="recentAds">Recent ads</h2>
+              <p data-i18n="recentAdsText">Review your latest published advertisements and open details quickly.</p>
+            </div>
+
+            <a class="btn primary" href="sell.html">
+              <i class="fa-solid fa-plus"></i>
+              <span data-i18n="newAd">New ad</span>
+            </a>
+          </div>
+
+          <div class="panel-body">
+            <div class="filter-row">
+              <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="adsKeyword" type="search" />
+              </div>
+
+              <select id="categoryFilter"></select>
+            </div>
+
+            <div class="ads-table" id="adsTable"></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="right-column">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2 data-i18n="categoryOverview">Category overview</h2>
+              <p data-i18n="categoryOverviewText">Distribution of ads by category.</p>
+            </div>
+
+            <div class="pill">
+              <i class="fa-solid fa-chart-simple"></i>
+              <span id="categoryTotal">0</span>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <div class="category-bars" id="categoryBars"></div>
+          </div>
+        </section>
+
+        <section class="panel" style="margin-top:24px;">
+          <div class="panel-head">
+            <div>
+              <h2 data-i18n="activity">Activity</h2>
+              <p data-i18n="activityText">Latest account activity summary.</p>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <div class="activity-list" id="activityList"></div>
+          </div>
+        </section>
+
+        <section class="panel" style="margin-top:24px;">
+          <div class="panel-head">
+            <div>
+              <h2 data-i18n="marketSummary">Market summary</h2>
+              <p data-i18n="marketSummaryText">Quick information about your local browser data.</p>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <div class="mini-grid">
+              <div class="mini-card">
+                <i class="fa-solid fa-flag"></i>
+                <span data-i18n="countriesUsed">Countries used</span>
+                <strong id="countriesUsed">0</strong>
+              </div>
+
+              <div class="mini-card">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                <span data-i18n="totalValue">Total value</span>
+                <strong id="totalValue">0</strong>
+              </div>
+
+              <div class="mini-card">
+                <i class="fa-solid fa-envelope-circle-check"></i>
+                <span data-i18n="unread">Unread</span>
+                <strong id="unreadCount">0</strong>
+              </div>
+
+              <div class="mini-card">
+                <i class="fa-solid fa-clock"></i>
+                <span data-i18n="lastUpdate">Last update</span>
+                <strong id="lastUpdate">-</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <div>
-        © 2026 AutoMarket Global. All rights reserved.
-      </div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 HK Global Market & Services.</div>
 
       <div class="footer-links">
         <a href="terms.html" data-i18n="terms">Terms</a>
-        <a href="search.html" data-i18n="searchCars">Search cars</a>
-        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+        <a href="search.html" data-i18n="search">Search</a>
+        <a href="sell.html" data-i18n="postAd">Post ad</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/core.js"></script>
+  <script src="assets/js/countries.js"></script>
+  <script src="assets/js/categories.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE = {
+        country: "amg_country_code",
+        countryLabel: "amg_country_label",
+        lang: "amg_country_lang",
+        listings: "hk_global_market_listings",
+        favorites: "hk_global_favorites",
+        messages: "hk_global_messages"
+      };
+
+      const RTL_LANGS = ["ar", "fa", "ur", "he"];
+
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+      const FALLBACK_COUNTRIES = [
+        { code: "SE", labels: { en: "Sweden", ar: "السويد", sv: "Sverige", de: "Schweden", tr: "İsveç" }, lang: "sv", currency: "SEK" },
+        { code: "DE", labels: { en: "Germany", ar: "ألمانيا", sv: "Tyskland", de: "Deutschland", tr: "Almanya" }, lang: "de", currency: "EUR" },
+        { code: "SY", labels: { en: "Syria", ar: "سوريا", sv: "Syrien", de: "Syrien", tr: "Suriye" }, lang: "ar", currency: "USD" },
+        { code: "TR", labels: { en: "Türkiye", ar: "تركيا", sv: "Turkiet", de: "Türkei", tr: "Türkiye" }, lang: "tr", currency: "TRY" },
+        { code: "AE", labels: { en: "United Arab Emirates", ar: "الإمارات", sv: "Förenade Arabemiraten", de: "VAE", tr: "BAE" }, lang: "ar", currency: "AED" }
+      ];
+
+      const FALLBACK_CATEGORIES = [
+        { id: "private-cars", labels: { en: "Private cars", ar: "سيارات خاصة", sv: "Personbilar", de: "Private Autos", tr: "Özel arabalar" }, icon: "fa-car" },
+        { id: "rental-cars", labels: { en: "Rental cars", ar: "سيارات للإيجار", sv: "Hyrbilar", de: "Mietwagen", tr: "Kiralık araçlar" }, icon: "fa-key" },
+        { id: "motorcycles", labels: { en: "Motorcycles", ar: "دراجات نارية", sv: "Motorcyklar", de: "Motorräder", tr: "Motosikletler" }, icon: "fa-motorcycle" },
+        { id: "bicycles", labels: { en: "Bicycles", ar: "دراجات هوائية", sv: "Cyklar", de: "Fahrräder", tr: "Bisikletler" }, icon: "fa-bicycle" },
+        { id: "small-trucks", labels: { en: "Small trucks", ar: "شاحنات صغيرة", sv: "Små lastbilar", de: "Kleine LKW", tr: "Küçük kamyonlar" }, icon: "fa-truck-pickup" },
+        { id: "heavy-trucks", labels: { en: "Heavy trucks", ar: "شاحنات كبيرة", sv: "Tunga lastbilar", de: "Schwere LKW", tr: "Ağır kamyonlar" }, icon: "fa-truck" },
+        { id: "property-sale", labels: { en: "Property for sale", ar: "عقار للبيع", sv: "Bostad till salu", de: "Immobilie kaufen", tr: "Satılık emlak" }, icon: "fa-house" },
+        { id: "property-rent", labels: { en: "Property for rent", ar: "عقار للإيجار", sv: "Bostad att hyra", de: "Immobilie mieten", tr: "Kiralık emlak" }, icon: "fa-building" },
+        { id: "lands", labels: { en: "Land", ar: "أراضي", sv: "Mark", de: "Grundstücke", tr: "Arsalar" }, icon: "fa-map" },
+        { id: "farms", labels: { en: "Farms", ar: "أراضٍ زراعية", sv: "Jordbruksmark", de: "Landwirtschaft", tr: "Tarım arazisi" }, icon: "fa-tractor" },
+        { id: "phones", labels: { en: "Phones", ar: "هواتف", sv: "Telefoner", de: "Telefone", tr: "Telefonlar" }, icon: "fa-mobile-screen" },
+        { id: "computers", labels: { en: "Computers", ar: "كمبيوترات", sv: "Datorer", de: "Computer", tr: "Bilgisayarlar" }, icon: "fa-computer" },
+        { id: "furniture", labels: { en: "Furniture", ar: "أثاث", sv: "Möbler", de: "Möbel", tr: "Mobilya" }, icon: "fa-couch" },
+        { id: "appliances", labels: { en: "Appliances", ar: "أجهزة منزلية", sv: "Vitvaror", de: "Haushaltsgeräte", tr: "Ev aletleri" }, icon: "fa-blender" },
+        { id: "shops", labels: { en: "Shops", ar: "محلات", sv: "Butiker", de: "Geschäfte", tr: "Dükkanlar" }, icon: "fa-store" },
+        { id: "vehicle-service", labels: { en: "Vehicle service", ar: "صيانة مركبات", sv: "Fordonsservice", de: "Fahrzeugservice", tr: "Araç servisi" }, icon: "fa-car-burst" },
+        { id: "home-maintenance", labels: { en: "Home maintenance", ar: "صيانة منازل", sv: "Hemunderhåll", de: "Hauswartung", tr: "Ev bakımı" }, icon: "fa-house-circle-check" },
+        { id: "private-lessons", labels: { en: "Private lessons", ar: "دروس خصوصية", sv: "Privatlektioner", de: "Nachhilfe", tr: "Özel ders" }, icon: "fa-chalkboard-user" },
+        { id: "web-design", labels: { en: "Web design", ar: "تصميم مواقع", sv: "Webbdesign", de: "Webdesign", tr: "Web tasarım" }, icon: "fa-globe" },
+        { id: "programming", labels: { en: "Programming", ar: "برمجة", sv: "Programmering", de: "Programmierung", tr: "Programlama" }, icon: "fa-code" }
+      ];
+
+      const DICT = {
+        en: {
+          home: "Home", search: "Search", postAd: "Post ad", account: "My account",
+          favorites: "Favorites", messages: "Messages", dashboard: "Dashboard", terms: "Terms",
+          login: "Login", register: "Create account", dashboardCenter: "Dashboard center",
+          heroTitleA: "Control your", heroTitleB: "global market",
+          heroText: "Track your ads, messages, favorites, categories, countries, and customer activity from one professional dashboard.",
+          heroCountryText: "Current working country and language are applied across the platform.",
+          totalAds: "Total ads", totalAdsHint: "Published in this browser",
+          savedFavorites: "Saved favorites", favoritesHint: "Saved market items",
+          totalMessages: "Messages", activeCategories: "Active categories",
+          categoriesHint: "Used by your ads", recentAds: "Recent ads",
+          recentAdsText: "Review your latest published advertisements and open details quickly.",
+          newAd: "New ad", categoryOverview: "Category overview",
+          categoryOverviewText: "Distribution of ads by category.",
+          activity: "Activity", activityText: "Latest account activity summary.",
+          marketSummary: "Market summary",
+          marketSummaryText: "Quick information about your local browser data.",
+          countriesUsed: "Countries used", totalValue: "Total value",
+          unread: "Unread", lastUpdate: "Last update",
+          allCategories: "All categories", searchPlaceholder: "Search ads...",
+          noAds: "No ads yet", noAdsText: "Publish your first advertisement to see dashboard statistics.",
+          view: "View", edit: "Edit", noPrice: "Ask price",
+          noCategories: "No category data", noActivity: "No activity yet",
+          publishedAd: "Published ad", savedFavorite: "Saved favorite",
+          receivedMessage: "Received message", unreadWord: "unread"
+        },
+
+        ar: {
+          home: "الرئيسية", search: "البحث", postAd: "نشر إعلان", account: "حسابي",
+          favorites: "المفضلة", messages: "الرسائل", dashboard: "لوحة التحكم", terms: "الشروط",
+          login: "تسجيل الدخول", register: "إنشاء حساب", dashboardCenter: "مركز لوحة التحكم",
+          heroTitleA: "تحكم في", heroTitleB: "سوقك العالمي",
+          heroText: "تابع الإعلانات والرسائل والمفضلة والفئات والدول ونشاط العملاء من لوحة احترافية واحدة.",
+          heroCountryText: "الدولة واللغة الحالية يتم تطبيقهما على كامل المنصة.",
+          totalAds: "كل الإعلانات", totalAdsHint: "منشورة في هذا المتصفح",
+          savedFavorites: "المفضلة المحفوظة", favoritesHint: "عناصر سوق محفوظة",
+          totalMessages: "الرسائل", activeCategories: "الفئات النشطة",
+          categoriesHint: "مستخدمة في إعلاناتك", recentAds: "أحدث الإعلانات",
+          recentAdsText: "راجع آخر الإعلانات المنشورة وافتح التفاصيل بسرعة.",
+          newAd: "إعلان جديد", categoryOverview: "نظرة على الفئات",
+          categoryOverviewText: "توزيع الإعلانات حسب الفئة.",
+          activity: "النشاط", activityText: "ملخص آخر نشاط في الحساب.",
+          marketSummary: "ملخص السوق",
+          marketSummaryText: "معلومات سريعة عن البيانات المحلية في المتصفح.",
+          countriesUsed: "الدول المستخدمة", totalValue: "القيمة الكلية",
+          unread: "غير مقروء", lastUpdate: "آخر تحديث",
+          allCategories: "كل الفئات", searchPlaceholder: "ابحث في الإعلانات...",
+          noAds: "لا توجد إعلانات بعد", noAdsText: "انشر أول إعلان حتى تظهر إحصائيات لوحة التحكم.",
+          view: "عرض", edit: "تعديل", noPrice: "السعر عند التواصل",
+          noCategories: "لا توجد بيانات فئات", noActivity: "لا يوجد نشاط بعد",
+          publishedAd: "تم نشر إعلان", savedFavorite: "تم حفظ مفضلة",
+          receivedMessage: "رسالة واردة", unreadWord: "غير مقروءة"
+        },
+
+        sv: {
+          home: "Hem", search: "Sök", postAd: "Lägg upp annons", account: "Mitt konto",
+          favorites: "Favoriter", messages: "Meddelanden", dashboard: "Panel", terms: "Villkor",
+          login: "Logga in", register: "Skapa konto", dashboardCenter: "Panelcenter",
+          heroTitleA: "Styr din", heroTitleB: "globala marknad",
+          heroText: "Följ annonser, meddelanden, favoriter, kategorier, länder och kundaktivitet från en professionell panel.",
+          heroCountryText: "Aktuellt land och språk används på hela plattformen.",
+          totalAds: "Totala annonser", totalAdsHint: "Publicerade i denna webbläsare",
+          savedFavorites: "Sparade favoriter", favoritesHint: "Sparade marknadsobjekt",
+          totalMessages: "Meddelanden", activeCategories: "Aktiva kategorier",
+          categoriesHint: "Används av dina annonser", recentAds: "Senaste annonser",
+          recentAdsText: "Granska dina senaste annonser och öppna detaljer snabbt.",
+          newAd: "Ny annons", categoryOverview: "Kategoriöversikt",
+          categoryOverviewText: "Fördelning av annonser per kategori.",
+          activity: "Aktivitet", activityText: "Senaste kontoaktivitet.",
+          marketSummary: "Marknadssammanfattning",
+          marketSummaryText: "Snabb information om lokal webbläsardata.",
+          countriesUsed: "Länder använda", totalValue: "Totalt värde",
+          unread: "Oläst", lastUpdate: "Senast uppdaterad",
+          allCategories: "Alla kategorier", searchPlaceholder: "Sök annonser...",
+          noAds: "Inga annonser ännu", noAdsText: "Publicera din första annons för att se statistik.",
+          view: "Visa", edit: "Redigera", noPrice: "Fråga pris",
+          noCategories: "Ingen kategoridata", noActivity: "Ingen aktivitet ännu",
+          publishedAd: "Publicerad annons", savedFavorite: "Sparad favorit",
+          receivedMessage: "Mottaget meddelande", unreadWord: "oläst"
+        },
+
+        de: {
+          home: "Start", search: "Suche", postAd: "Anzeige erstellen", account: "Mein Konto",
+          favorites: "Favoriten", messages: "Nachrichten", dashboard: "Dashboard", terms: "Bedingungen",
+          login: "Anmelden", register: "Konto erstellen", dashboardCenter: "Dashboard-Center",
+          heroTitleA: "Verwalte deinen", heroTitleB: "globalen Markt",
+          heroText: "Verfolge Anzeigen, Nachrichten, Favoriten, Kategorien, Länder und Kundenaktivität in einem professionellen Dashboard.",
+          heroCountryText: "Aktuelles Land und Sprache werden auf der Plattform angewendet.",
+          totalAds: "Anzeigen gesamt", totalAdsHint: "In diesem Browser veröffentlicht",
+          savedFavorites: "Gespeicherte Favoriten", favoritesHint: "Gespeicherte Markteinträge",
+          totalMessages: "Nachrichten", activeCategories: "Aktive Kategorien",
+          categoriesHint: "Von deinen Anzeigen genutzt", recentAds: "Neueste Anzeigen",
+          recentAdsText: "Überprüfe deine neuesten Anzeigen und öffne Details schnell.",
+          newAd: "Neue Anzeige", categoryOverview: "Kategorieübersicht",
+          categoryOverviewText: "Verteilung der Anzeigen nach Kategorie.",
+          activity: "Aktivität", activityText: "Letzte Kontoaktivität.",
+          marketSummary: "Marktübersicht",
+          marketSummaryText: "Kurzinformationen zu lokalen Browserdaten.",
+          countriesUsed: "Genutzte Länder", totalValue: "Gesamtwert",
+          unread: "Ungelesen", lastUpdate: "Letzte Aktualisierung",
+          allCategories: "Alle Kategorien", searchPlaceholder: "Anzeigen suchen...",
+          noAds: "Noch keine Anzeigen", noAdsText: "Erstelle deine erste Anzeige, um Statistiken zu sehen.",
+          view: "Ansehen", edit: "Bearbeiten", noPrice: "Preis anfragen",
+          noCategories: "Keine Kategoriedaten", noActivity: "Noch keine Aktivität",
+          publishedAd: "Anzeige veröffentlicht", savedFavorite: "Favorit gespeichert",
+          receivedMessage: "Nachricht erhalten", unreadWord: "ungelesen"
+        },
+
+        tr: {
+          home: "Ana sayfa", search: "Ara", postAd: "İlan ver", account: "Hesabım",
+          favorites: "Favoriler", messages: "Mesajlar", dashboard: "Panel", terms: "Şartlar",
+          login: "Giriş", register: "Hesap oluştur", dashboardCenter: "Panel merkezi",
+          heroTitleA: "Küresel", heroTitleB: "pazarını yönet",
+          heroText: "İlanları, mesajları, favorileri, kategorileri, ülkeleri ve müşteri aktivitesini profesyonel panelden takip edin.",
+          heroCountryText: "Geçerli ülke ve dil tüm platformda uygulanır.",
+          totalAds: "Toplam ilan", totalAdsHint: "Bu tarayıcıda yayınlandı",
+          savedFavorites: "Kayıtlı favoriler", favoritesHint: "Kayıtlı pazar öğeleri",
+          totalMessages: "Mesajlar", activeCategories: "Aktif kategoriler",
+          categoriesHint: "İlanlarınızda kullanıldı", recentAds: "Son ilanlar",
+          recentAdsText: "Son yayınlanan ilanları inceleyin ve detayları hızlı açın.",
+          newAd: "Yeni ilan", categoryOverview: "Kategori özeti",
+          categoryOverviewText: "İlanların kategori dağılımı.",
+          activity: "Aktivite", activityText: "Son hesap aktivitesi özeti.",
+          marketSummary: "Pazar özeti",
+          marketSummaryText: "Yerel tarayıcı verileri hakkında hızlı bilgi.",
+          countriesUsed: "Kullanılan ülkeler", totalValue: "Toplam değer",
+          unread: "Okunmamış", lastUpdate: "Son güncelleme",
+          allCategories: "Tüm kategoriler", searchPlaceholder: "İlan ara...",
+          noAds: "Henüz ilan yok", noAdsText: "Panel istatistiklerini görmek için ilk ilanınızı yayınlayın.",
+          view: "Görüntüle", edit: "Düzenle", noPrice: "Fiyat sor",
+          noCategories: "Kategori verisi yok", noActivity: "Henüz aktivite yok",
+          publishedAd: "İlan yayınlandı", savedFavorite: "Favori kaydedildi",
+          receivedMessage: "Mesaj alındı", unreadWord: "okunmamış"
+        },
+
+        fr: {},
+        es: {},
+        it: {},
+        pt: {},
+        nl: {}
+      };
+
+      DICT.fr = DICT.en;
+      DICT.es = DICT.en;
+      DICT.it = DICT.en;
+      DICT.pt = DICT.en;
+      DICT.nl = DICT.en;
+
+      function currentLang() {
+        return String(localStorage.getItem(STORAGE.lang) || "en").slice(0, 2).toLowerCase();
+      }
+
+      function t(key) {
+        const lang = currentLang();
+        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+      }
+
+      function readJson(key, fallback) {
+        try {
+          const value = JSON.parse(localStorage.getItem(key) || "");
+          return value || fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function getCountries() {
+        const external = window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+        return external.length ? external : FALLBACK_COUNTRIES;
+      }
+
+      function getCategories() {
+        const external = window.AMG_CATEGORIES || window.CATEGORIES || window.categories || [];
+        return external.length ? external.concat(FALLBACK_CATEGORIES) : FALLBACK_CATEGORIES;
+      }
+
+      function countryCode(country) {
+        return country?.code || country?.id || country?.iso2 || country?.value || "";
+      }
+
+      function countryLang(country) {
+        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
+      }
+
+      function localText(obj, fallback = "") {
+        const lang = currentLang();
+
+        if (!obj) return fallback;
+        if (typeof obj === "string") return obj;
+
+        if (obj.labels) return obj.labels[lang] || obj.labels.en || obj.labels.ar || fallback;
+        if (obj.names) return obj.names[lang] || obj.names.en || obj.names.ar || fallback;
+
+        return obj.name || fallback;
+      }
+
+      function getCountryByCode(code) {
+        const clean = String(code || "").toUpperCase();
+        return getCountries().find((country) => String(countryCode(country)).toUpperCase() === clean) || getCountries()[0];
+      }
+
+      function getCategory(id) {
+        return getCategories().find((category) => category.id === id) || FALLBACK_CATEGORIES[0];
+      }
+
+      function categoryLabel(id) {
+        return localText(getCategory(id), id || "-");
+      }
+
+      function categoryIcon(id) {
+        return getCategory(id)?.icon || "fa-layer-group";
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function formatPrice(item) {
+        const price = Number(item.price || 0);
+        if (!price) return t("noPrice");
+
+        return new Intl.NumberFormat(undefined, {
+          maximumFractionDigits: 0
+        }).format(price) + " " + (item.currency || "");
+      }
+
+      function formatDate(date) {
+        if (!date) return "-";
+
+        try {
+          return new Date(date).toLocaleDateString();
+        } catch {
+          return "-";
+        }
+      }
+
+      function shortText(text, limit) {
+        const clean = String(text || "").replace(/\s+/g, " ").trim();
+        if (clean.length <= limit) return clean;
+        return clean.slice(0, limit) + "...";
+      }
+
+      function fillCountries() {
+        const select = $("#countrySelect");
+        const countries = getCountries();
+
+        if (!select || !countries.length) return;
+
+        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
+
+        select.innerHTML = "";
+
+        countries.forEach((country) => {
+          const option = document.createElement("option");
+          option.value = countryCode(country);
+          option.textContent = localText(country, countryCode(country));
+          select.appendChild(option);
+        });
+
+        select.value = saved;
+      }
+
+      function applyCountry(code) {
+        const country = getCountryByCode(code);
+        if (!country) return;
+
+        const codeValue = countryCode(country);
+        const label = localText(country, codeValue);
+
+        localStorage.setItem(STORAGE.country, codeValue);
+        localStorage.setItem(STORAGE.countryLabel, label);
+
+        if (!localStorage.getItem(STORAGE.lang)) {
+          localStorage.setItem(STORAGE.lang, countryLang(country));
+        }
+
+        const lang = currentLang();
+        const dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = dir;
+        document.body.setAttribute("dir", dir);
+
+        fillCountries();
+        applyTranslations();
+        fillCategoryFilter();
+        renderDashboard();
+      }
+
+      function applyTranslations() {
+        $$("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+
+        $("#adsKeyword").placeholder = t("searchPlaceholder");
+      }
+
+      function getListings() {
+        const keys = [
+          STORAGE.listings,
+          "amg_listings",
+          "amg_ads",
+          "automarket_listings",
+          "automarket_ads",
+          "hk_global_ads"
+        ];
+
+        let all = [];
+
+        keys.forEach((key) => {
+          const value = readJson(key, []);
+          if (Array.isArray(value)) all = all.concat(value);
+        });
+
+        const normalized = all.map(normalizeListing);
+
+        const unique = [];
+        const seen = new Set();
+
+        normalized.forEach((item) => {
+          if (!seen.has(String(item.id))) {
+            seen.add(String(item.id));
+            unique.push(item);
+          }
+        });
+
+        unique.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+        return unique;
+      }
+
+      function normalizeListing(item, index) {
+        const country = getCountryByCode(item.countryCode || item.country || item.country_code);
+        const categoryId = item.categoryId || item.category || item.type || "private-cars";
+
+        return {
+          id: item.id || "ad-" + Math.random().toString(36).slice(2),
+          title: item.title || item.name || "Untitled ad",
+          city: item.city || item.location || "",
+          countryCode: item.countryCode || item.country || item.country_code || countryCode(country),
+          countryLabel: item.countryLabel || localText(country, item.countryCode || ""),
+          categoryId,
+          categoryLabel: item.categoryLabel || categoryLabel(categoryId),
+          icon: item.icon || categoryIcon(categoryId),
+          price: Number(item.price || 0),
+          currency: item.currency || country?.currency || "",
+          listingType: item.listingType || item.type || "",
+          description: item.description || item.details || "",
+          createdAt: item.createdAt || item.date || new Date().toISOString(),
+          status: item.status || "active"
+        };
+      }
+
+      function getFavorites() {
+        const keys = [
+          STORAGE.favorites,
+          "amg_favorites",
+          "automarket_favorites",
+          "hk_global_saved"
+        ];
+
+        let all = [];
+
+        keys.forEach((key) => {
+          const value = readJson(key, []);
+          if (Array.isArray(value)) all = all.concat(value);
+        });
+
+        return all;
+      }
+
+      function getMessages() {
+        const keys = [
+          STORAGE.messages,
+          "amg_messages",
+          "automarket_messages",
+          "hk_global_inbox",
+          "hk_global_contact_requests"
+        ];
+
+        let all = [];
+
+        keys.forEach((key) => {
+          const value = readJson(key, []);
+          if (Array.isArray(value)) all = all.concat(value);
+        });
+
+        return all.map((item, index) => ({
+          id: item.id || "msg-" + index,
+          senderName: item.senderName || item.name || item.sender || "",
+          listingTitle: item.listingTitle || item.adTitle || item.title || "",
+          message: item.message || item.text || item.body || "",
+          status: item.status || (item.read ? "read" : "unread"),
+          createdAt: item.createdAt || item.date || new Date().toISOString()
+        }));
+      }
+
+      function fillCategoryFilter() {
+        const select = $("#categoryFilter");
+        const listings = getListings();
+        const ids = [...new Set(listings.map((item) => item.categoryId).filter(Boolean))];
+
+        select.innerHTML = "";
+
+        const all = document.createElement("option");
+        all.value = "";
+        all.textContent = t("allCategories");
+        select.appendChild(all);
+
+        ids.forEach((id) => {
+          const option = document.createElement("option");
+          option.value = id;
+          option.textContent = categoryLabel(id);
+          select.appendChild(option);
+        });
+      }
+
+      function getFilteredAds() {
+        const keyword = $("#adsKeyword").value.trim().toLowerCase();
+        const category = $("#categoryFilter").value;
+
+        return getListings().filter((item) => {
+          const text = [
+            item.title,
+            item.description,
+            item.city,
+            item.countryLabel,
+            item.categoryLabel,
+            item.listingType
+          ].join(" ").toLowerCase();
+
+          const keywordOk = !keyword || text.includes(keyword);
+          const categoryOk = !category || item.categoryId === category;
+
+          return keywordOk && categoryOk;
+        });
+      }
+
+      function renderDashboard() {
+        const listings = getListings();
+        const favorites = getFavorites();
+        const messages = getMessages();
+        const unread = messages.filter((item) => item.status !== "read").length;
+        const categoryIds = [...new Set(listings.map((item) => item.categoryId).filter(Boolean))];
+        const countryIds = [...new Set(listings.map((item) => item.countryCode).filter(Boolean))];
+        const totalValue = listings.reduce((sum, item) => sum + Number(item.price || 0), 0);
+        const countryLabel = localStorage.getItem(STORAGE.countryLabel) || "-";
+
+        $("#heroCountry").textContent = countryLabel;
+        $("#adsCount").textContent = listings.length;
+        $("#favoritesCount").textContent = favorites.length;
+        $("#messagesCount").textContent = messages.length;
+        $("#categoriesCount").textContent = categoryIds.length;
+        $("#unreadHint").textContent = unread + " " + t("unreadWord");
+        $("#countriesUsed").textContent = countryIds.length;
+        $("#totalValue").textContent = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(totalValue);
+        $("#unreadCount").textContent = unread;
+        $("#lastUpdate").textContent = formatDate(new Date());
+
+        renderAds();
+        renderCategoryBars(listings);
+        renderActivity(listings, favorites, messages);
+      }
+
+      function renderAds() {
+        const root = $("#adsTable");
+        const ads = getFilteredAds();
+
+        if (!ads.length) {
+          root.innerHTML = `
+            <div class="empty-state">
+              <div>
+                <i class="fa-solid fa-rectangle-ad"></i>
+                <h3>${escapeHtml(t("noAds"))}</h3>
+                <p>${escapeHtml(t("noAdsText"))}</p>
+                <a class="btn primary" href="sell.html">
+                  <i class="fa-solid fa-circle-plus"></i>
+                  ${escapeHtml(t("postAd"))}
+                </a>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        root.innerHTML = ads.slice(0, 12).map((item) => `
+          <article class="ad-row">
+            <div class="row-icon">
+              <i class="fa-solid ${escapeHtml(item.icon || "fa-layer-group")}"></i>
+            </div>
+
+            <div>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>
+                ${escapeHtml(item.city || "-")}
+                · ${escapeHtml(item.countryLabel || item.countryCode || "-")}
+                · ${escapeHtml(item.categoryLabel || "-")}
+              </p>
+              <p>${escapeHtml(shortText(item.description || "", 100))}</p>
+            </div>
+
+            <div>
+              <div class="row-price">${escapeHtml(formatPrice(item))}</div>
+
+              <div class="row-actions">
+                <a class="btn dark" href="details.html?id=${encodeURIComponent(item.id)}">
+                  <i class="fa-solid fa-eye"></i>
+                  ${escapeHtml(t("view"))}
+                </a>
+
+                <a class="btn" href="sell.html?edit=${encodeURIComponent(item.id)}">
+                  <i class="fa-solid fa-pen"></i>
+                  ${escapeHtml(t("edit"))}
+                </a>
+              </div>
+            </div>
+          </article>
+        `).join("");
+      }
+
+      function renderCategoryBars(listings) {
+        const root = $("#categoryBars");
+        const total = listings.length;
+        $("#categoryTotal").textContent = total;
+
+        if (!total) {
+          root.innerHTML = `
+            <div class="empty-state">
+              <div>
+                <i class="fa-solid fa-chart-simple"></i>
+                <h3>${escapeHtml(t("noCategories"))}</h3>
+                <p>${escapeHtml(t("noAdsText"))}</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        const map = new Map();
+
+        listings.forEach((item) => {
+          const id = item.categoryId || "other";
+          map.set(id, (map.get(id) || 0) + 1);
+        });
+
+        const rows = [...map.entries()]
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 8);
+
+        root.innerHTML = rows.map(([id, count]) => {
+          const percent = Math.round((count / total) * 100);
+
+          return `
+            <div class="bar-item">
+              <div class="bar-top">
+                <span>${escapeHtml(categoryLabel(id))}</span>
+                <span>${count} · ${percent}%</span>
+              </div>
+
+              <div class="bar-track">
+                <div class="bar-fill" style="width:${percent}%"></div>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderActivity(listings, favorites, messages) {
+        const root = $("#activityList");
+        const activity = [];
+
+        listings.slice(0, 3).forEach((item) => {
+          activity.push({
+            icon: "fa-rectangle-ad",
+            title: t("publishedAd"),
+            text: item.title,
+            date: item.createdAt
+          });
+        });
+
+        favorites.slice(0, 2).forEach((item) => {
+          const title = typeof item === "object" && item !== null ? (item.title || item.name || "") : String(item);
+
+          activity.push({
+            icon: "fa-heart",
+            title: t("savedFavorite"),
+            text: title || "-",
+            date: new Date().toISOString()
+          });
+        });
+
+        messages.slice(0, 3).forEach((item) => {
+          activity.push({
+            icon: "fa-envelope",
+            title: t("receivedMessage"),
+            text: item.senderName || item.listingTitle || item.message || "-",
+            date: item.createdAt
+          });
+        });
+
+        activity.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+        if (!activity.length) {
+          root.innerHTML = `
+            <div class="empty-state">
+              <div>
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <h3>${escapeHtml(t("noActivity"))}</h3>
+                <p>${escapeHtml(t("noAdsText"))}</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        root.innerHTML = activity.slice(0, 8).map((item) => `
+          <article class="activity-item">
+            <div class="activity-icon">
+              <i class="fa-solid ${escapeHtml(item.icon)}"></i>
+            </div>
+
+            <div>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(shortText(item.text || "-", 90))}</p>
+              <p>${escapeHtml(formatDate(item.date))}</p>
+            </div>
+          </article>
+        `).join("");
+      }
+
+      function initMenu() {
+        const toggle = $("#menuToggle");
+        const sidebar = $("#sidebar");
+        const close = $("#sidebarClose");
+        const backdrop = $("#sidebarBackdrop");
+
+        function open() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document.body.classList.add("menu-open");
+        }
+
+        function shut() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        }
+
+        toggle.addEventListener("click", open);
+        close.addEventListener("click", shut);
+        backdrop.addEventListener("click", shut);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") shut();
+        });
+      }
+
+      function initEvents() {
+        $("#countrySelect").addEventListener("change", (event) => {
+          localStorage.removeItem(STORAGE.lang);
+          applyCountry(event.target.value);
+        });
+
+        $("#adsKeyword").addEventListener("input", renderAds);
+        $("#categoryFilter").addEventListener("change", renderAds);
+      }
+
+      function init() {
+        initMenu();
+        fillCountries();
+
+        const countries = getCountries();
+        const startCountry =
+          localStorage.getItem(STORAGE.country) ||
+          $("#countrySelect")?.value ||
+          countryCode(countries[0]);
+
+        applyCountry(startCountry);
+        initEvents();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
 </body>
 </html>
