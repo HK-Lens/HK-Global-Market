@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Page Not Found | HK Global Market & Services</title>
+  <meta name="description" content="The page was not found. Return to HK Global Market & Services home, search, or post an ad." />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    :root {
+      --orange: #ff8b26;
+      --orange-dark: #e87512;
+      --dark: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.1);
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+      --danger: #b42318;
+      --blue: #175cd3;
+      --green: #027a48;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.14), transparent 30%),
+        radial-gradient(circle at top right, rgba(46, 144, 250, 0.12), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    body[dir="rtl"] {
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      height: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle,
+    .sidebar-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--dark);
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--orange);
+    }
+
+    .top-country {
+      min-width: 220px;
+      max-width: 320px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.42);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 320px;
+      background: #fff;
+      z-index: 90;
+      transform: translateX(-105%);
+      transition: 0.25s ease;
+      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      transform: translateX(105%);
+      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .sidebar-title span {
+      color: var(--orange);
+    }
+
+    .sidebar-nav {
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 800;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 34px 18px 80px;
+    }
+
+    .error-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero {
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(16, 24, 40, 0.96), rgba(16, 24, 40, 0.78)),
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.4), transparent 38%);
+      color: #fff;
+      padding: 38px;
+      box-shadow: 0 32px 90px rgba(16, 24, 40, 0.24);
+      overflow: hidden;
+      position: relative;
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      right: -120px;
+      top: -140px;
+      background: rgba(255, 139, 38, 0.22);
+      filter: blur(4px);
+    }
+
+    body[dir="rtl"] .hero::after {
+      right: auto;
+      left: -120px;
+    }
+
+    .hero-content,
+    .hero-bottom {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd2aa;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .error-code {
+      font-size: clamp(90px, 18vw, 190px);
+      line-height: 0.84;
+      letter-spacing: -0.12em;
+      font-weight: 950;
+      color: var(--orange);
+      margin: 0 0 22px;
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 5.5vw, 72px);
+      line-height: 0.96;
+      letter-spacing: -0.065em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.85;
+      font-size: 17px;
+      max-width: 760px;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .main-btn {
+      min-height: 52px;
+      border-radius: 999px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 950;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .main-btn.primary {
+      background: var(--orange);
+      border-color: var(--orange);
+      box-shadow: 0 18px 44px rgba(255, 139, 38, 0.32);
+    }
+
+    .hero-bottom {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+      margin-top: 34px;
+    }
+
+    .hero-bottom strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .hero-bottom span {
+      color: rgba(255, 255, 255, 0.74);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 36px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      align-self: center;
+    }
+
+    .panel-head {
+      margin-bottom: 22px;
+    }
+
+    .panel-icon {
+      width: 66px;
+      height: 66px;
+      border-radius: 24px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .panel-head h2 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      letter-spacing: -0.055em;
+    }
+
+    .panel-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: var(--muted);
+    }
+
+    body[dir="rtl"] .search-box i {
+      left: auto;
+      right: 16px;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 54px;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 18px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+      font-size: 15px;
+      padding: 0 48px 0 46px;
+    }
+
+    body[dir="rtl"] .search-box input {
+      padding: 0 46px 0 48px;
+    }
+
+    .search-box input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
+    }
+
+    .search-submit {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      border: 0;
+      background: var(--orange);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    body[dir="rtl"] .search-submit {
+      right: auto;
+      left: 7px;
+    }
+
+    .quick-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .quick-card {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 22px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 50px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      transition: 0.2s ease;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(16, 24, 40, 0.08);
+    }
+
+    .quick-card i:first-child {
+      width: 50px;
+      height: 50px;
+      border-radius: 18px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    .quick-card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+
+    .quick-card span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .quick-card .arrow {
+      color: var(--muted);
+    }
+
+    .help-box {
+      margin-top: 18px;
+      border: 1px solid #fedf89;
+      background: #fffaeb;
+      color: #7a2e0e;
+      border-radius: 22px;
+      padding: 16px;
+      line-height: 1.7;
+      font-size: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .help-box i {
+      margin-top: 2px;
+      color: var(--orange-dark);
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 980px) {
+      .error-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-country {
+        min-width: 150px;
+        max-width: 180px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .page {
+        padding-top: 24px;
+      }
+
+      .hero,
+      .panel {
+        border-radius: 28px;
+        padding: 22px;
+      }
+
+      .quick-card {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-card .arrow {
+        display: none;
+      }
+
+      .panel-head h2 {
+        font-size: 29px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a class="brand" href="index.html">HK <span>Global</span></a>
+      </div>
+
+      <div class="top-right">
+        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
+      </div>
+    </div>
+  </header>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">HK <span>Global</span></div>
+
+      <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-link" href="index.html">
+        <i class="fa-solid fa-house"></i>
+        <span data-i18n="home">Home</span>
+      </a>
+
+      <a class="sidebar-link" href="search.html">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span data-i18n="search">Search</span>
+      </a>
+
+      <a class="sidebar-link" href="sell.html">
+        <i class="fa-solid fa-circle-plus"></i>
+        <span data-i18n="postAd">Post ad</span>
+      </a>
+
+      <a class="sidebar-link" href="account.html">
+        <i class="fa-solid fa-user"></i>
+        <span data-i18n="account">My account</span>
+      </a>
+
+      <a class="sidebar-link" href="favorites.html">
+        <i class="fa-solid fa-heart"></i>
+        <span data-i18n="favorites">Favorites</span>
+      </a>
+
+      <a class="sidebar-link" href="messages.html">
+        <i class="fa-solid fa-envelope"></i>
+        <span data-i18n="messages">Messages</span>
+      </a>
+
+      <a class="sidebar-link" href="dashboard.html">
+        <i class="fa-solid fa-chart-line"></i>
+        <span data-i18n="dashboard">Dashboard</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a class="sidebar-link" href="terms.html">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span data-i18n="terms">Terms</span>
+      </a>
+
+      <a class="sidebar-link" href="login.html">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span data-i18n="login">Login</span>
+      </a>
+
+      <a class="sidebar-link" href="register.html">
+        <i class="fa-solid fa-user-plus"></i>
+        <span data-i18n="register">Create account</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">HK Global Market & Services · 2026</div>
+  </aside>
+
+  <main class="page">
+    <section class="error-layout">
+      <div class="hero">
+        <div class="hero-content">
+          <div class="badge">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span data-i18n="errorBadge">Page not found</span>
+          </div>
+
+          <div class="error-code">404</div>
+
+          <h1 data-i18n="heroTitle">The page you need is not available.</h1>
+
+          <p data-i18n="heroText">
+            The link may be wrong, the file name may have changed, or the page may not have been uploaded yet.
+          </p>
+
+          <div class="action-row">
+            <a class="main-btn primary" href="index.html">
+              <i class="fa-solid fa-house"></i>
+              <span data-i18n="goHome">Go home</span>
+            </a>
+
+            <a class="main-btn" href="search.html">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span data-i18n="search">Search</span>
+            </a>
+
+            <a class="main-btn" href="sell.html">
+              <i class="fa-solid fa-circle-plus"></i>
+              <span data-i18n="postAd">Post ad</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-bottom">
+          <strong data-i18n="tipTitle">Check the page name</strong>
+          <span data-i18n="tipText">
+            Make sure the file exists in the project root and the link uses the same exact file name, such as account.html, search.html, or sell.html.
+          </span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="panel-icon">
+            <i class="fa-solid fa-compass"></i>
+          </div>
+
+          <h2 data-i18n="panelTitle">Where do you want to go?</h2>
+          <p data-i18n="panelText">
+            Use the quick links below to return to the main marketplace sections.
+          </p>
+        </div>
+
+        <form class="search-box" id="notFoundSearch">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="searchInput" type="search" />
+          <button class="search-submit" type="submit" aria-label="Search">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <div class="quick-grid">
+          <a class="quick-card" href="index.html">
+            <i class="fa-solid fa-house"></i>
+            <div>
+              <strong data-i18n="home">Home</strong>
+              <span data-i18n="homeText">Return to the main global market page.</span>
+            </div>
+            <i class="fa-solid fa-arrow-right arrow"></i>
+          </a>
+
+          <a class="quick-card" href="search.html">
+            <i class="fa-solid fa-list-check"></i>
+            <div>
+              <strong data-i18n="browseAds">Browse ads</strong>
+              <span data-i18n="browseText">Search vehicles, homes, electronics, services, and more.</span>
+            </div>
+            <i class="fa-solid fa-arrow-right arrow"></i>
+          </a>
+
+          <a class="quick-card" href="sell.html">
+            <i class="fa-solid fa-circle-plus"></i>
+            <div>
+              <strong data-i18n="publishNow">Publish now</strong>
+              <span data-i18n="publishText">Create a detailed ad that matches the selected category.</span>
+            </div>
+            <i class="fa-solid fa-arrow-right arrow"></i>
+          </a>
+
+          <a class="quick-card" href="account.html">
+            <i class="fa-solid fa-user"></i>
+            <div>
+              <strong data-i18n="account">My account</strong>
+              <span data-i18n="accountText">Open account, messages, favorites, and dashboard links.</span>
+            </div>
+            <i class="fa-solid fa-arrow-right arrow"></i>
+          </a>
+        </div>
+
+        <div class="help-box">
+          <i class="fa-solid fa-circle-info"></i>
+          <span data-i18n="helpText">
+            If this page appeared after clicking a menu link, check that the linked file has been uploaded with the exact same name.
+          </span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 HK Global Market & Services.</div>
+
+      <div class="footer-links">
+        <a href="terms.html" data-i18n="terms">Terms</a>
+        <a href="search.html" data-i18n="search">Search</a>
+        <a href="sell.html" data-i18n="postAd">Post ad</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/countries.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE = {
+        country: "amg_country_code",
+        countryLabel: "amg_country_label",
+        lang: "amg_country_lang"
+      };
+
+      const RTL_LANGS = ["ar", "fa", "ur", "he"];
+
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+      const FALLBACK_COUNTRIES = [
+        { code: "SE", labels: { en: "Sweden", ar: "السويد", sv: "Sverige", de: "Schweden", tr: "İsveç" }, lang: "sv", currency: "SEK" },
+        { code: "DE", labels: { en: "Germany", ar: "ألمانيا", sv: "Tyskland", de: "Deutschland", tr: "Almanya" }, lang: "de", currency: "EUR" },
+        { code: "SY", labels: { en: "Syria", ar: "سوريا", sv: "Syrien", de: "Syrien", tr: "Suriye" }, lang: "ar", currency: "USD" },
+        { code: "TR", labels: { en: "Türkiye", ar: "تركيا", sv: "Turkiet", de: "Türkei", tr: "Türkiye" }, lang: "tr", currency: "TRY" },
+        { code: "AE", labels: { en: "United Arab Emirates", ar: "الإمارات", sv: "Förenade Arabemiraten", de: "VAE", tr: "BAE" }, lang: "ar", currency: "AED" },
+        { code: "SA", labels: { en: "Saudi Arabia", ar: "السعودية", sv: "Saudiarabien", de: "Saudi-Arabien", tr: "Suudi Arabistan" }, lang: "ar", currency: "SAR" },
+        { code: "EG", labels: { en: "Egypt", ar: "مصر", sv: "Egypten", de: "Ägypten", tr: "Mısır" }, lang: "ar", currency: "EGP" }
+      ];
+
+      const DICT = {
+        en: {
+          home: "Home",
+          search: "Search",
+          postAd: "Post ad",
+          account: "My account",
+          favorites: "Favorites",
+          messages: "Messages",
+          dashboard: "Dashboard",
+          terms: "Terms",
+          login: "Login",
+          register: "Create account",
+          errorBadge: "Page not found",
+          heroTitle: "The page you need is not available.",
+          heroText: "The link may be wrong, the file name may have changed, or the page may not have been uploaded yet.",
+          goHome: "Go home",
+          tipTitle: "Check the page name",
+          tipText: "Make sure the file exists in the project root and the link uses the same exact file name, such as account.html, search.html, or sell.html.",
+          panelTitle: "Where do you want to go?",
+          panelText: "Use the quick links below to return to the main marketplace sections.",
+          searchPlaceholder: "Search the marketplace...",
+          homeText: "Return to the main global market page.",
+          browseAds: "Browse ads",
+          browseText: "Search vehicles, homes, electronics, services, and more.",
+          publishNow: "Publish now",
+          publishText: "Create a detailed ad that matches the selected category.",
+          accountText: "Open account, messages, favorites, and dashboard links.",
+          helpText: "If this page appeared after clicking a menu link, check that the linked file has been uploaded with the exact same name."
+        },
+
+        ar: {
+          home: "الرئيسية",
+          search: "البحث",
+          postAd: "نشر إعلان",
+          account: "حسابي",
+          favorites: "المفضلة",
+          messages: "الرسائل",
+          dashboard: "لوحة التحكم",
+          terms: "الشروط",
+          login: "تسجيل الدخول",
+          register: "إنشاء حساب",
+          errorBadge: "الصفحة غير موجودة",
+          heroTitle: "الصفحة المطلوبة غير متوفرة.",
+          heroText: "قد يكون الرابط غير صحيح، أو تغير اسم الملف، أو لم يتم رفع الصفحة بعد.",
+          goHome: "العودة للرئيسية",
+          tipTitle: "تحقق من اسم الصفحة",
+          tipText: "تأكد أن الملف موجود في جذر المشروع وأن الرابط يستخدم نفس الاسم تماماً مثل account.html أو search.html أو sell.html.",
+          panelTitle: "إلى أين تريد الذهاب؟",
+          panelText: "استخدم الروابط السريعة للعودة إلى أقسام السوق الرئيسية.",
+          searchPlaceholder: "ابحث في السوق...",
+          homeText: "العودة إلى الصفحة الرئيسية للسوق العالمي.",
+          browseAds: "تصفح الإعلانات",
+          browseText: "ابحث في المركبات والمنازل والإلكترونيات والخدمات والمزيد.",
+          publishNow: "انشر الآن",
+          publishText: "أنشئ إعلاناً مفصلاً يناسب الفئة المختارة.",
+          accountText: "افتح الحساب والرسائل والمفضلة وروابط لوحة التحكم.",
+          helpText: "إذا ظهرت هذه الصفحة بعد الضغط على رابط من القائمة، تحقق أن الملف المرتبط تم رفعه بنفس الاسم تماماً."
+        },
+
+        sv: {
+          home: "Hem",
+          search: "Sök",
+          postAd: "Lägg upp annons",
+          account: "Mitt konto",
+          favorites: "Favoriter",
+          messages: "Meddelanden",
+          dashboard: "Panel",
+          terms: "Villkor",
+          login: "Logga in",
+          register: "Skapa konto",
+          errorBadge: "Sidan hittades inte",
+          heroTitle: "Sidan du söker är inte tillgänglig.",
+          heroText: "Länken kan vara fel, filnamnet kan ha ändrats eller sidan kan saknas.",
+          goHome: "Gå hem",
+          tipTitle: "Kontrollera sidnamnet",
+          tipText: "Se till att filen finns i projektroten och att länken använder exakt samma filnamn.",
+          panelTitle: "Vart vill du gå?",
+          panelText: "Använd snabblänkarna för att återgå till marknadsplatsen.",
+          searchPlaceholder: "Sök på marknaden...",
+          homeText: "Gå tillbaka till huvudsidan.",
+          browseAds: "Bläddra annonser",
+          browseText: "Sök fordon, bostäder, elektronik, tjänster och mer.",
+          publishNow: "Publicera nu",
+          publishText: "Skapa en detaljerad annons för rätt kategori.",
+          accountText: "Öppna konto, meddelanden, favoriter och panel.",
+          helpText: "Om denna sida visas efter en menylänk, kontrollera att filen har laddats upp med exakt samma namn."
+        },
+
+        de: {
+          home: "Start",
+          search: "Suche",
+          postAd: "Anzeige erstellen",
+          account: "Mein Konto",
+          favorites: "Favoriten",
+          messages: "Nachrichten",
+          dashboard: "Dashboard",
+          terms: "Bedingungen",
+          login: "Anmelden",
+          register: "Konto erstellen",
+          errorBadge: "Seite nicht gefunden",
+          heroTitle: "Die gesuchte Seite ist nicht verfügbar.",
+          heroText: "Der Link kann falsch sein, der Dateiname kann geändert worden sein oder die Seite wurde noch nicht hochgeladen.",
+          goHome: "Zur Startseite",
+          tipTitle: "Seitennamen prüfen",
+          tipText: "Stelle sicher, dass die Datei im Projektordner existiert und der Link exakt denselben Dateinamen nutzt.",
+          panelTitle: "Wohin möchtest du gehen?",
+          panelText: "Nutze die Schnelllinks, um zu den wichtigsten Bereichen zurückzukehren.",
+          searchPlaceholder: "Marktplatz durchsuchen...",
+          homeText: "Zur globalen Hauptseite zurückkehren.",
+          browseAds: "Anzeigen ansehen",
+          browseText: "Fahrzeuge, Immobilien, Elektronik, Dienstleistungen und mehr suchen.",
+          publishNow: "Jetzt veröffentlichen",
+          publishText: "Erstelle eine detaillierte Anzeige für die passende Kategorie.",
+          accountText: "Konto, Nachrichten, Favoriten und Dashboard öffnen.",
+          helpText: "Wenn diese Seite nach einem Menüklick erscheint, prüfe, ob die verlinkte Datei exakt so hochgeladen wurde."
+        },
+
+        tr: {
+          home: "Ana sayfa",
+          search: "Ara",
+          postAd: "İlan ver",
+          account: "Hesabım",
+          favorites: "Favoriler",
+          messages: "Mesajlar",
+          dashboard: "Panel",
+          terms: "Şartlar",
+          login: "Giriş",
+          register: "Hesap oluştur",
+          errorBadge: "Sayfa bulunamadı",
+          heroTitle: "Aradığın sayfa mevcut değil.",
+          heroText: "Bağlantı yanlış olabilir, dosya adı değişmiş olabilir veya sayfa henüz yüklenmemiş olabilir.",
+          goHome: "Ana sayfaya git",
+          tipTitle: "Sayfa adını kontrol et",
+          tipText: "Dosyanın proje kökünde olduğundan ve bağlantının aynı dosya adını kullandığından emin ol.",
+          panelTitle: "Nereye gitmek istiyorsun?",
+          panelText: "Ana pazar bölümlerine dönmek için hızlı bağlantıları kullan.",
+          searchPlaceholder: "Pazarda ara...",
+          homeText: "Ana küresel pazar sayfasına dön.",
+          browseAds: "İlanlara göz at",
+          browseText: "Araç, ev, elektronik, hizmet ve daha fazlasını ara.",
+          publishNow: "Şimdi yayınla",
+          publishText: "Seçilen kategoriye uygun detaylı ilan oluştur.",
+          accountText: "Hesap, mesajlar, favoriler ve panel bağlantılarını aç.",
+          helpText: "Bu sayfa menü bağlantısından sonra çıktıysa, dosyanın aynı adla yüklendiğini kontrol et."
+        },
+
+        fr: {},
+        es: {},
+        it: {},
+        pt: {},
+        nl: {}
+      };
+
+      DICT.fr = DICT.en;
+      DICT.es = DICT.en;
+      DICT.it = DICT.en;
+      DICT.pt = DICT.en;
+      DICT.nl = DICT.en;
+
+      function currentLang() {
+        return String(localStorage.getItem(STORAGE.lang) || "en").slice(0, 2).toLowerCase();
+      }
+
+      function t(key) {
+        const lang = currentLang();
+        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+      }
+
+      function getCountries() {
+        const external = window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+        return Array.isArray(external) && external.length ? external : FALLBACK_COUNTRIES;
+      }
+
+      function countryCode(country) {
+        return country?.code || country?.id || country?.iso2 || country?.value || "";
+      }
+
+      function countryLang(country) {
+        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
+      }
+
+      function localText(obj, fallback = "") {
+        const lang = currentLang();
+
+        if (!obj) return fallback;
+        if (typeof obj === "string") return obj;
+
+        if (obj.labels) return obj.labels[lang] || obj.labels.en || obj.labels.ar || fallback;
+        if (obj.names) return obj.names[lang] || obj.names.en || obj.names.ar || fallback;
+
+        return obj.name || fallback;
+      }
+
+      function getCountryByCode(code) {
+        const clean = String(code || "").toUpperCase();
+        return getCountries().find((country) => String(countryCode(country)).toUpperCase() === clean) || getCountries()[0];
+      }
+
+      function fillCountries() {
+        const select = $("#countrySelect");
+        const countries = getCountries();
+
+        if (!select || !countries.length) return;
+
+        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
+
+        select.innerHTML = "";
+
+        countries.forEach((country) => {
+          const option = document.createElement("option");
+          option.value = countryCode(country);
+          option.textContent = localText(country, countryCode(country));
+          select.appendChild(option);
+        });
+
+        select.value = saved;
+      }
+
+      function applyCountry(code) {
+        const country = getCountryByCode(code);
+        if (!country) return;
+
+        const codeValue = countryCode(country);
+        const label = localText(country, codeValue);
+
+        localStorage.setItem(STORAGE.country, codeValue);
+        localStorage.setItem(STORAGE.countryLabel, label);
+
+        if (!localStorage.getItem(STORAGE.lang)) {
+          localStorage.setItem(STORAGE.lang, countryLang(country));
+        }
+
+        const lang = currentLang();
+        const dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = dir;
+        document.body.setAttribute("dir", dir);
+
+        fillCountries();
+        applyTranslations();
+      }
+
+      function applyTranslations() {
+        $$("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+
+        $("#searchInput").placeholder = t("searchPlaceholder");
+      }
+
+      function initMenu() {
+        const toggle = $("#menuToggle");
+        const sidebar = $("#sidebar");
+        const close = $("#sidebarClose");
+        const backdrop = $("#sidebarBackdrop");
+
+        function open() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document.body.classList.add("menu-open");
+        }
+
+        function shut() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        }
+
+        toggle.addEventListener("click", open);
+        close.addEventListener("click", shut);
+        backdrop.addEventListener("click", shut);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") shut();
+        });
+      }
+
+      function initEvents() {
+        $("#countrySelect").addEventListener("change", (event) => {
+          localStorage.removeItem(STORAGE.lang);
+          applyCountry(event.target.value);
+        });
+
+        $("#notFoundSearch").addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const keyword = $("#searchInput").value.trim();
+
+          if (keyword) {
+            window.location.href = "search.html?q=" + encodeURIComponent(keyword);
+          } else {
+            window.location.href = "search.html";
+          }
+        });
+      }
+
+      function init() {
+        initMenu();
+        fillCountries();
+
+        const countries = getCountries();
+        const startCountry =
+          localStorage.getItem(STORAGE.country) ||
+          $("#countrySelect")?.value ||
+          countryCode(countries[0]);
+
+        applyCountry(startCountry);
+        initEvents();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
+</body>
+</html>
