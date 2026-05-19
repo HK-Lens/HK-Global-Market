@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Create Account | AutoMarket Global</title>
-
-  <meta
-    name="description"
-    content="Create an AutoMarket Global account to sell cars, save favorites, and manage messages."
-  />
+  <title>Create Account | HK Global Market & Services</title>
+  <meta name="description" content="Create an account on HK Global Market & Services to publish ads, save favorites, and manage messages." />
 
   <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -17,60 +13,694 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
+
+  <style>
+    :root {
+      --orange: #ff8b26;
+      --orange-dark: #e87512;
+      --dark: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.1);
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+      --danger: #b42318;
+      --success: #027a48;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.14), transparent 30%),
+        radial-gradient(circle at top right, rgba(46, 144, 250, 0.12), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      color: var(--dark);
+    }
+
+    body[dir="rtl"] {
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      height: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle,
+    .sidebar-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--dark);
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--orange);
+    }
+
+    .top-country {
+      min-width: 220px;
+      max-width: 320px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.42);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 320px;
+      background: #fff;
+      z-index: 90;
+      transform: translateX(-105%);
+      transition: 0.25s ease;
+      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      transform: translateX(105%);
+      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .sidebar-title span {
+      color: var(--orange);
+    }
+
+    .sidebar-nav {
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 800;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 34px 18px 80px;
+    }
+
+    .auth-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(410px, 0.95fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero {
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(16, 24, 40, 0.96), rgba(16, 24, 40, 0.78)),
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.4), transparent 38%);
+      color: #fff;
+      padding: 38px;
+      box-shadow: 0 32px 90px rgba(16, 24, 40, 0.24);
+      overflow: hidden;
+      position: relative;
+      min-height: 740px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      right: -120px;
+      top: -140px;
+      background: rgba(255, 139, 38, 0.22);
+      filter: blur(4px);
+    }
+
+    body[dir="rtl"] .hero::after {
+      right: auto;
+      left: -120px;
+    }
+
+    .hero-content,
+    .hero-bottom {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd2aa;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: 0.96;
+      letter-spacing: -0.065em;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.85;
+      font-size: 17px;
+      max-width: 720px;
+    }
+
+    .hero-features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .feature {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 18px;
+      backdrop-filter: blur(14px);
+    }
+
+    .feature i {
+      width: 50px;
+      height: 50px;
+      border-radius: 18px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+      margin-bottom: 12px;
+    }
+
+    .feature strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 17px;
+    }
+
+    .feature span {
+      display: block;
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    .hero-bottom {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+      margin-top: 34px;
+    }
+
+    .hero-bottom strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .hero-bottom span {
+      color: rgba(255, 255, 255, 0.74);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .auth-card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 36px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      align-self: center;
+    }
+
+    .auth-head {
+      margin-bottom: 22px;
+    }
+
+    .auth-icon {
+      width: 66px;
+      height: 66px;
+      border-radius: 24px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .auth-head h2 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      letter-spacing: -0.055em;
+    }
+
+    .auth-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 15px;
+    }
+
+    .two-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      color: #344054;
+      margin-bottom: 8px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap i {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 15px;
+      color: var(--muted);
+    }
+
+    body[dir="rtl"] .input-wrap i {
+      left: auto;
+      right: 15px;
+    }
+
+    .input-wrap input,
+    .input-wrap select {
+      width: 100%;
+      height: 52px;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 18px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+      font-size: 15px;
+      padding: 0 44px;
+    }
+
+    .input-wrap input:focus,
+    .input-wrap select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 8px;
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    body[dir="rtl"] .toggle-password {
+      right: auto;
+      left: 8px;
+    }
+
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #344054;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    .check input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--orange);
+      flex: 0 0 auto;
+    }
+
+    .check a {
+      color: var(--orange-dark);
+      font-weight: 950;
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 54px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 950;
+      font-size: 15px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 18px 44px rgba(255, 139, 38, 0.32);
+      margin-top: 4px;
+    }
+
+    .submit-btn:hover {
+      background: var(--orange-dark);
+    }
+
+    .auth-footer {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.65;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .auth-footer a {
+      color: var(--orange-dark);
+      font-weight: 950;
+    }
+
+    .form-note {
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 22px;
+      padding: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 13px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .form-note i {
+      color: var(--orange);
+      margin-top: 2px;
+    }
+
+    .alert {
+      display: none;
+      border-radius: 18px;
+      padding: 13px 14px;
+      line-height: 1.6;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .alert.show {
+      display: block;
+    }
+
+    .alert.error {
+      border: 1px solid #fecdca;
+      background: #fef3f2;
+      color: var(--danger);
+    }
+
+    .alert.success {
+      border: 1px solid #abefc6;
+      background: #ecfdf3;
+      color: var(--success);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 120;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 900;
+      box-shadow: 0 18px 55px rgba(16, 24, 40, 0.22);
+      transition: 0.25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 980px) {
+      .auth-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-country {
+        min-width: 150px;
+        max-width: 180px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .page {
+        padding-top: 24px;
+      }
+
+      .hero,
+      .auth-card {
+        border-radius: 28px;
+        padding: 22px;
+      }
+
+      .hero-features,
+      .two-fields {
+        grid-template-columns: 1fr;
+      }
+
+      .auth-head h2 {
+        font-size: 29px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="site-topbar">
-    <div class="site-topbar-inner">
-      <div class="topbar-left">
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false"
-        >
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
-          AutoMarket <span>Global</span>
-        </a>
+        <a class="brand" href="index.html">HK <span>Global</span></a>
       </div>
 
-      <div class="topbar-right">
-        <select
-          class="country-select"
-          id="countrySelect"
-          aria-label="Choose country"
-        ></select>
+      <div class="top-right">
+        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
       </div>
     </div>
   </header>
 
-  <!-- Sidebar backdrop -->
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-title">
-        AutoMarket <span>Global</span>
-      </div>
+      <div class="sidebar-title">HK <span>Global</span></div>
 
-      <button
-        class="sidebar-close"
-        id="sidebarClose"
-        type="button"
-        aria-label="Close menu"
-      >
+      <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <nav class="sidebar-nav" aria-label="Main navigation">
+    <nav class="sidebar-nav">
       <a class="sidebar-link" href="index.html">
         <i class="fa-solid fa-house"></i>
         <span data-i18n="home">Home</span>
@@ -78,15 +708,13 @@
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
+        <span data-i18n="search">Search</span>
       </a>
 
       <a class="sidebar-link" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
+        <span data-i18n="postAd">Post ad</span>
       </a>
-
-      <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
@@ -126,92 +754,800 @@
       </a>
     </nav>
 
-    <div class="sidebar-footer">
-      AutoMarket Global · 2026
-    </div>
+    <div class="sidebar-footer">HK Global Market & Services · 2026</div>
   </aside>
 
-  <!-- Main page -->
   <main class="page">
-    <section class="page-header">
-      <p class="eyebrow">
-        <i class="fa-solid fa-user-plus"></i>
-        <span data-i18n="register">Create account</span>
-      </p>
+    <section class="auth-layout">
+      <div class="hero">
+        <div class="hero-content">
+          <div class="badge">
+            <i class="fa-solid fa-user-plus"></i>
+            <span data-i18n="registerCenter">Account registration</span>
+          </div>
 
-      <h1 data-i18n="registerTitle">Create account</h1>
+          <h1>
+            <span data-i18n="heroTitleA">Create your</span>
+            <span data-i18n="heroTitleB">market account</span>
+          </h1>
 
-      <p class="subtitle" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
-      </p>
+          <p data-i18n="heroText">
+            Register to publish ads, save favorites, manage messages, and use the platform in the language of your selected country.
+          </p>
+
+          <div class="hero-features">
+            <div class="feature">
+              <i class="fa-solid fa-globe"></i>
+              <strong data-i18n="featureGlobalTitle">Global countries</strong>
+              <span data-i18n="featureGlobalText">Choose your country and the platform adapts the language direction.</span>
+            </div>
+
+            <div class="feature">
+              <i class="fa-solid fa-layer-group"></i>
+              <strong data-i18n="featureCategoriesTitle">All categories</strong>
+              <span data-i18n="featureCategoriesText">Vehicles, real estate, electronics, services, education, and more.</span>
+            </div>
+
+            <div class="feature">
+              <i class="fa-solid fa-lock"></i>
+              <strong data-i18n="featureSafeTitle">Local demo account</strong>
+              <span data-i18n="featureSafeText">This front-end version stores demo account data in your browser.</span>
+            </div>
+
+            <div class="feature">
+              <i class="fa-solid fa-chart-line"></i>
+              <strong data-i18n="featureDashboardTitle">Dashboard ready</strong>
+              <span data-i18n="featureDashboardText">After registration, you can open your account and dashboard.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-bottom">
+          <strong data-i18n="countryBoxTitle">Smart country setup</strong>
+          <span data-i18n="countryBoxText">
+            Your selected country, language, and account information are saved locally for this version.
+          </span>
+        </div>
+      </div>
+
+      <div class="auth-card">
+        <div class="auth-head">
+          <div class="auth-icon">
+            <i class="fa-solid fa-id-card"></i>
+          </div>
+
+          <h2 data-i18n="createTitle">Create account</h2>
+          <p data-i18n="createText">Fill in your information to create a local demo account.</p>
+        </div>
+
+        <form class="form-grid" id="registerForm">
+          <div class="alert error" id="errorBox"></div>
+          <div class="alert success" id="successBox"></div>
+
+          <div class="two-fields">
+            <div class="field">
+              <label for="name" data-i18n="fullName">Full name</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-user"></i>
+                <input id="name" name="name" type="text" autocomplete="name" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="role" data-i18n="accountType">Account type</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-briefcase"></i>
+                <select id="role" name="role">
+                  <option value="member" data-i18n="member">Member</option>
+                  <option value="seller" data-i18n="seller">Seller</option>
+                  <option value="service-provider" data-i18n="serviceProvider">Service provider</option>
+                  <option value="company" data-i18n="company">Company</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email" data-i18n="email">Email address</label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-envelope"></i>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="two-fields">
+            <div class="field">
+              <label for="phone" data-i18n="phone">Phone</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-phone"></i>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="city" data-i18n="city">City</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-location-dot"></i>
+                <input id="city" name="city" type="text" autocomplete="address-level2" />
+              </div>
+            </div>
+          </div>
+
+          <div class="two-fields">
+            <div class="field">
+              <label for="password" data-i18n="password">Password</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-lock"></i>
+                <input id="password" name="password" type="password" autocomplete="new-password" required minlength="6" />
+
+                <button class="toggle-password" data-toggle-password="password" type="button" aria-label="Show password">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="confirmPassword" data-i18n="confirmPassword">Confirm password</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-lock"></i>
+                <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required minlength="6" />
+
+                <button class="toggle-password" data-toggle-password="confirmPassword" type="button" aria-label="Show password">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <label class="check">
+            <input id="acceptTerms" type="checkbox" required />
+            <span>
+              <span data-i18n="acceptText">I accept the platform terms and publishing rules.</span>
+              <a href="terms.html" data-i18n="readTerms">Read terms</a>
+            </span>
+          </label>
+
+          <button class="submit-btn" type="submit">
+            <i class="fa-solid fa-user-plus"></i>
+            <span data-i18n="createAccount">Create account</span>
+          </button>
+        </form>
+
+        <div class="form-note">
+          <i class="fa-solid fa-circle-info"></i>
+          <span data-i18n="formNote">
+            This register page creates a local browser account only. A real backend login system can be connected later.
+          </span>
+        </div>
+
+        <div class="auth-footer">
+          <span data-i18n="haveAccount">Already have an account?</span>
+          <a href="login.html" data-i18n="signIn">Sign in</a>
+        </div>
+      </div>
     </section>
-
-    <form class="form-card" id="loginForm">
-      <div class="alert" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
-      </div>
-
-      <div class="form-group">
-        <label for="name" data-i18n="name">Name</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          required
-          placeholder="Your name"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="email" data-i18n="email">Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          placeholder="example@email.com"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="password" data-i18n="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          placeholder="********"
-        />
-      </div>
-
-      <button class="btn btn-primary btn-full" type="submit">
-        <i class="fa-solid fa-user-plus"></i>
-        <span data-i18n="register">Create account</span>
-      </button>
-
-      <div style="margin-top: 16px; text-align: center;">
-        <a href="login.html" style="font-weight: 900; color: var(--primary); text-decoration: none;">
-          <span data-i18n="login">Login</span>
-        </a>
-      </div>
-    </form>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <div>
-        © 2026 AutoMarket Global. All rights reserved.
-      </div>
+  <div class="toast" id="toast"></div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 HK Global Market & Services.</div>
 
       <div class="footer-links">
         <a href="terms.html" data-i18n="terms">Terms</a>
-        <a href="search.html" data-i18n="searchCars">Search cars</a>
-        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+        <a href="search.html" data-i18n="search">Search</a>
+        <a href="sell.html" data-i18n="postAd">Post ad</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/core.js"></script>
+  <script src="assets/js/countries.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE = {
+        country: "amg_country_code",
+        countryLabel: "amg_country_label",
+        lang: "amg_country_lang",
+        accounts: "hk_global_accounts",
+        currentUser: "hk_global_current_user",
+        session: "hk_global_auth_session"
+      };
+
+      const RTL_LANGS = ["ar", "fa", "ur", "he"];
+
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+      const FALLBACK_COUNTRIES = [
+        { code: "SE", labels: { en: "Sweden", ar: "السويد", sv: "Sverige", de: "Schweden", tr: "İsveç" }, lang: "sv", currency: "SEK" },
+        { code: "DE", labels: { en: "Germany", ar: "ألمانيا", sv: "Tyskland", de: "Deutschland", tr: "Almanya" }, lang: "de", currency: "EUR" },
+        { code: "SY", labels: { en: "Syria", ar: "سوريا", sv: "Syrien", de: "Syrien", tr: "Suriye" }, lang: "ar", currency: "USD" },
+        { code: "TR", labels: { en: "Türkiye", ar: "تركيا", sv: "Turkiet", de: "Türkei", tr: "Türkiye" }, lang: "tr", currency: "TRY" },
+        { code: "AE", labels: { en: "United Arab Emirates", ar: "الإمارات", sv: "Förenade Arabemiraten", de: "VAE", tr: "BAE" }, lang: "ar", currency: "AED" },
+        { code: "SA", labels: { en: "Saudi Arabia", ar: "السعودية", sv: "Saudiarabien", de: "Saudi-Arabien", tr: "Suudi Arabistan" }, lang: "ar", currency: "SAR" },
+        { code: "EG", labels: { en: "Egypt", ar: "مصر", sv: "Egypten", de: "Ägypten", tr: "Mısır" }, lang: "ar", currency: "EGP" }
+      ];
+
+      const DICT = {
+        en: {
+          home: "Home",
+          search: "Search",
+          postAd: "Post ad",
+          account: "My account",
+          favorites: "Favorites",
+          messages: "Messages",
+          dashboard: "Dashboard",
+          terms: "Terms",
+          login: "Login",
+          register: "Create account",
+          registerCenter: "Account registration",
+          heroTitleA: "Create your",
+          heroTitleB: "market account",
+          heroText: "Register to publish ads, save favorites, manage messages, and use the platform in the language of your selected country.",
+          featureGlobalTitle: "Global countries",
+          featureGlobalText: "Choose your country and the platform adapts the language direction.",
+          featureCategoriesTitle: "All categories",
+          featureCategoriesText: "Vehicles, real estate, electronics, services, education, and more.",
+          featureSafeTitle: "Local demo account",
+          featureSafeText: "This front-end version stores demo account data in your browser.",
+          featureDashboardTitle: "Dashboard ready",
+          featureDashboardText: "After registration, you can open your account and dashboard.",
+          countryBoxTitle: "Smart country setup",
+          countryBoxText: "Your selected country, language, and account information are saved locally for this version.",
+          createTitle: "Create account",
+          createText: "Fill in your information to create a local demo account.",
+          fullName: "Full name",
+          accountType: "Account type",
+          member: "Member",
+          seller: "Seller",
+          serviceProvider: "Service provider",
+          company: "Company",
+          email: "Email address",
+          phone: "Phone",
+          city: "City",
+          password: "Password",
+          confirmPassword: "Confirm password",
+          acceptText: "I accept the platform terms and publishing rules.",
+          readTerms: "Read terms",
+          createAccount: "Create account",
+          formNote: "This register page creates a local browser account only. A real backend login system can be connected later.",
+          haveAccount: "Already have an account?",
+          signIn: "Sign in",
+          invalidName: "Please enter your full name.",
+          invalidEmail: "Please enter a valid email address.",
+          passwordMin: "Password must be at least 6 characters.",
+          passwordMatch: "Passwords do not match.",
+          termsRequired: "You must accept the terms to create an account.",
+          emailExists: "An account with this email already exists.",
+          success: "Account created successfully. Redirecting to your account..."
+        },
+
+        ar: {
+          home: "الرئيسية",
+          search: "البحث",
+          postAd: "نشر إعلان",
+          account: "حسابي",
+          favorites: "المفضلة",
+          messages: "الرسائل",
+          dashboard: "لوحة التحكم",
+          terms: "الشروط",
+          login: "تسجيل الدخول",
+          register: "إنشاء حساب",
+          registerCenter: "تسجيل حساب",
+          heroTitleA: "أنشئ",
+          heroTitleB: "حساب السوق",
+          heroText: "سجل حساباً لنشر الإعلانات وحفظ المفضلة وإدارة الرسائل واستخدام المنصة بلغة الدولة المختارة.",
+          featureGlobalTitle: "دول عالمية",
+          featureGlobalText: "اختر الدولة والمنصة تضبط اتجاه اللغة المناسب.",
+          featureCategoriesTitle: "كل الفئات",
+          featureCategoriesText: "مركبات، عقارات، إلكترونيات، خدمات، تعليم والمزيد.",
+          featureSafeTitle: "حساب تجريبي محلي",
+          featureSafeText: "هذه النسخة الأمامية تحفظ بيانات الحساب التجريبي في المتصفح.",
+          featureDashboardTitle: "لوحة التحكم جاهزة",
+          featureDashboardText: "بعد التسجيل يمكنك فتح حسابك ولوحة التحكم.",
+          countryBoxTitle: "إعداد ذكي حسب الدولة",
+          countryBoxText: "يتم حفظ الدولة واللغة ومعلومات الحساب محلياً في هذه النسخة.",
+          createTitle: "إنشاء حساب",
+          createText: "املأ معلوماتك لإنشاء حساب محلي تجريبي.",
+          fullName: "الاسم الكامل",
+          accountType: "نوع الحساب",
+          member: "عضو",
+          seller: "بائع",
+          serviceProvider: "مقدم خدمة",
+          company: "شركة",
+          email: "البريد الإلكتروني",
+          phone: "الهاتف",
+          city: "المدينة",
+          password: "كلمة المرور",
+          confirmPassword: "تأكيد كلمة المرور",
+          acceptText: "أوافق على شروط المنصة وقواعد النشر.",
+          readTerms: "قراءة الشروط",
+          createAccount: "إنشاء حساب",
+          formNote: "صفحة التسجيل هذه تنشئ حساباً محلياً في المتصفح فقط. يمكن لاحقاً ربط نظام تسجيل دخول حقيقي.",
+          haveAccount: "لديك حساب بالفعل؟",
+          signIn: "تسجيل الدخول",
+          invalidName: "يرجى إدخال الاسم الكامل.",
+          invalidEmail: "يرجى إدخال بريد إلكتروني صحيح.",
+          passwordMin: "كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
+          passwordMatch: "كلمتا المرور غير متطابقتين.",
+          termsRequired: "يجب الموافقة على الشروط لإنشاء الحساب.",
+          emailExists: "يوجد حساب بهذا البريد مسبقاً.",
+          success: "تم إنشاء الحساب بنجاح. سيتم تحويلك إلى حسابك..."
+        },
+
+        sv: {
+          home: "Hem",
+          search: "Sök",
+          postAd: "Lägg upp annons",
+          account: "Mitt konto",
+          favorites: "Favoriter",
+          messages: "Meddelanden",
+          dashboard: "Panel",
+          terms: "Villkor",
+          login: "Logga in",
+          register: "Skapa konto",
+          registerCenter: "Kontoregistrering",
+          heroTitleA: "Skapa ditt",
+          heroTitleB: "marknadskonto",
+          heroText: "Registrera dig för att publicera annonser, spara favoriter, hantera meddelanden och använda plattformen på rätt språk.",
+          featureGlobalTitle: "Globala länder",
+          featureGlobalText: "Välj land och plattformen anpassar språkriktningen.",
+          featureCategoriesTitle: "Alla kategorier",
+          featureCategoriesText: "Fordon, fastigheter, elektronik, tjänster, utbildning och mer.",
+          featureSafeTitle: "Lokalt demokonto",
+          featureSafeText: "Denna front-end-version sparar demodata i webbläsaren.",
+          featureDashboardTitle: "Panel redo",
+          featureDashboardText: "Efter registrering kan du öppna konto och panel.",
+          countryBoxTitle: "Smart landsinställning",
+          countryBoxText: "Valt land, språk och kontoinformation sparas lokalt.",
+          createTitle: "Skapa konto",
+          createText: "Fyll i dina uppgifter för att skapa ett lokalt demokonto.",
+          fullName: "Fullständigt namn",
+          accountType: "Kontotyp",
+          member: "Medlem",
+          seller: "Säljare",
+          serviceProvider: "Tjänsteleverantör",
+          company: "Företag",
+          email: "E-postadress",
+          phone: "Telefon",
+          city: "Stad",
+          password: "Lösenord",
+          confirmPassword: "Bekräfta lösenord",
+          acceptText: "Jag accepterar plattformens villkor och publiceringsregler.",
+          readTerms: "Läs villkor",
+          createAccount: "Skapa konto",
+          formNote: "Denna registreringssida skapar endast ett lokalt webbläsarkonto.",
+          haveAccount: "Har du redan konto?",
+          signIn: "Logga in",
+          invalidName: "Ange ditt fullständiga namn.",
+          invalidEmail: "Ange en giltig e-postadress.",
+          passwordMin: "Lösenordet måste vara minst 6 tecken.",
+          passwordMatch: "Lösenorden matchar inte.",
+          termsRequired: "Du måste acceptera villkoren.",
+          emailExists: "Ett konto med denna e-post finns redan.",
+          success: "Kontot skapades. Du skickas till ditt konto..."
+        },
+
+        de: {
+          home: "Start",
+          search: "Suche",
+          postAd: "Anzeige erstellen",
+          account: "Mein Konto",
+          favorites: "Favoriten",
+          messages: "Nachrichten",
+          dashboard: "Dashboard",
+          terms: "Bedingungen",
+          login: "Anmelden",
+          register: "Konto erstellen",
+          registerCenter: "Kontoregistrierung",
+          heroTitleA: "Erstelle dein",
+          heroTitleB: "Marktkonto",
+          heroText: "Registriere dich, um Anzeigen zu veröffentlichen, Favoriten zu speichern, Nachrichten zu verwalten und die passende Sprache zu nutzen.",
+          featureGlobalTitle: "Globale Länder",
+          featureGlobalText: "Wähle dein Land und die Plattform passt die Sprachrichtung an.",
+          featureCategoriesTitle: "Alle Kategorien",
+          featureCategoriesText: "Fahrzeuge, Immobilien, Elektronik, Dienstleistungen, Bildung und mehr.",
+          featureSafeTitle: "Lokales Demokonto",
+          featureSafeText: "Diese Front-End-Version speichert Demokontodaten im Browser.",
+          featureDashboardTitle: "Dashboard bereit",
+          featureDashboardText: "Nach der Registrierung kannst du Konto und Dashboard öffnen.",
+          countryBoxTitle: "Intelligente Ländereinstellung",
+          countryBoxText: "Land, Sprache und Kontoinformationen werden lokal gespeichert.",
+          createTitle: "Konto erstellen",
+          createText: "Fülle deine Informationen aus, um ein lokales Demokonto zu erstellen.",
+          fullName: "Vollständiger Name",
+          accountType: "Kontotyp",
+          member: "Mitglied",
+          seller: "Verkäufer",
+          serviceProvider: "Dienstleister",
+          company: "Firma",
+          email: "E-Mail-Adresse",
+          phone: "Telefon",
+          city: "Stadt",
+          password: "Passwort",
+          confirmPassword: "Passwort bestätigen",
+          acceptText: "Ich akzeptiere die Plattformbedingungen und Veröffentlichungsregeln.",
+          readTerms: "Bedingungen lesen",
+          createAccount: "Konto erstellen",
+          formNote: "Diese Registrierungsseite erstellt nur ein lokales Browserkonto.",
+          haveAccount: "Schon ein Konto?",
+          signIn: "Anmelden",
+          invalidName: "Bitte gib deinen vollständigen Namen ein.",
+          invalidEmail: "Bitte gib eine gültige E-Mail-Adresse ein.",
+          passwordMin: "Das Passwort muss mindestens 6 Zeichen haben.",
+          passwordMatch: "Die Passwörter stimmen nicht überein.",
+          termsRequired: "Du musst die Bedingungen akzeptieren.",
+          emailExists: "Ein Konto mit dieser E-Mail existiert bereits.",
+          success: "Konto erfolgreich erstellt. Weiterleitung zum Konto..."
+        },
+
+        tr: {
+          home: "Ana sayfa",
+          search: "Ara",
+          postAd: "İlan ver",
+          account: "Hesabım",
+          favorites: "Favoriler",
+          messages: "Mesajlar",
+          dashboard: "Panel",
+          terms: "Şartlar",
+          login: "Giriş",
+          register: "Hesap oluştur",
+          registerCenter: "Hesap kaydı",
+          heroTitleA: "Pazar",
+          heroTitleB: "hesabını oluştur",
+          heroText: "İlan yayınlamak, favorileri kaydetmek, mesajları yönetmek ve seçilen ülke dilini kullanmak için kayıt ol.",
+          featureGlobalTitle: "Küresel ülkeler",
+          featureGlobalText: "Ülkeni seç, platform dil yönünü ayarlasın.",
+          featureCategoriesTitle: "Tüm kategoriler",
+          featureCategoriesText: "Araçlar, emlak, elektronik, hizmetler, eğitim ve daha fazlası.",
+          featureSafeTitle: "Yerel demo hesabı",
+          featureSafeText: "Bu front-end sürümü demo hesap verilerini tarayıcıda saklar.",
+          featureDashboardTitle: "Panel hazır",
+          featureDashboardText: "Kayıttan sonra hesabını ve panelini açabilirsin.",
+          countryBoxTitle: "Akıllı ülke ayarı",
+          countryBoxText: "Seçilen ülke, dil ve hesap bilgileri yerel olarak kaydedilir.",
+          createTitle: "Hesap oluştur",
+          createText: "Yerel demo hesabı oluşturmak için bilgilerini doldur.",
+          fullName: "Ad soyad",
+          accountType: "Hesap türü",
+          member: "Üye",
+          seller: "Satıcı",
+          serviceProvider: "Hizmet sağlayıcı",
+          company: "Şirket",
+          email: "E-posta adresi",
+          phone: "Telefon",
+          city: "Şehir",
+          password: "Şifre",
+          confirmPassword: "Şifreyi onayla",
+          acceptText: "Platform şartlarını ve yayın kurallarını kabul ediyorum.",
+          readTerms: "Şartları oku",
+          createAccount: "Hesap oluştur",
+          formNote: "Bu kayıt sayfası yalnızca yerel tarayıcı hesabı oluşturur.",
+          haveAccount: "Zaten hesabın var mı?",
+          signIn: "Giriş yap",
+          invalidName: "Lütfen ad soyad gir.",
+          invalidEmail: "Geçerli bir e-posta adresi gir.",
+          passwordMin: "Şifre en az 6 karakter olmalı.",
+          passwordMatch: "Şifreler eşleşmiyor.",
+          termsRequired: "Hesap oluşturmak için şartları kabul etmelisin.",
+          emailExists: "Bu e-posta ile zaten hesap var.",
+          success: "Hesap oluşturuldu. Hesabına yönlendiriliyorsun..."
+        },
+
+        fr: {},
+        es: {},
+        it: {},
+        pt: {},
+        nl: {}
+      };
+
+      DICT.fr = DICT.en;
+      DICT.es = DICT.en;
+      DICT.it = DICT.en;
+      DICT.pt = DICT.en;
+      DICT.nl = DICT.en;
+
+      function currentLang() {
+        return String(localStorage.getItem(STORAGE.lang) || "en").slice(0, 2).toLowerCase();
+      }
+
+      function t(key) {
+        const lang = currentLang();
+        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+      }
+
+      function readJson(key, fallback) {
+        try {
+          const value = JSON.parse(localStorage.getItem(key) || "");
+          return value || fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function writeJson(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+
+      function getCountries() {
+        const external = window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+        return Array.isArray(external) && external.length ? external : FALLBACK_COUNTRIES;
+      }
+
+      function countryCode(country) {
+        return country?.code || country?.id || country?.iso2 || country?.value || "";
+      }
+
+      function countryLang(country) {
+        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
+      }
+
+      function localText(obj, fallback = "") {
+        const lang = currentLang();
+
+        if (!obj) return fallback;
+        if (typeof obj === "string") return obj;
+
+        if (obj.labels) return obj.labels[lang] || obj.labels.en || obj.labels.ar || fallback;
+        if (obj.names) return obj.names[lang] || obj.names.en || obj.names.ar || fallback;
+
+        return obj.name || fallback;
+      }
+
+      function getCountryByCode(code) {
+        const clean = String(code || "").toUpperCase();
+        return getCountries().find((country) => String(countryCode(country)).toUpperCase() === clean) || getCountries()[0];
+      }
+
+      function fillCountries() {
+        const select = $("#countrySelect");
+        const countries = getCountries();
+
+        if (!select || !countries.length) return;
+
+        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
+
+        select.innerHTML = "";
+
+        countries.forEach((country) => {
+          const option = document.createElement("option");
+          option.value = countryCode(country);
+          option.textContent = localText(country, countryCode(country));
+          select.appendChild(option);
+        });
+
+        select.value = saved;
+      }
+
+      function applyCountry(code) {
+        const country = getCountryByCode(code);
+        if (!country) return;
+
+        const codeValue = countryCode(country);
+        const label = localText(country, codeValue);
+
+        localStorage.setItem(STORAGE.country, codeValue);
+        localStorage.setItem(STORAGE.countryLabel, label);
+
+        if (!localStorage.getItem(STORAGE.lang)) {
+          localStorage.setItem(STORAGE.lang, countryLang(country));
+        }
+
+        const lang = currentLang();
+        const dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = dir;
+        document.body.setAttribute("dir", dir);
+
+        fillCountries();
+        applyTranslations();
+      }
+
+      function applyTranslations() {
+        $$("[data-i18n]").forEach((el) => {
+          const key = el.dataset.i18n;
+          if (key) el.textContent = t(key);
+        });
+
+        $$("#role option").forEach((option) => {
+          const key = option.dataset.i18n;
+          if (key) option.textContent = t(key);
+        });
+      }
+
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
+      }
+
+      function showAlert(type, text) {
+        const errorBox = $("#errorBox");
+        const successBox = $("#successBox");
+
+        errorBox.classList.remove("show");
+        successBox.classList.remove("show");
+
+        if (type === "error") {
+          errorBox.textContent = text;
+          errorBox.classList.add("show");
+        } else {
+          successBox.textContent = text;
+          successBox.classList.add("show");
+        }
+      }
+
+      function showToast(text) {
+        const toast = $("#toast");
+        toast.textContent = text;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      function buildUser(data) {
+        const countryCodeValue = localStorage.getItem(STORAGE.country) || "SE";
+        const countryLabel = localStorage.getItem(STORAGE.countryLabel) || "";
+
+        return {
+          id: "user-" + Date.now(),
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          phone: data.phone,
+          city: data.city,
+          countryCode: countryCodeValue,
+          countryLabel,
+          role: data.role,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+      }
+
+      function loginUser(user) {
+        writeJson(STORAGE.currentUser, user);
+
+        writeJson(STORAGE.session, {
+          loggedIn: true,
+          userId: user.id,
+          email: user.email,
+          remember: true,
+          loginAt: new Date().toISOString()
+        });
+
+        localStorage.setItem("amg_user", JSON.stringify(user));
+        localStorage.setItem("hk_global_user", JSON.stringify(user));
+      }
+
+      function handleRegister(event) {
+        event.preventDefault();
+
+        const data = {
+          name: $("#name").value.trim(),
+          email: $("#email").value.trim().toLowerCase(),
+          phone: $("#phone").value.trim(),
+          city: $("#city").value.trim(),
+          role: $("#role").value,
+          password: $("#password").value,
+          confirmPassword: $("#confirmPassword").value,
+          acceptTerms: $("#acceptTerms").checked
+        };
+
+        if (data.name.length < 2) {
+          showAlert("error", t("invalidName"));
+          return;
+        }
+
+        if (!validateEmail(data.email)) {
+          showAlert("error", t("invalidEmail"));
+          return;
+        }
+
+        if (data.password.length < 6) {
+          showAlert("error", t("passwordMin"));
+          return;
+        }
+
+        if (data.password !== data.confirmPassword) {
+          showAlert("error", t("passwordMatch"));
+          return;
+        }
+
+        if (!data.acceptTerms) {
+          showAlert("error", t("termsRequired"));
+          return;
+        }
+
+        const accounts = readJson(STORAGE.accounts, []);
+        const exists = accounts.some((account) => String(account.email || "").toLowerCase() === data.email);
+
+        if (exists) {
+          showAlert("error", t("emailExists"));
+          return;
+        }
+
+        const user = buildUser(data);
+        accounts.push(user);
+
+        writeJson(STORAGE.accounts, accounts);
+        loginUser(user);
+
+        showAlert("success", t("success"));
+        showToast(t("success"));
+
+        setTimeout(() => {
+          window.location.href = "account.html";
+        }, 900);
+      }
+
+      function initMenu() {
+        const toggle = $("#menuToggle");
+        const sidebar = $("#sidebar");
+        const close = $("#sidebarClose");
+        const backdrop = $("#sidebarBackdrop");
+
+        function open() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document.body.classList.add("menu-open");
+        }
+
+        function shut() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        }
+
+        toggle.addEventListener("click", open);
+        close.addEventListener("click", shut);
+        backdrop.addEventListener("click", shut);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") shut();
+        });
+      }
+
+      function initEvents() {
+        $("#countrySelect").addEventListener("change", (event) => {
+          localStorage.removeItem(STORAGE.lang);
+          applyCountry(event.target.value);
+        });
+
+        $("#registerForm").addEventListener("submit", handleRegister);
+
+        $$("[data-toggle-password]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const input = $("#" + button.dataset.togglePassword);
+            const icon = $("i", button);
+            const isPassword = input.type === "password";
+
+            input.type = isPassword ? "text" : "password";
+            icon.className = isPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+          });
+        });
+      }
+
+      function init() {
+        initMenu();
+        fillCountries();
+
+        const countries = getCountries();
+        const startCountry =
+          localStorage.getItem(STORAGE.country) ||
+          $("#countrySelect")?.value ||
+          countryCode(countries[0]);
+
+        applyCountry(startCountry);
+        initEvents();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
 </body>
 </html>
