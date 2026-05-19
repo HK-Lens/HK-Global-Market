@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Terms | AutoMarket Global</title>
-
-  <meta
-    name="description"
-    content="Read AutoMarket Global terms, demo policy, user responsibility, and marketplace rules."
-  />
+  <title>Terms | HK Global Market & Services</title>
+  <meta name="description" content="Global marketplace terms, safety rules, publishing conditions, user responsibilities, and platform policies." />
 
   <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -17,57 +13,672 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
+
+  <style>
+    :root {
+      --orange: #ff8b26;
+      --orange-dark: #e87512;
+      --dark: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.1);
+      --soft: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+      --radius: 28px;
+      --danger: #b42318;
+      --success: #027a48;
+      --blue: #175cd3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(46, 144, 250, 0.1), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      color: var(--dark);
+    }
+
+    body[dir="rtl"] {
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      height: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle,
+    .sidebar-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--dark);
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--orange);
+    }
+
+    .top-country {
+      min-width: 220px;
+      max-width: 320px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.42);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 320px;
+      background: #fff;
+      z-index: 90;
+      transform: translateX(-105%);
+      transition: 0.25s ease;
+      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      transform: translateX(105%);
+      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .sidebar-title span {
+      color: var(--orange);
+    }
+
+    .sidebar-nav {
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 800;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 34px 18px 80px;
+    }
+
+    .hero {
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(16, 24, 40, 0.94), rgba(16, 24, 40, 0.78)),
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.35), transparent 38%);
+      color: #fff;
+      padding: 34px;
+      box-shadow: 0 32px 90px rgba(16, 24, 40, 0.24);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 24px;
+      align-items: end;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      right: -110px;
+      top: -130px;
+      background: rgba(255, 139, 38, 0.2);
+      filter: blur(4px);
+    }
+
+    body[dir="rtl"] .hero::after {
+      right: auto;
+      left: -110px;
+    }
+
+    .hero-content,
+    .hero-card {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd2aa;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 6vw, 70px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.8;
+      font-size: 17px;
+      max-width: 720px;
+    }
+
+    .hero-card {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-card i {
+      width: 64px;
+      height: 64px;
+      border-radius: 22px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .hero-card strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .hero-card span {
+      display: block;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .notice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .notice-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .notice-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .notice-card h3 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.035em;
+    }
+
+    .notice-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .terms-layout {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .terms-nav,
+    .terms-content {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .terms-nav {
+      position: sticky;
+      top: 84px;
+      padding: 18px;
+    }
+
+    .terms-nav h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .terms-nav a {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 12px 13px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .terms-nav a:hover {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .terms-content {
+      padding: 24px;
+    }
+
+    .terms-section {
+      border-bottom: 1px solid var(--line);
+      padding: 0 0 24px;
+      margin-bottom: 24px;
+      scroll-margin-top: 90px;
+    }
+
+    .terms-section:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-title {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .section-title i {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      flex: 0 0 auto;
+    }
+
+    .section-title h2 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      letter-spacing: -0.045em;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .terms-section ul {
+      margin: 14px 0 0;
+      padding-inline-start: 22px;
+      color: #475467;
+      line-height: 1.9;
+    }
+
+    .terms-section li {
+      margin-bottom: 8px;
+    }
+
+    .policy-box {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: #fff;
+      padding: 18px;
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .policy-box h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .policy-box h3 i {
+      color: var(--orange);
+    }
+
+    .policy-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .warning-box {
+      border: 1px solid #fecdca;
+      background: #fef3f2;
+      color: #7a271a;
+      border-radius: 24px;
+      padding: 18px;
+      margin-top: 14px;
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .success-box {
+      border: 1px solid #abefc6;
+      background: #ecfdf3;
+      color: #054f31;
+      border-radius: 24px;
+      padding: 18px;
+      margin-top: 14px;
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .category-policy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .category-policy {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #fff;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .category-policy i {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+    }
+
+    .category-policy h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      letter-spacing: -0.03em;
+    }
+
+    .category-policy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 13px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 1000px) {
+      .hero,
+      .terms-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .terms-nav {
+        position: static;
+      }
+
+      .notice-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 660px) {
+      .top-country {
+        min-width: 150px;
+        max-width: 180px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .page {
+        padding-top: 24px;
+      }
+
+      .hero {
+        padding: 22px;
+        border-radius: 28px;
+      }
+
+      .terms-content {
+        padding: 18px;
+      }
+
+      .section-title {
+        display: grid;
+      }
+
+      .category-policy-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-policy {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <header class="site-topbar">
-    <div class="site-topbar-inner">
-      <div class="topbar-left">
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false"
-        >
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
-          AutoMarket <span>Global</span>
-        </a>
+        <a class="brand" href="index.html">HK <span>Global</span></a>
       </div>
 
-      <div class="topbar-right">
-        <select
-          class="country-select"
-          id="countrySelect"
-          aria-label="Choose country"
-        ></select>
+      <div class="top-right">
+        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
       </div>
     </div>
   </header>
 
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-title">
-        AutoMarket <span>Global</span>
-      </div>
+      <div class="sidebar-title">HK <span>Global</span></div>
 
-      <button
-        class="sidebar-close"
-        id="sidebarClose"
-        type="button"
-        aria-label="Close menu"
-      >
+      <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <nav class="sidebar-nav" aria-label="Main navigation">
+    <nav class="sidebar-nav">
       <a class="sidebar-link" href="index.html">
         <i class="fa-solid fa-house"></i>
         <span data-i18n="home">Home</span>
@@ -75,15 +686,13 @@
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
+        <span data-i18n="search">Search</span>
       </a>
 
       <a class="sidebar-link" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
+        <span data-i18n="postAd">Post ad</span>
       </a>
-
-      <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
@@ -123,93 +732,649 @@
       </a>
     </nav>
 
-    <div class="sidebar-footer">
-      AutoMarket Global · 2026
-    </div>
+    <div class="sidebar-footer">HK Global Market & Services · 2026</div>
   </aside>
 
   <main class="page">
-    <section class="page-header">
-      <p class="eyebrow">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span data-i18n="terms">Terms</span>
-      </p>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span data-i18n="termsCenter">Terms center</span>
+        </div>
 
-      <h1 data-i18n="termsTitle">Terms</h1>
+        <h1>
+          <span data-i18n="heroTitleA">Safe global</span>
+          <span data-i18n="heroTitleB">market rules</span>
+        </h1>
 
-      <p class="subtitle" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
-      </p>
-    </section>
-
-    <section class="panel-card">
-      <h2>AutoMarket Global Terms</h2>
-
-      <p>
-        AutoMarket Global is a demo car marketplace template. It allows users to
-        search cars by country, publish demo listings, save favorites, and send
-        demo messages.
-      </p>
-
-      <div class="alert" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
+        <p data-i18n="heroText">
+          These terms organize publishing, searching, buying, selling, services, safety, and responsibility across countries and categories.
+        </p>
       </div>
 
-      <h2>User responsibility</h2>
+      <div class="hero-card">
+        <i class="fa-solid fa-scale-balanced"></i>
+        <strong data-i18n="countryBasedRules">Country-based rules</strong>
+        <span data-i18n="countryBasedText">
+          Users must follow the laws, language, currency, taxes, and trading rules of the selected country.
+        </span>
+      </div>
+    </section>
 
-      <p>
-        Users are responsible for checking all vehicle information before making
-        any decision. This includes vehicle ownership, mileage, service history,
-        price, legal documents, taxes, insurance, and local regulations.
-      </p>
+    <section class="notice-grid">
+      <div class="notice-card">
+        <div class="notice-icon">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <h3 data-i18n="noticeOneTitle">User responsibility</h3>
+        <p data-i18n="noticeOneText">Every user is responsible for the accuracy, legality, and safety of the ads or services they publish.</p>
+      </div>
 
-      <h2>Listings</h2>
+      <div class="notice-card">
+        <div class="notice-icon">
+          <i class="fa-solid fa-globe"></i>
+        </div>
+        <h3 data-i18n="noticeTwoTitle">Global use</h3>
+        <p data-i18n="noticeTwoText">The platform can support many countries, but each transaction must respect the local rules of that country.</p>
+      </div>
 
-      <p>
-        The seller is responsible for publishing correct and honest information.
-        AutoMarket Global does not guarantee that a listing is accurate,
-        complete, or legally valid.
-      </p>
+      <div class="notice-card">
+        <div class="notice-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 data-i18n="noticeThreeTitle">Safety first</h3>
+        <p data-i18n="noticeThreeText">Meet carefully, verify documents, avoid risky payments, and report suspicious ads or messages.</p>
+      </div>
+    </section>
 
-      <h2>Payments and safety</h2>
+    <section class="terms-layout">
+      <aside class="terms-nav">
+        <h2 data-i18n="contents">Contents</h2>
 
-      <p>
-        Do not send money before verifying the seller, the vehicle, and the legal
-        documents. Always use safe payment methods and meet in secure places when
-        checking a vehicle.
-      </p>
+        <a href="#acceptance">
+          <i class="fa-solid fa-check"></i>
+          <span data-i18n="navAcceptance">Acceptance</span>
+        </a>
 
-      <h2>Demo data</h2>
+        <a href="#platform-role">
+          <i class="fa-solid fa-building-shield"></i>
+          <span data-i18n="navPlatformRole">Platform role</span>
+        </a>
 
-      <p>
-        In this version, login, registration, messages, favorites, and listings
-        are saved locally in the browser using localStorage. This means the data
-        is not saved on a real server yet.
-      </p>
+        <a href="#publishing">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <span data-i18n="navPublishing">Publishing rules</span>
+        </a>
 
-      <h2>Future Firebase version</h2>
+        <a href="#categories">
+          <i class="fa-solid fa-layer-group"></i>
+          <span data-i18n="navCategories">Category conditions</span>
+        </a>
 
-      <p>
-        When Firebase is connected, authentication, listings, messages, and user
-        data can be saved online using Firebase services.
-      </p>
+        <a href="#prohibited">
+          <i class="fa-solid fa-ban"></i>
+          <span data-i18n="navProhibited">Prohibited content</span>
+        </a>
+
+        <a href="#transactions">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <span data-i18n="navTransactions">Payments and deals</span>
+        </a>
+
+        <a href="#privacy">
+          <i class="fa-solid fa-lock"></i>
+          <span data-i18n="navPrivacy">Privacy</span>
+        </a>
+
+        <a href="#reports">
+          <i class="fa-solid fa-flag"></i>
+          <span data-i18n="navReports">Reports</span>
+        </a>
+      </aside>
+
+      <article class="terms-content">
+        <section class="terms-section" id="acceptance">
+          <div class="section-title">
+            <i class="fa-solid fa-check"></i>
+            <div>
+              <h2 data-i18n="acceptanceTitle">1. Acceptance of terms</h2>
+              <p data-i18n="acceptanceIntro">By using HK Global Market & Services, you agree to use the platform responsibly and legally.</p>
+            </div>
+          </div>
+
+          <ul>
+            <li data-i18n="acceptanceOne">You must provide truthful information when publishing an advertisement or contacting another user.</li>
+            <li data-i18n="acceptanceTwo">You must not use the website for fraud, misleading offers, harassment, spam, or illegal activity.</li>
+            <li data-i18n="acceptanceThree">If you do not agree with these terms, you should stop using the platform.</li>
+          </ul>
+        </section>
+
+        <section class="terms-section" id="platform-role">
+          <div class="section-title">
+            <i class="fa-solid fa-building-shield"></i>
+            <div>
+              <h2 data-i18n="platformRoleTitle">2. Platform role</h2>
+              <p data-i18n="platformRoleIntro">HK Global Market & Services is a listing and communication platform.</p>
+            </div>
+          </div>
+
+          <div class="policy-box">
+            <h3>
+              <i class="fa-solid fa-circle-info"></i>
+              <span data-i18n="platformRoleBoxTitle">Important clarification</span>
+            </h3>
+            <p data-i18n="platformRoleBoxText">
+              The website helps users publish, search, save, and contact each other. The platform is not automatically the seller, buyer, broker, transport company, repair provider, school, or payment guarantor.
+            </p>
+          </div>
+
+          <ul>
+            <li data-i18n="platformRoleOne">Deals are made directly between users unless a separate written agreement says otherwise.</li>
+            <li data-i18n="platformRoleTwo">Users must verify identity, ownership, documents, prices, availability, quality, and legal status before any deal.</li>
+            <li data-i18n="platformRoleThree">The platform may remove suspicious, incomplete, misleading, unsafe, or illegal ads.</li>
+          </ul>
+        </section>
+
+        <section class="terms-section" id="publishing">
+          <div class="section-title">
+            <i class="fa-solid fa-rectangle-ad"></i>
+            <div>
+              <h2 data-i18n="publishingTitle">3. Publishing advertisements</h2>
+              <p data-i18n="publishingIntro">Every advertisement must match its real category and must include clear and correct details.</p>
+            </div>
+          </div>
+
+          <ul>
+            <li data-i18n="publishingOne">Vehicle ads must include correct brand, model, year, mileage, fuel or power type, condition, price, and ownership information.</li>
+            <li data-i18n="publishingTwo">Real estate ads must clarify whether the property is for sale, rent, room, land, farm, or commercial use.</li>
+            <li data-i18n="publishingThree">Service ads must describe the service area, price method, experience, availability, and whether the service is for individuals, homes, or companies.</li>
+            <li data-i18n="publishingFour">Education and digital service ads must avoid false certificates, fake qualifications, copied portfolios, or unrealistic promises.</li>
+            <li data-i18n="publishingFive">Photos must belong to the actual item or service whenever possible and must not mislead buyers.</li>
+          </ul>
+
+          <div class="success-box" data-i18n="publishingTip">
+            Good ads are detailed, honest, organized, and written in the language suitable for the selected country.
+          </div>
+        </section>
+
+        <section class="terms-section" id="categories">
+          <div class="section-title">
+            <i class="fa-solid fa-layer-group"></i>
+            <div>
+              <h2 data-i18n="categoriesTitle">4. Category-specific conditions</h2>
+              <p data-i18n="categoriesIntro">Different categories need different information and different safety checks.</p>
+            </div>
+          </div>
+
+          <div class="category-policy-grid">
+            <div class="category-policy">
+              <i class="fa-solid fa-car"></i>
+              <div>
+                <h3 data-i18n="vehiclesTitle">Vehicles</h3>
+                <p data-i18n="vehiclesText">Private cars, rental cars, motorcycles, bicycles, small trucks, heavy trucks, and parts must be described accurately.</p>
+              </div>
+            </div>
+
+            <div class="category-policy">
+              <i class="fa-solid fa-house"></i>
+              <div>
+                <h3 data-i18n="realEstateTitle">Real estate</h3>
+                <p data-i18n="realEstateText">Homes, rooms, shops, land, farms, and commercial spaces require clear ownership, location, size, and contract details.</p>
+              </div>
+            </div>
+
+            <div class="category-policy">
+              <i class="fa-solid fa-mobile-screen"></i>
+              <div>
+                <h3 data-i18n="electronicsTitle">Electronics</h3>
+                <p data-i18n="electronicsText">Phones, computers, appliances, gaming, TV, and audio items must show condition, warranty, defects, and included accessories.</p>
+              </div>
+            </div>
+
+            <div class="category-policy">
+              <i class="fa-solid fa-screwdriver-wrench"></i>
+              <div>
+                <h3 data-i18n="servicesTitle">Services</h3>
+                <p data-i18n="servicesText">Maintenance, repair, cleaning, transport, education, digital work, and personal services must be clear about price and responsibility.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="terms-section" id="prohibited">
+          <div class="section-title">
+            <i class="fa-solid fa-ban"></i>
+            <div>
+              <h2 data-i18n="prohibitedTitle">5. Prohibited content</h2>
+              <p data-i18n="prohibitedIntro">Some content is not allowed because it can be unsafe, illegal, misleading, or harmful.</p>
+            </div>
+          </div>
+
+          <div class="warning-box" data-i18n="prohibitedWarning">
+            Do not publish illegal products, stolen goods, fake documents, weapons, drugs, dangerous materials, hateful content, adult exploitation, scams, fake jobs, or any listing that violates the law of the selected country.
+          </div>
+
+          <ul>
+            <li data-i18n="prohibitedOne">Do not publish items you do not own or cannot legally sell.</li>
+            <li data-i18n="prohibitedTwo">Do not publish services that require a license unless you legally hold the required permission.</li>
+            <li data-i18n="prohibitedThree">Do not publish ads that copy another person’s photos, company name, brand identity, or intellectual property.</li>
+          </ul>
+        </section>
+
+        <section class="terms-section" id="transactions">
+          <div class="section-title">
+            <i class="fa-solid fa-money-bill-transfer"></i>
+            <div>
+              <h2 data-i18n="transactionsTitle">6. Payments, meetings, and transactions</h2>
+              <p data-i18n="transactionsIntro">Users should protect themselves before sending money or transferring ownership.</p>
+            </div>
+          </div>
+
+          <ul>
+            <li data-i18n="transactionsOne">Avoid paying before seeing the item, verifying the seller, or checking the required documents.</li>
+            <li data-i18n="transactionsTwo">For vehicles and real estate, verify ownership papers, registration, tax duties, debts, damages, and legal restrictions.</li>
+            <li data-i18n="transactionsThree">For services, agree clearly on scope, price, deadline, cancellation, warranty, and responsibility before work begins.</li>
+            <li data-i18n="transactionsFour">Meet in safe public places when possible and avoid suspicious payment methods.</li>
+          </ul>
+        </section>
+
+        <section class="terms-section" id="privacy">
+          <div class="section-title">
+            <i class="fa-solid fa-lock"></i>
+            <div>
+              <h2 data-i18n="privacyTitle">7. Privacy and local browser data</h2>
+              <p data-i18n="privacyIntro">Some information may be stored locally in your browser to make the website easier to use.</p>
+            </div>
+          </div>
+
+          <ul>
+            <li data-i18n="privacyOne">Country choice, language choice, saved ads, favorites, messages, and account form data may be stored in local browser storage.</li>
+            <li data-i18n="privacyTwo">If you clear browser data, change browser, or use another device, local saved data may disappear.</li>
+            <li data-i18n="privacyThree">Do not publish private information that you do not want other users to see.</li>
+          </ul>
+
+          <div class="policy-box">
+            <h3>
+              <i class="fa-solid fa-user-lock"></i>
+              <span data-i18n="privacyBoxTitle">Personal data caution</span>
+            </h3>
+            <p data-i18n="privacyBoxText">
+              Users should share only necessary contact information and should avoid publishing sensitive personal, financial, or identity data inside public advertisements.
+            </p>
+          </div>
+        </section>
+
+        <section class="terms-section" id="reports">
+          <div class="section-title">
+            <i class="fa-solid fa-flag"></i>
+            <div>
+              <h2 data-i18n="reportsTitle">8. Reports, removal, and changes</h2>
+              <p data-i18n="reportsIntro">The platform may update rules and remove unsafe or unsuitable content.</p>
+            </div>
+          </div>
+
+          <ul>
+            <li data-i18n="reportsOne">Users may report suspicious ads, fraud attempts, wrong categories, harmful messages, or illegal content.</li>
+            <li data-i18n="reportsTwo">The platform may edit, hide, reject, or remove ads that break rules or harm trust and safety.</li>
+            <li data-i18n="reportsThree">Terms may be updated as the website grows, adds countries, adds categories, or improves safety systems.</li>
+          </ul>
+
+          <div class="success-box" data-i18n="finalNote">
+            These terms are designed to support a safer global marketplace for vehicles, real estate, electronics, home items, businesses, education, digital services, maintenance, and personal services.
+          </div>
+        </section>
+      </article>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <div>
-        © 2026 AutoMarket Global. All rights reserved.
-      </div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 HK Global Market & Services.</div>
 
       <div class="footer-links">
         <a href="terms.html" data-i18n="terms">Terms</a>
-        <a href="search.html" data-i18n="searchCars">Search cars</a>
-        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+        <a href="search.html" data-i18n="search">Search</a>
+        <a href="sell.html" data-i18n="postAd">Post ad</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/core.js"></script>
+  <script src="assets/js/countries.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE = {
+        country: "amg_country_code",
+        countryLabel: "amg_country_label",
+        lang: "amg_country_lang"
+      };
+
+      const RTL_LANGS = ["ar", "fa", "ur", "he"];
+
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+      const FALLBACK_COUNTRIES = [
+        { code: "SE", labels: { en: "Sweden", ar: "السويد", sv: "Sverige", de: "Schweden", tr: "İsveç" }, lang: "sv", currency: "SEK" },
+        { code: "DE", labels: { en: "Germany", ar: "ألمانيا", sv: "Tyskland", de: "Deutschland", tr: "Almanya" }, lang: "de", currency: "EUR" },
+        { code: "SY", labels: { en: "Syria", ar: "سوريا", sv: "Syrien", de: "Syrien", tr: "Suriye" }, lang: "ar", currency: "USD" },
+        { code: "TR", labels: { en: "Türkiye", ar: "تركيا", sv: "Turkiet", de: "Türkei", tr: "Türkiye" }, lang: "tr", currency: "TRY" },
+        { code: "AE", labels: { en: "United Arab Emirates", ar: "الإمارات", sv: "Förenade Arabemiraten", de: "VAE", tr: "BAE" }, lang: "ar", currency: "AED" }
+      ];
+
+      const DICT = {
+        en: {
+          home: "Home", search: "Search", postAd: "Post ad", account: "My account",
+          favorites: "Favorites", messages: "Messages", dashboard: "Dashboard",
+          terms: "Terms", login: "Login", register: "Create account",
+          termsCenter: "Terms center", heroTitleA: "Safe global", heroTitleB: "market rules",
+          heroText: "These terms organize publishing, searching, buying, selling, services, safety, and responsibility across countries and categories.",
+          countryBasedRules: "Country-based rules",
+          countryBasedText: "Users must follow the laws, language, currency, taxes, and trading rules of the selected country.",
+          noticeOneTitle: "User responsibility",
+          noticeOneText: "Every user is responsible for the accuracy, legality, and safety of the ads or services they publish.",
+          noticeTwoTitle: "Global use",
+          noticeTwoText: "The platform can support many countries, but each transaction must respect the local rules of that country.",
+          noticeThreeTitle: "Safety first",
+          noticeThreeText: "Meet carefully, verify documents, avoid risky payments, and report suspicious ads or messages.",
+          contents: "Contents",
+          navAcceptance: "Acceptance", navPlatformRole: "Platform role", navPublishing: "Publishing rules",
+          navCategories: "Category conditions", navProhibited: "Prohibited content",
+          navTransactions: "Payments and deals", navPrivacy: "Privacy", navReports: "Reports",
+          acceptanceTitle: "1. Acceptance of terms",
+          acceptanceIntro: "By using HK Global Market & Services, you agree to use the platform responsibly and legally.",
+          acceptanceOne: "You must provide truthful information when publishing an advertisement or contacting another user.",
+          acceptanceTwo: "You must not use the website for fraud, misleading offers, harassment, spam, or illegal activity.",
+          acceptanceThree: "If you do not agree with these terms, you should stop using the platform.",
+          platformRoleTitle: "2. Platform role",
+          platformRoleIntro: "HK Global Market & Services is a listing and communication platform.",
+          platformRoleBoxTitle: "Important clarification",
+          platformRoleBoxText: "The website helps users publish, search, save, and contact each other. The platform is not automatically the seller, buyer, broker, transport company, repair provider, school, or payment guarantor.",
+          platformRoleOne: "Deals are made directly between users unless a separate written agreement says otherwise.",
+          platformRoleTwo: "Users must verify identity, ownership, documents, prices, availability, quality, and legal status before any deal.",
+          platformRoleThree: "The platform may remove suspicious, incomplete, misleading, unsafe, or illegal ads.",
+          publishingTitle: "3. Publishing advertisements",
+          publishingIntro: "Every advertisement must match its real category and must include clear and correct details.",
+          publishingOne: "Vehicle ads must include correct brand, model, year, mileage, fuel or power type, condition, price, and ownership information.",
+          publishingTwo: "Real estate ads must clarify whether the property is for sale, rent, room, land, farm, or commercial use.",
+          publishingThree: "Service ads must describe the service area, price method, experience, availability, and whether the service is for individuals, homes, or companies.",
+          publishingFour: "Education and digital service ads must avoid false certificates, fake qualifications, copied portfolios, or unrealistic promises.",
+          publishingFive: "Photos must belong to the actual item or service whenever possible and must not mislead buyers.",
+          publishingTip: "Good ads are detailed, honest, organized, and written in the language suitable for the selected country.",
+          categoriesTitle: "4. Category-specific conditions",
+          categoriesIntro: "Different categories need different information and different safety checks.",
+          vehiclesTitle: "Vehicles",
+          vehiclesText: "Private cars, rental cars, motorcycles, bicycles, small trucks, heavy trucks, and parts must be described accurately.",
+          realEstateTitle: "Real estate",
+          realEstateText: "Homes, rooms, shops, land, farms, and commercial spaces require clear ownership, location, size, and contract details.",
+          electronicsTitle: "Electronics",
+          electronicsText: "Phones, computers, appliances, gaming, TV, and audio items must show condition, warranty, defects, and included accessories.",
+          servicesTitle: "Services",
+          servicesText: "Maintenance, repair, cleaning, transport, education, digital work, and personal services must be clear about price and responsibility.",
+          prohibitedTitle: "5. Prohibited content",
+          prohibitedIntro: "Some content is not allowed because it can be unsafe, illegal, misleading, or harmful.",
+          prohibitedWarning: "Do not publish illegal products, stolen goods, fake documents, weapons, drugs, dangerous materials, hateful content, adult exploitation, scams, fake jobs, or any listing that violates the law of the selected country.",
+          prohibitedOne: "Do not publish items you do not own or cannot legally sell.",
+          prohibitedTwo: "Do not publish services that require a license unless you legally hold the required permission.",
+          prohibitedThree: "Do not publish ads that copy another person’s photos, company name, brand identity, or intellectual property.",
+          transactionsTitle: "6. Payments, meetings, and transactions",
+          transactionsIntro: "Users should protect themselves before sending money or transferring ownership.",
+          transactionsOne: "Avoid paying before seeing the item, verifying the seller, or checking the required documents.",
+          transactionsTwo: "For vehicles and real estate, verify ownership papers, registration, tax duties, debts, damages, and legal restrictions.",
+          transactionsThree: "For services, agree clearly on scope, price, deadline, cancellation, warranty, and responsibility before work begins.",
+          transactionsFour: "Meet in safe public places when possible and avoid suspicious payment methods.",
+          privacyTitle: "7. Privacy and local browser data",
+          privacyIntro: "Some information may be stored locally in your browser to make the website easier to use.",
+          privacyOne: "Country choice, language choice, saved ads, favorites, messages, and account form data may be stored in local browser storage.",
+          privacyTwo: "If you clear browser data, change browser, or use another device, local saved data may disappear.",
+          privacyThree: "Do not publish private information that you do not want other users to see.",
+          privacyBoxTitle: "Personal data caution",
+          privacyBoxText: "Users should share only necessary contact information and should avoid publishing sensitive personal, financial, or identity data inside public advertisements.",
+          reportsTitle: "8. Reports, removal, and changes",
+          reportsIntro: "The platform may update rules and remove unsafe or unsuitable content.",
+          reportsOne: "Users may report suspicious ads, fraud attempts, wrong categories, harmful messages, or illegal content.",
+          reportsTwo: "The platform may edit, hide, reject, or remove ads that break rules or harm trust and safety.",
+          reportsThree: "Terms may be updated as the website grows, adds countries, adds categories, or improves safety systems.",
+          finalNote: "These terms are designed to support a safer global marketplace for vehicles, real estate, electronics, home items, businesses, education, digital services, maintenance, and personal services."
+        },
+
+        ar: {
+          home: "الرئيسية", search: "البحث", postAd: "نشر إعلان", account: "حسابي",
+          favorites: "المفضلة", messages: "الرسائل", dashboard: "لوحة التحكم",
+          terms: "الشروط", login: "تسجيل الدخول", register: "إنشاء حساب",
+          termsCenter: "مركز الشروط", heroTitleA: "قواعد سوق", heroTitleB: "عالمي آمن",
+          heroText: "هذه الشروط تنظم النشر والبحث والشراء والبيع والخدمات والسلامة والمسؤولية بين الدول والفئات.",
+          countryBasedRules: "قواعد حسب الدولة",
+          countryBasedText: "يجب على المستخدمين الالتزام بقوانين ولغة وعملة وضرائب وقواعد التجارة في الدولة المختارة.",
+          noticeOneTitle: "مسؤولية المستخدم",
+          noticeOneText: "كل مستخدم مسؤول عن دقة وقانونية وسلامة الإعلانات أو الخدمات التي ينشرها.",
+          noticeTwoTitle: "استخدام عالمي",
+          noticeTwoText: "يمكن للمنصة دعم دول كثيرة، لكن كل عملية يجب أن تحترم القواعد المحلية لتلك الدولة.",
+          noticeThreeTitle: "السلامة أولاً",
+          noticeThreeText: "قابل بحذر، تحقق من الوثائق، تجنب المدفوعات الخطرة، وأبلغ عن الإعلانات أو الرسائل المشبوهة.",
+          contents: "المحتويات",
+          navAcceptance: "القبول", navPlatformRole: "دور المنصة", navPublishing: "قواعد النشر",
+          navCategories: "شروط الفئات", navProhibited: "المحتوى الممنوع",
+          navTransactions: "الدفع والاتفاقات", navPrivacy: "الخصوصية", navReports: "الإبلاغ",
+          acceptanceTitle: "1. قبول الشروط",
+          acceptanceIntro: "باستخدام HK Global Market & Services، فإنك توافق على استخدام المنصة بشكل مسؤول وقانوني.",
+          acceptanceOne: "يجب تقديم معلومات صحيحة عند نشر إعلان أو التواصل مع مستخدم آخر.",
+          acceptanceTwo: "لا يجوز استخدام الموقع للاحتيال أو العروض المضللة أو الإزعاج أو الرسائل المزعجة أو أي نشاط غير قانوني.",
+          acceptanceThree: "إذا لم توافق على هذه الشروط، يجب التوقف عن استخدام المنصة.",
+          platformRoleTitle: "2. دور المنصة",
+          platformRoleIntro: "HK Global Market & Services هي منصة عرض إعلانات وتواصل.",
+          platformRoleBoxTitle: "توضيح مهم",
+          platformRoleBoxText: "يساعد الموقع المستخدمين على النشر والبحث والحفظ والتواصل. المنصة ليست تلقائياً البائع أو المشتري أو الوسيط أو شركة النقل أو مقدم الصيانة أو المدرسة أو ضامن الدفع.",
+          platformRoleOne: "تتم الصفقات مباشرة بين المستخدمين ما لم يوجد اتفاق مكتوب منفصل.",
+          platformRoleTwo: "يجب على المستخدمين التحقق من الهوية والملكية والوثائق والأسعار والتوفر والجودة والوضع القانوني قبل أي اتفاق.",
+          platformRoleThree: "قد تقوم المنصة بإزالة الإعلانات المشبوهة أو الناقصة أو المضللة أو غير الآمنة أو غير القانونية.",
+          publishingTitle: "3. نشر الإعلانات",
+          publishingIntro: "كل إعلان يجب أن يطابق فئته الحقيقية وأن يحتوي على تفاصيل واضحة وصحيحة.",
+          publishingOne: "إعلانات المركبات يجب أن تتضمن الماركة والموديل والسنة والمسافة ونوع الوقود أو الطاقة والحالة والسعر ومعلومات الملكية.",
+          publishingTwo: "إعلانات العقارات يجب أن توضح هل العقار للبيع أو الإيجار أو غرفة أو أرض أو مزرعة أو استخدام تجاري.",
+          publishingThree: "إعلانات الخدمات يجب أن تصف منطقة الخدمة وطريقة السعر والخبرة والتوفر وهل الخدمة للأفراد أو المنازل أو الشركات.",
+          publishingFour: "إعلانات التعليم والخدمات الرقمية يجب أن تتجنب الشهادات الوهمية أو المؤهلات غير الحقيقية أو الأعمال المنسوخة أو الوعود غير الواقعية.",
+          publishingFive: "الصور يجب أن تعود للعنصر أو الخدمة الحقيقية قدر الإمكان وألا تضلل المشترين.",
+          publishingTip: "الإعلان الجيد يكون مفصلاً وصادقاً ومنظماً ومكتوباً باللغة المناسبة للدولة المختارة.",
+          categoriesTitle: "4. شروط خاصة بكل فئة",
+          categoriesIntro: "كل فئة تحتاج معلومات مختلفة وفحوصات أمان مختلفة.",
+          vehiclesTitle: "المركبات",
+          vehiclesText: "السيارات الخاصة، سيارات الإيجار، الدراجات النارية، الدراجات الهوائية، الشاحنات الصغيرة والكبيرة وقطع الغيار يجب وصفها بدقة.",
+          realEstateTitle: "العقارات",
+          realEstateText: "المنازل والغرف والمحلات والأراضي والمزارع والمساحات التجارية تحتاج معلومات واضحة عن الملكية والموقع والمساحة والعقد.",
+          electronicsTitle: "الإلكترونيات",
+          electronicsText: "الهواتف والكمبيوترات والأجهزة المنزلية والألعاب والتلفزيون والصوتيات يجب أن توضح الحالة والضمان والعيوب والملحقات.",
+          servicesTitle: "الخدمات",
+          servicesText: "الصيانة والإصلاح والتنظيف والنقل والتعليم والعمل الرقمي والخدمات الشخصية يجب أن تكون واضحة في السعر والمسؤولية.",
+          prohibitedTitle: "5. المحتوى الممنوع",
+          prohibitedIntro: "بعض المحتوى غير مسموح لأنه قد يكون غير آمن أو غير قانوني أو مضلل أو ضار.",
+          prohibitedWarning: "لا تنشر منتجات غير قانونية أو بضائع مسروقة أو وثائق مزورة أو أسلحة أو مخدرات أو مواد خطرة أو محتوى كراهية أو استغلال أو احتيال أو وظائف وهمية أو أي إعلان يخالف قانون الدولة المختارة.",
+          prohibitedOne: "لا تنشر عناصر لا تملكها أو لا تستطيع بيعها قانونياً.",
+          prohibitedTwo: "لا تنشر خدمات تحتاج ترخيصاً إلا إذا كنت تملك التصريح القانوني المطلوب.",
+          prohibitedThree: "لا تنشر إعلانات تنسخ صور أو اسم شركة أو هوية علامة تجارية أو ملكية فكرية لشخص آخر.",
+          transactionsTitle: "6. المدفوعات والاجتماعات والصفقات",
+          transactionsIntro: "يجب على المستخدمين حماية أنفسهم قبل إرسال المال أو نقل الملكية.",
+          transactionsOne: "تجنب الدفع قبل رؤية العنصر أو التحقق من البائع أو فحص الوثائق المطلوبة.",
+          transactionsTwo: "بالنسبة للمركبات والعقارات، تحقق من أوراق الملكية والتسجيل والضرائب والديون والأضرار والقيود القانونية.",
+          transactionsThree: "بالنسبة للخدمات، اتفق بوضوح على نطاق العمل والسعر والمدة والإلغاء والضمان والمسؤولية قبل بدء العمل.",
+          transactionsFour: "قابل في أماكن عامة آمنة قدر الإمكان وتجنب طرق الدفع المشبوهة.",
+          privacyTitle: "7. الخصوصية وبيانات المتصفح المحلية",
+          privacyIntro: "قد يتم حفظ بعض المعلومات محلياً في المتصفح لتسهيل استخدام الموقع.",
+          privacyOne: "قد يتم حفظ اختيار الدولة واللغة والإعلانات المحفوظة والمفضلة والرسائل وبيانات نموذج الحساب في تخزين المتصفح المحلي.",
+          privacyTwo: "إذا قمت بمسح بيانات المتصفح أو غيرت المتصفح أو استخدمت جهازاً آخر، قد تختفي البيانات المحلية المحفوظة.",
+          privacyThree: "لا تنشر معلومات خاصة لا تريد أن يراها المستخدمون الآخرون.",
+          privacyBoxTitle: "تنبيه حول البيانات الشخصية",
+          privacyBoxText: "ينبغي على المستخدمين مشاركة معلومات التواصل الضرورية فقط وتجنب نشر بيانات شخصية أو مالية أو هوية حساسة داخل الإعلانات العامة.",
+          reportsTitle: "8. الإبلاغ والإزالة والتغييرات",
+          reportsIntro: "قد تقوم المنصة بتحديث القواعد وإزالة المحتوى غير الآمن أو غير المناسب.",
+          reportsOne: "يمكن للمستخدمين الإبلاغ عن الإعلانات المشبوهة أو محاولات الاحتيال أو الفئات الخاطئة أو الرسائل الضارة أو المحتوى غير القانوني.",
+          reportsTwo: "قد تقوم المنصة بتعديل أو إخفاء أو رفض أو إزالة الإعلانات التي تخالف القواعد أو تضر بالثقة والسلامة.",
+          reportsThree: "قد يتم تحديث الشروط مع توسع الموقع وإضافة دول وفئات وتحسين أنظمة السلامة.",
+          finalNote: "هذه الشروط مصممة لدعم سوق عالمي أكثر أماناً للمركبات والعقارات والإلكترونيات والأدوات المنزلية والأعمال والتعليم والخدمات الرقمية والصيانة والخدمات الشخصية."
+        },
+
+        sv: {},
+        de: {},
+        tr: {},
+        fr: {},
+        es: {},
+        it: {},
+        pt: {},
+        nl: {}
+      };
+
+      DICT.sv = DICT.en;
+      DICT.de = DICT.en;
+      DICT.tr = DICT.en;
+      DICT.fr = DICT.en;
+      DICT.es = DICT.en;
+      DICT.it = DICT.en;
+      DICT.pt = DICT.en;
+      DICT.nl = DICT.en;
+
+      function currentLang() {
+        return String(localStorage.getItem(STORAGE.lang) || "en").slice(0, 2).toLowerCase();
+      }
+
+      function t(key) {
+        const lang = currentLang();
+        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+      }
+
+      function getCountries() {
+        const external = window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+        return external.length ? external : FALLBACK_COUNTRIES;
+      }
+
+      function countryCode(country) {
+        return country?.code || country?.id || country?.iso2 || country?.value || "";
+      }
+
+      function countryLang(country) {
+        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
+      }
+
+      function localText(obj, fallback = "") {
+        const lang = currentLang();
+
+        if (!obj) return fallback;
+        if (typeof obj === "string") return obj;
+
+        if (obj.labels) return obj.labels[lang] || obj.labels.en || obj.labels.ar || fallback;
+        if (obj.names) return obj.names[lang] || obj.names.en || obj.names.ar || fallback;
+
+        return obj.name || fallback;
+      }
+
+      function getCountryByCode(code) {
+        const clean = String(code || "").toUpperCase();
+        return getCountries().find((country) => String(countryCode(country)).toUpperCase() === clean) || getCountries()[0];
+      }
+
+      function fillCountries() {
+        const select = $("#countrySelect");
+        const countries = getCountries();
+
+        if (!select || !countries.length) return;
+
+        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
+
+        select.innerHTML = "";
+
+        countries.forEach((country) => {
+          const option = document.createElement("option");
+          option.value = countryCode(country);
+          option.textContent = localText(country, countryCode(country));
+          select.appendChild(option);
+        });
+
+        select.value = saved;
+      }
+
+      function applyCountry(code) {
+        const country = getCountryByCode(code);
+        if (!country) return;
+
+        const codeValue = countryCode(country);
+        const label = localText(country, codeValue);
+
+        localStorage.setItem(STORAGE.country, codeValue);
+        localStorage.setItem(STORAGE.countryLabel, label);
+
+        if (!localStorage.getItem(STORAGE.lang)) {
+          localStorage.setItem(STORAGE.lang, countryLang(country));
+        }
+
+        const lang = currentLang();
+        const dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = dir;
+        document.body.setAttribute("dir", dir);
+
+        fillCountries();
+        applyTranslations();
+      }
+
+      function applyTranslations() {
+        $$("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+      }
+
+      function initMenu() {
+        const toggle = $("#menuToggle");
+        const sidebar = $("#sidebar");
+        const close = $("#sidebarClose");
+        const backdrop = $("#sidebarBackdrop");
+
+        function open() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document.body.classList.add("menu-open");
+        }
+
+        function shut() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        }
+
+        toggle.addEventListener("click", open);
+        close.addEventListener("click", shut);
+        backdrop.addEventListener("click", shut);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") shut();
+        });
+      }
+
+      function initEvents() {
+        $("#countrySelect").addEventListener("change", (event) => {
+          localStorage.removeItem(STORAGE.lang);
+          applyCountry(event.target.value);
+        });
+      }
+
+      function init() {
+        initMenu();
+        fillCountries();
+
+        const countries = getCountries();
+        const startCountry =
+          localStorage.getItem(STORAGE.country) ||
+          $("#countrySelect")?.value ||
+          countryCode(countries[0]);
+
+        applyCountry(startCountry);
+        initEvents();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
 </body>
 </html>
