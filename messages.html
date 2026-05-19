@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Messages | AutoMarket Global</title>
-
-  <meta
-    name="description"
-    content="Contact sellers and manage car messages on AutoMarket Global."
-  />
+  <title>Messages | HK Global Market & Services</title>
+  <meta name="description" content="Manage visitor messages, contact requests, and listing conversations." />
 
   <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -17,57 +13,841 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
+
+  <style>
+    :root {
+      --orange: #ff8b26;
+      --orange-dark: #e87512;
+      --dark: #101828;
+      --muted: #667085;
+      --line: rgba(16, 24, 40, 0.1);
+      --soft: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+      --radius: 28px;
+      --danger: #b42318;
+      --success: #027a48;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 139, 38, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(46, 144, 250, 0.1), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      color: var(--dark);
+    }
+
+    body[dir="rtl"] {
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      height: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .top-left,
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle,
+    .sidebar-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      color: var(--dark);
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: var(--orange);
+    }
+
+    .top-country {
+      min-width: 220px;
+      max-width: 320px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 14px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 24, 40, 0.42);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 320px;
+      background: #fff;
+      z-index: 90;
+      transform: translateX(-105%);
+      transition: 0.25s ease;
+      box-shadow: 30px 0 80px rgba(16, 24, 40, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[dir="rtl"] .sidebar {
+      left: auto;
+      right: 0;
+      transform: translateX(105%);
+      box-shadow: -30px 0 80px rgba(16, 24, 40, 0.18);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-title {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .sidebar-title span {
+      color: var(--orange);
+    }
+
+    .sidebar-nav {
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #344054;
+      font-weight: 800;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #fff4ea;
+      color: var(--orange-dark);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 34px 18px 80px;
+    }
+
+    .hero {
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(16, 24, 40, 0.94), rgba(16, 24, 40, 0.78)),
+        radial-gradient(circle at top right, rgba(255, 139, 38, 0.35), transparent 38%);
+      color: #fff;
+      padding: 34px;
+      box-shadow: 0 32px 90px rgba(16, 24, 40, 0.24);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 24px;
+      align-items: end;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      right: -110px;
+      top: -130px;
+      background: rgba(255, 139, 38, 0.2);
+      filter: blur(4px);
+    }
+
+    body[dir="rtl"] .hero::after {
+      right: auto;
+      left: -110px;
+    }
+
+    .hero-content,
+    .hero-stats {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffd2aa;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 6vw, 70px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .hero h1 span {
+      color: var(--orange);
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.8;
+      font-size: 17px;
+      max-width: 720px;
+    }
+
+    .hero-stats {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stat-box {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 18px;
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .stat-box i {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .stat-box span {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .toolbar {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 190px 190px;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: var(--muted);
+    }
+
+    body[dir="rtl"] .search-box i {
+      left: auto;
+      right: 16px;
+    }
+
+    .search-box input,
+    .toolbar select {
+      width: 100%;
+      height: 48px;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--dark);
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-box input {
+      padding: 0 16px 0 44px;
+    }
+
+    body[dir="rtl"] .search-box input {
+      padding: 0 44px 0 16px;
+    }
+
+    .toolbar select {
+      padding: 0 14px;
+    }
+
+    .clear-btn {
+      height: 48px;
+      border-radius: 999px;
+      border: 1px solid #fecdca;
+      background: #fef3f2;
+      color: var(--danger);
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+    }
+
+    .messages-layout {
+      display: grid;
+      grid-template-columns: 390px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .panel-head h2 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      letter-spacing: -0.04em;
+    }
+
+    .panel-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .count-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      background: #fff4ea;
+      color: var(--orange-dark);
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .conversation-list {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      max-height: 720px;
+      overflow: auto;
+    }
+
+    .conversation {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 22px;
+      padding: 14px;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 12px;
+      transition: 0.2s ease;
+    }
+
+    .conversation:hover,
+    .conversation.active {
+      border-color: rgba(255, 139, 38, 0.35);
+      background: #fff9f3;
+    }
+
+    .conversation.unread {
+      box-shadow: inset 4px 0 0 var(--orange);
+    }
+
+    body[dir="rtl"] .conversation.unread {
+      box-shadow: inset -4px 0 0 var(--orange);
+    }
+
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: #fff4ea;
+      color: var(--orange);
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+      flex: 0 0 auto;
+    }
+
+    .conversation-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .conversation h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .conversation time {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .conversation p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message-detail {
+      min-height: 620px;
+    }
+
+    .detail-body {
+      padding: 24px;
+    }
+
+    .sender-card {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: #fff;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .sender-card .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 22px;
+      font-size: 25px;
+    }
+
+    .sender-card h3 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      letter-spacing: -0.035em;
+    }
+
+    .sender-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .message-box {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: #fff;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .message-box h3 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      letter-spacing: -0.035em;
+    }
+
+    .message-text {
+      color: #475467;
+      line-height: 1.85;
+      white-space: pre-wrap;
+      margin: 0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .info-item {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 20px;
+      padding: 15px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .info-item i {
+      color: var(--orange);
+      font-size: 18px;
+    }
+
+    .info-item span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .info-item strong {
+      color: var(--dark);
+      font-size: 14px;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 46px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 900;
+      background: #fff;
+      color: var(--dark);
+      font-size: 14px;
+    }
+
+    .btn.primary {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 16px 40px rgba(255, 139, 38, 0.28);
+    }
+
+    .btn.dark {
+      background: var(--dark);
+      border-color: var(--dark);
+      color: #fff;
+    }
+
+    .btn.danger {
+      background: #fef3f2;
+      color: var(--danger);
+      border-color: #fecdca;
+    }
+
+    .reply-box {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: #fff;
+      padding: 18px;
+    }
+
+    .reply-box label {
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      color: #344054;
+      margin-bottom: 8px;
+    }
+
+    .reply-box textarea {
+      width: 100%;
+      min-height: 120px;
+      border: 1px solid rgba(16, 24, 40, 0.14);
+      border-radius: 18px;
+      padding: 14px;
+      resize: vertical;
+      outline: none;
+      line-height: 1.7;
+      color: var(--dark);
+    }
+
+    .reply-box textarea:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255, 139, 38, 0.12);
+    }
+
+    .empty-state {
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 32px;
+      color: var(--muted);
+    }
+
+    .empty-state i {
+      display: block;
+      font-size: 54px;
+      color: var(--orange);
+      margin-bottom: 14px;
+    }
+
+    .empty-state h3 {
+      margin: 0 0 8px;
+      color: var(--dark);
+      font-size: 28px;
+      letter-spacing: -0.04em;
+    }
+
+    .empty-state p {
+      margin: 0 0 20px;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 120;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 900;
+      box-shadow: 0 18px 55px rgba(16, 24, 40, 0.22);
+      transition: 0.25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 22px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .toolbar,
+      .messages-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .conversation-list {
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .top-country {
+        min-width: 150px;
+        max-width: 180px;
+        font-size: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .page {
+        padding-top: 24px;
+      }
+
+      .hero {
+        padding: 22px;
+        border-radius: 28px;
+      }
+
+      .sender-card,
+      .conversation {
+        grid-template-columns: 1fr;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <header class="site-topbar">
-    <div class="site-topbar-inner">
-      <div class="topbar-left">
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          type="button"
-          aria-label="Open menu"
-          aria-controls="sidebar"
-          aria-expanded="false"
-        >
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="top-left">
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
           <i class="fa-solid fa-bars"></i>
         </button>
 
-        <a class="logo" href="index.html" aria-label="AutoMarket Global home">
-          AutoMarket <span>Global</span>
-        </a>
+        <a class="brand" href="index.html">HK <span>Global</span></a>
       </div>
 
-      <div class="topbar-right">
-        <select
-          class="country-select"
-          id="countrySelect"
-          aria-label="Choose country"
-        ></select>
+      <div class="top-right">
+        <select class="top-country" id="countrySelect" aria-label="Choose country"></select>
       </div>
     </div>
   </header>
 
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <aside class="sidebar" id="sidebar" aria-label="Main menu">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-title">
-        AutoMarket <span>Global</span>
-      </div>
+      <div class="sidebar-title">HK <span>Global</span></div>
 
-      <button
-        class="sidebar-close"
-        id="sidebarClose"
-        type="button"
-        aria-label="Close menu"
-      >
+      <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close menu">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <nav class="sidebar-nav" aria-label="Main navigation">
+    <nav class="sidebar-nav">
       <a class="sidebar-link" href="index.html">
         <i class="fa-solid fa-house"></i>
         <span data-i18n="home">Home</span>
@@ -75,15 +855,13 @@
 
       <a class="sidebar-link" href="search.html">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span data-i18n="searchCars">Search cars</span>
+        <span data-i18n="search">Search</span>
       </a>
 
       <a class="sidebar-link" href="sell.html">
         <i class="fa-solid fa-circle-plus"></i>
-        <span data-i18n="sellCar">Sell a car</span>
+        <span data-i18n="postAd">Post ad</span>
       </a>
-
-      <div class="sidebar-divider"></div>
 
       <a class="sidebar-link" href="account.html">
         <i class="fa-solid fa-user"></i>
@@ -123,85 +901,799 @@
       </a>
     </nav>
 
-    <div class="sidebar-footer">
-      AutoMarket Global · 2026
-    </div>
+    <div class="sidebar-footer">HK Global Market & Services · 2026</div>
   </aside>
 
   <main class="page">
-    <section class="page-header">
-      <p class="eyebrow">
-        <i class="fa-solid fa-envelope"></i>
-        <span data-i18n="messages">Messages</span>
-      </p>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">
+          <i class="fa-solid fa-comments"></i>
+          <span data-i18n="messagesCenter">Messages center</span>
+        </div>
 
-      <h1 id="messageSubject" data-i18n="messagesTitle">Messages</h1>
+        <h1>
+          <span data-i18n="heroTitleA">Manage all</span>
+          <span data-i18n="heroTitleB">customer messages</span>
+        </h1>
 
-      <p class="subtitle" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
-      </p>
+        <p data-i18n="heroText">
+          View visitor requests, reply by email, call, WhatsApp, and keep every listing conversation organized.
+        </p>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-box">
+          <i class="fa-solid fa-envelope"></i>
+          <div>
+            <strong id="totalCount">0</strong>
+            <span data-i18n="totalMessages">Total messages</span>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+          <div>
+            <strong id="unreadCount">0</strong>
+            <span data-i18n="unreadMessages">Unread messages</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <form class="form-card" id="messageForm">
-      <div id="messageResult"></div>
-
-      <div class="alert" data-i18n="demoNotice">
-        Demo version: data is saved only in this browser until Firebase is connected.
+    <section class="toolbar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="keyword" type="search" />
       </div>
 
-      <div class="form-group">
-        <label for="messageName" data-i18n="name">Name</label>
-        <input
-          id="messageName"
-          name="name"
-          type="text"
-          required
-          placeholder="Your name"
-        />
-      </div>
+      <select id="statusFilter">
+        <option value="" data-i18n="allMessages">All messages</option>
+        <option value="unread" data-i18n="unread">Unread</option>
+        <option value="read" data-i18n="read">Read</option>
+      </select>
 
-      <div class="form-group">
-        <label for="messageEmail" data-i18n="email">Email</label>
-        <input
-          id="messageEmail"
-          name="email"
-          type="email"
-          required
-          placeholder="example@email.com"
-        />
-      </div>
-
-      <div class="form-group">
-        <label for="messageText" data-i18n="messages">Messages</label>
-        <textarea
-          id="messageText"
-          name="message"
-          required
-          placeholder="Write your message here..."
-        ></textarea>
-      </div>
-
-      <button class="btn btn-primary btn-full" type="submit">
-        <i class="fa-solid fa-paper-plane"></i>
-        <span data-i18n="save">Save</span>
+      <button class="clear-btn" id="clearAllBtn" type="button">
+        <i class="fa-solid fa-trash"></i>
+        <span data-i18n="clearAll">Clear all</span>
       </button>
-    </form>
+    </section>
+
+    <section class="messages-layout">
+      <aside class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 data-i18n="inbox">Inbox</h2>
+            <p data-i18n="inboxText">Contact requests saved in this browser.</p>
+          </div>
+
+          <div class="count-pill">
+            <i class="fa-solid fa-envelope"></i>
+            <span id="listCount">0</span>
+          </div>
+        </div>
+
+        <div class="conversation-list" id="conversationList"></div>
+      </aside>
+
+      <section class="panel message-detail" id="messageDetail"></section>
+    </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <div>
-        © 2026 AutoMarket Global. All rights reserved.
-      </div>
+  <div class="toast" id="toast"></div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 HK Global Market & Services.</div>
 
       <div class="footer-links">
         <a href="terms.html" data-i18n="terms">Terms</a>
-        <a href="search.html" data-i18n="searchCars">Search cars</a>
-        <a href="sell.html" data-i18n="sellCar">Sell a car</a>
+        <a href="search.html" data-i18n="search">Search</a>
+        <a href="sell.html" data-i18n="postAd">Post ad</a>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/core.js"></script>
+  <script src="assets/js/countries.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE = {
+        country: "amg_country_code",
+        countryLabel: "amg_country_label",
+        lang: "amg_country_lang",
+        messages: "hk_global_messages"
+      };
+
+      const RTL_LANGS = ["ar", "fa", "ur", "he"];
+
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+      const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+      const FALLBACK_COUNTRIES = [
+        { code: "SE", labels: { en: "Sweden", ar: "السويد", sv: "Sverige" }, lang: "sv", currency: "SEK" },
+        { code: "DE", labels: { en: "Germany", ar: "ألمانيا", sv: "Tyskland" }, lang: "de", currency: "EUR" },
+        { code: "SY", labels: { en: "Syria", ar: "سوريا", sv: "Syrien" }, lang: "ar", currency: "USD" },
+        { code: "TR", labels: { en: "Türkiye", ar: "تركيا", sv: "Turkiet" }, lang: "tr", currency: "TRY" },
+        { code: "AE", labels: { en: "United Arab Emirates", ar: "الإمارات", sv: "Förenade Arabemiraten" }, lang: "ar", currency: "AED" }
+      ];
+
+      const DICT = {
+        en: {
+          home: "Home", search: "Search", postAd: "Post ad", account: "My account",
+          favorites: "Favorites", messages: "Messages", dashboard: "Dashboard", terms: "Terms",
+          login: "Login", register: "Create account", messagesCenter: "Messages center",
+          heroTitleA: "Manage all", heroTitleB: "customer messages",
+          heroText: "View visitor requests, reply by email, call, WhatsApp, and keep every listing conversation organized.",
+          totalMessages: "Total messages", unreadMessages: "Unread messages", allMessages: "All messages",
+          unread: "Unread", read: "Read", clearAll: "Clear all", inbox: "Inbox",
+          inboxText: "Contact requests saved in this browser.", noMessages: "No messages yet",
+          noMessagesText: "When visitors contact you about an advertisement, their messages will appear here.",
+          browseAds: "Browse ads", sender: "Sender", contactInfo: "Contact information",
+          message: "Message", listing: "Related listing", email: "Email", phone: "Phone",
+          whatsapp: "WhatsApp", date: "Date", status: "Status", markRead: "Mark as read",
+          markUnread: "Mark as unread", delete: "Delete", replyByEmail: "Reply by email",
+          openListing: "Open listing", writeReply: "Write quick reply note", copyReply: "Copy reply text",
+          copied: "Copied", deleted: "Message deleted", cleared: "All messages cleared",
+          searchPlaceholder: "Search by name, email, listing, or message...",
+          unknownSender: "Unknown sender", noEmail: "No email", noPhone: "No phone",
+          noListing: "No related listing", selectedMessage: "Selected message"
+        },
+
+        ar: {
+          home: "الرئيسية", search: "البحث", postAd: "نشر إعلان", account: "حسابي",
+          favorites: "المفضلة", messages: "الرسائل", dashboard: "لوحة التحكم", terms: "الشروط",
+          login: "تسجيل الدخول", register: "إنشاء حساب", messagesCenter: "مركز الرسائل",
+          heroTitleA: "إدارة كل", heroTitleB: "رسائل العملاء",
+          heroText: "اعرض طلبات الزوار، ورد عبر البريد أو الاتصال أو واتساب، وحافظ على تنظيم محادثات الإعلانات.",
+          totalMessages: "كل الرسائل", unreadMessages: "رسائل غير مقروءة", allMessages: "كل الرسائل",
+          unread: "غير مقروءة", read: "مقروءة", clearAll: "مسح الكل", inbox: "صندوق الرسائل",
+          inboxText: "طلبات التواصل المحفوظة في هذا المتصفح.", noMessages: "لا توجد رسائل بعد",
+          noMessagesText: "عندما يتواصل الزوار معك حول إعلان، ستظهر رسائلهم هنا.",
+          browseAds: "تصفح الإعلانات", sender: "المرسل", contactInfo: "معلومات التواصل",
+          message: "الرسالة", listing: "الإعلان المرتبط", email: "البريد", phone: "الهاتف",
+          whatsapp: "واتساب", date: "التاريخ", status: "الحالة", markRead: "تحديد كمقروءة",
+          markUnread: "تحديد كغير مقروءة", delete: "حذف", replyByEmail: "الرد بالبريد",
+          openListing: "فتح الإعلان", writeReply: "اكتب رد سريع", copyReply: "نسخ نص الرد",
+          copied: "تم النسخ", deleted: "تم حذف الرسالة", cleared: "تم مسح كل الرسائل",
+          searchPlaceholder: "ابحث بالاسم أو البريد أو الإعلان أو الرسالة...",
+          unknownSender: "مرسل غير معروف", noEmail: "لا يوجد بريد", noPhone: "لا يوجد هاتف",
+          noListing: "لا يوجد إعلان مرتبط", selectedMessage: "الرسالة المختارة"
+        },
+
+        sv: {
+          home: "Hem", search: "Sök", postAd: "Lägg upp annons", account: "Mitt konto",
+          favorites: "Favoriter", messages: "Meddelanden", dashboard: "Panel", terms: "Villkor",
+          login: "Logga in", register: "Skapa konto", messagesCenter: "Meddelandecenter",
+          heroTitleA: "Hantera alla", heroTitleB: "kundmeddelanden",
+          heroText: "Visa besökarförfrågningar, svara via e-post, samtal, WhatsApp och håll alla annonskonversationer organiserade.",
+          totalMessages: "Totala meddelanden", unreadMessages: "Olästa meddelanden", allMessages: "Alla meddelanden",
+          unread: "Oläst", read: "Läst", clearAll: "Rensa alla", inbox: "Inkorg",
+          inboxText: "Kontaktförfrågningar sparade i denna webbläsare.", noMessages: "Inga meddelanden ännu",
+          noMessagesText: "När besökare kontaktar dig om en annons visas deras meddelanden här.",
+          browseAds: "Bläddra annonser", sender: "Avsändare", contactInfo: "Kontaktinformation",
+          message: "Meddelande", listing: "Relaterad annons", email: "E-post", phone: "Telefon",
+          whatsapp: "WhatsApp", date: "Datum", status: "Status", markRead: "Markera som läst",
+          markUnread: "Markera som oläst", delete: "Ta bort", replyByEmail: "Svara via e-post",
+          openListing: "Öppna annons", writeReply: "Skriv snabbt svar", copyReply: "Kopiera svar",
+          copied: "Kopierat", deleted: "Meddelande borttaget", cleared: "Alla meddelanden rensade",
+          searchPlaceholder: "Sök efter namn, e-post, annons eller meddelande...",
+          unknownSender: "Okänd avsändare", noEmail: "Ingen e-post", noPhone: "Ingen telefon",
+          noListing: "Ingen relaterad annons", selectedMessage: "Valt meddelande"
+        },
+
+        de: {
+          home: "Start", search: "Suche", postAd: "Anzeige erstellen", account: "Mein Konto",
+          favorites: "Favoriten", messages: "Nachrichten", dashboard: "Dashboard", terms: "Bedingungen",
+          login: "Anmelden", register: "Konto erstellen", messagesCenter: "Nachrichtencenter",
+          heroTitleA: "Alle", heroTitleB: "Kundennachrichten verwalten",
+          heroText: "Besucheranfragen ansehen, per E-Mail, Telefon oder WhatsApp antworten und Anzeigenkonversationen organisieren.",
+          totalMessages: "Nachrichten gesamt", unreadMessages: "Ungelesene Nachrichten", allMessages: "Alle Nachrichten",
+          unread: "Ungelesen", read: "Gelesen", clearAll: "Alle löschen", inbox: "Posteingang",
+          inboxText: "Kontaktanfragen, die in diesem Browser gespeichert sind.", noMessages: "Noch keine Nachrichten",
+          noMessagesText: "Wenn Besucher Sie zu einer Anzeige kontaktieren, erscheinen ihre Nachrichten hier.",
+          browseAds: "Anzeigen durchsuchen", sender: "Absender", contactInfo: "Kontaktinformationen",
+          message: "Nachricht", listing: "Zugehörige Anzeige", email: "E-Mail", phone: "Telefon",
+          whatsapp: "WhatsApp", date: "Datum", status: "Status", markRead: "Als gelesen markieren",
+          markUnread: "Als ungelesen markieren", delete: "Löschen", replyByEmail: "Per E-Mail antworten",
+          openListing: "Anzeige öffnen", writeReply: "Schnelle Antwort schreiben", copyReply: "Antwort kopieren",
+          copied: "Kopiert", deleted: "Nachricht gelöscht", cleared: "Alle Nachrichten gelöscht",
+          searchPlaceholder: "Nach Name, E-Mail, Anzeige oder Nachricht suchen...",
+          unknownSender: "Unbekannter Absender", noEmail: "Keine E-Mail", noPhone: "Keine Telefonnummer",
+          noListing: "Keine zugehörige Anzeige", selectedMessage: "Ausgewählte Nachricht"
+        },
+
+        tr: {
+          home: "Ana sayfa", search: "Ara", postAd: "İlan ver", account: "Hesabım",
+          favorites: "Favoriler", messages: "Mesajlar", dashboard: "Panel", terms: "Şartlar",
+          login: "Giriş", register: "Hesap oluştur", messagesCenter: "Mesaj merkezi",
+          heroTitleA: "Tüm", heroTitleB: "müşteri mesajlarını yönet",
+          heroText: "Ziyaretçi taleplerini görüntüleyin, e-posta, telefon veya WhatsApp ile yanıt verin ve ilan konuşmalarını düzenli tutun.",
+          totalMessages: "Toplam mesaj", unreadMessages: "Okunmamış mesaj", allMessages: "Tüm mesajlar",
+          unread: "Okunmamış", read: "Okundu", clearAll: "Tümünü sil", inbox: "Gelen kutusu",
+          inboxText: "Bu tarayıcıda kaydedilen iletişim talepleri.", noMessages: "Henüz mesaj yok",
+          noMessagesText: "Ziyaretçiler bir ilan hakkında size yazdığında mesajları burada görünür.",
+          browseAds: "İlanlara göz at", sender: "Gönderen", contactInfo: "İletişim bilgileri",
+          message: "Mesaj", listing: "İlgili ilan", email: "E-posta", phone: "Telefon",
+          whatsapp: "WhatsApp", date: "Tarih", status: "Durum", markRead: "Okundu işaretle",
+          markUnread: "Okunmadı işaretle", delete: "Sil", replyByEmail: "E-posta ile yanıtla",
+          openListing: "İlanı aç", writeReply: "Hızlı yanıt yaz", copyReply: "Yanıtı kopyala",
+          copied: "Kopyalandı", deleted: "Mesaj silindi", cleared: "Tüm mesajlar silindi",
+          searchPlaceholder: "İsim, e-posta, ilan veya mesaj ara...",
+          unknownSender: "Bilinmeyen gönderen", noEmail: "E-posta yok", noPhone: "Telefon yok",
+          noListing: "İlgili ilan yok", selectedMessage: "Seçili mesaj"
+        },
+
+        fr: {},
+        es: {},
+        it: {},
+        pt: {},
+        nl: {}
+      };
+
+      DICT.fr = DICT.en;
+      DICT.es = DICT.en;
+      DICT.it = DICT.en;
+      DICT.pt = DICT.en;
+      DICT.nl = DICT.en;
+
+      let selectedId = null;
+
+      function currentLang() {
+        return String(localStorage.getItem(STORAGE.lang) || "en").slice(0, 2).toLowerCase();
+      }
+
+      function t(key) {
+        const lang = currentLang();
+        return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+      }
+
+      function readJson(key, fallback) {
+        try {
+          const value = JSON.parse(localStorage.getItem(key) || "");
+          return value || fallback;
+        } catch {
+          return fallback;
+        }
+      }
+
+      function writeJson(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+
+      function getCountries() {
+        const external = window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+        return external.length ? external : FALLBACK_COUNTRIES;
+      }
+
+      function countryCode(country) {
+        return country?.code || country?.id || country?.iso2 || country?.value || "";
+      }
+
+      function countryLang(country) {
+        return String(country?.lang || country?.language || country?.defaultLang || "en").slice(0, 2).toLowerCase();
+      }
+
+      function localText(obj, fallback = "") {
+        const lang = currentLang();
+
+        if (!obj) return fallback;
+        if (typeof obj === "string") return obj;
+        if (obj.labels) return obj.labels[lang] || obj.labels.en || obj.labels.ar || fallback;
+        if (obj.names) return obj.names[lang] || obj.names.en || obj.names.ar || fallback;
+
+        return obj.name || fallback;
+      }
+
+      function getCountryByCode(code) {
+        const clean = String(code || "").toUpperCase();
+        return getCountries().find((country) => String(countryCode(country)).toUpperCase() === clean) || getCountries()[0];
+      }
+
+      function fillCountries() {
+        const select = $("#countrySelect");
+        const countries = getCountries();
+
+        if (!select || !countries.length) return;
+
+        const saved = localStorage.getItem(STORAGE.country) || countryCode(countries[0]);
+
+        select.innerHTML = "";
+
+        countries.forEach((country) => {
+          const option = document.createElement("option");
+          option.value = countryCode(country);
+          option.textContent = localText(country, countryCode(country));
+          select.appendChild(option);
+        });
+
+        select.value = saved;
+      }
+
+      function applyCountry(code) {
+        const country = getCountryByCode(code);
+
+        if (!country) return;
+
+        const codeValue = countryCode(country);
+        const label = localText(country, codeValue);
+
+        localStorage.setItem(STORAGE.country, codeValue);
+        localStorage.setItem(STORAGE.countryLabel, label);
+
+        if (!localStorage.getItem(STORAGE.lang)) {
+          localStorage.setItem(STORAGE.lang, countryLang(country));
+        }
+
+        const lang = currentLang();
+        const dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
+
+        document.documentElement.lang = lang;
+        document.documentElement.dir = dir;
+        document.body.setAttribute("dir", dir);
+
+        fillCountries();
+        applyTranslations();
+        renderMessages();
+      }
+
+      function applyTranslations() {
+        $$("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+
+        $("#keyword").placeholder = t("searchPlaceholder");
+
+        $$("#statusFilter option").forEach((option) => {
+          const key = option.dataset.i18n;
+          if (key) option.textContent = t(key);
+        });
+      }
+
+      function normalizeMessage(item, index) {
+        return {
+          id: item.id || item.messageId || "msg-" + index + "-" + Math.random().toString(36).slice(2),
+          senderName: item.senderName || item.name || item.sender || t("unknownSender"),
+          senderEmail: item.senderEmail || item.email || "",
+          senderPhone: item.senderPhone || item.phone || "",
+          senderWhatsapp: item.senderWhatsapp || item.whatsapp || item.phone || "",
+          listingId: item.listingId || item.adId || item.productId || "",
+          listingTitle: item.listingTitle || item.adTitle || item.title || "",
+          message: item.message || item.text || item.body || "",
+          status: item.status || (item.read ? "read" : "unread"),
+          createdAt: item.createdAt || item.date || new Date().toISOString()
+        };
+      }
+
+      function getMessages() {
+        const keys = [
+          STORAGE.messages,
+          "amg_messages",
+          "automarket_messages",
+          "hk_global_inbox",
+          "hk_global_contact_requests"
+        ];
+
+        let all = [];
+
+        keys.forEach((key) => {
+          const value = readJson(key, []);
+          if (Array.isArray(value)) all = all.concat(value);
+        });
+
+        const normalized = all.map(normalizeMessage);
+
+        const unique = [];
+        const seen = new Set();
+
+        normalized.forEach((item) => {
+          if (!seen.has(String(item.id))) {
+            seen.add(String(item.id));
+            unique.push(item);
+          }
+        });
+
+        unique.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+        return unique;
+      }
+
+      function saveMessages(messages) {
+        writeJson(STORAGE.messages, messages);
+      }
+
+      function getFilteredMessages() {
+        const keyword = $("#keyword").value.trim().toLowerCase();
+        const status = $("#statusFilter").value;
+
+        return getMessages().filter((item) => {
+          const keywordText = [
+            item.senderName,
+            item.senderEmail,
+            item.senderPhone,
+            item.listingTitle,
+            item.message
+          ].join(" ").toLowerCase();
+
+          const keywordOk = !keyword || keywordText.includes(keyword);
+          const statusOk = !status || item.status === status;
+
+          return keywordOk && statusOk;
+        });
+      }
+
+      function shortText(text, limit) {
+        const clean = String(text || "").replace(/\s+/g, " ").trim();
+        if (clean.length <= limit) return clean;
+        return clean.slice(0, limit) + "...";
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function formatDate(date) {
+        try {
+          return new Date(date).toLocaleString();
+        } catch {
+          return "-";
+        }
+      }
+
+      function renderConversation(item) {
+        const isActive = String(item.id) === String(selectedId);
+        const isUnread = item.status !== "read";
+
+        return `
+          <article
+            class="conversation ${isActive ? "active" : ""} ${isUnread ? "unread" : ""}"
+            data-message-id="${escapeHtml(item.id)}"
+          >
+            <div class="avatar">
+              <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div>
+              <div class="conversation-top">
+                <h3>${escapeHtml(item.senderName || t("unknownSender"))}</h3>
+                <time>${escapeHtml(formatDate(item.createdAt))}</time>
+              </div>
+
+              <p><strong>${escapeHtml(item.listingTitle || t("noListing"))}</strong></p>
+              <p>${escapeHtml(shortText(item.message || "", 80))}</p>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderEmptyList() {
+        $("#conversationList").innerHTML = `
+          <div class="empty-state">
+            <div>
+              <i class="fa-solid fa-envelope-open-text"></i>
+              <h3>${escapeHtml(t("noMessages"))}</h3>
+              <p>${escapeHtml(t("noMessagesText"))}</p>
+              <a class="btn primary" href="search.html">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                ${escapeHtml(t("browseAds"))}
+              </a>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderEmptyDetail() {
+        $("#messageDetail").innerHTML = `
+          <div class="empty-state">
+            <div>
+              <i class="fa-solid fa-comments"></i>
+              <h3>${escapeHtml(t("noMessages"))}</h3>
+              <p>${escapeHtml(t("noMessagesText"))}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderDetail(item) {
+        if (!item) {
+          renderEmptyDetail();
+          return;
+        }
+
+        const emailHref = item.senderEmail ? "mailto:" + item.senderEmail : "#";
+        const phoneHref = item.senderPhone ? "tel:" + item.senderPhone : "#";
+        const whatsappHref = item.senderWhatsapp
+          ? "https://wa.me/" + String(item.senderWhatsapp).replace(/\D/g, "")
+          : "#";
+
+        $("#messageDetail").innerHTML = `
+          <div class="panel-head">
+            <div>
+              <h2>${escapeHtml(t("selectedMessage"))}</h2>
+              <p>${escapeHtml(t("date"))}: ${escapeHtml(formatDate(item.createdAt))}</p>
+            </div>
+
+            <div class="count-pill">
+              <i class="fa-solid ${item.status === "read" ? "fa-envelope-open" : "fa-envelope"}"></i>
+              ${escapeHtml(item.status === "read" ? t("read") : t("unread"))}
+            </div>
+          </div>
+
+          <div class="detail-body">
+            <div class="sender-card">
+              <div class="avatar">
+                <i class="fa-solid fa-user"></i>
+              </div>
+
+              <div>
+                <h3>${escapeHtml(item.senderName || t("unknownSender"))}</h3>
+                <p>${escapeHtml(item.senderEmail || t("noEmail"))}</p>
+              </div>
+            </div>
+
+            <div class="info-grid">
+              <div class="info-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>${escapeHtml(t("email"))}</span>
+                <strong>${escapeHtml(item.senderEmail || t("noEmail"))}</strong>
+              </div>
+
+              <div class="info-item">
+                <i class="fa-solid fa-phone"></i>
+                <span>${escapeHtml(t("phone"))}</span>
+                <strong>${escapeHtml(item.senderPhone || t("noPhone"))}</strong>
+              </div>
+
+              <div class="info-item">
+                <i class="fa-solid fa-rectangle-ad"></i>
+                <span>${escapeHtml(t("listing"))}</span>
+                <strong>${escapeHtml(item.listingTitle || t("noListing"))}</strong>
+              </div>
+
+              <div class="info-item">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>${escapeHtml(t("status"))}</span>
+                <strong>${escapeHtml(item.status === "read" ? t("read") : t("unread"))}</strong>
+              </div>
+            </div>
+
+            <div class="message-box">
+              <h3>${escapeHtml(t("message"))}</h3>
+              <p class="message-text">${escapeHtml(item.message || "-")}</p>
+            </div>
+
+            <div class="actions">
+              ${item.senderEmail ? `
+                <a class="btn primary" href="${escapeHtml(emailHref)}">
+                  <i class="fa-solid fa-reply"></i>
+                  ${escapeHtml(t("replyByEmail"))}
+                </a>
+              ` : ""}
+
+              ${item.senderPhone ? `
+                <a class="btn" href="${escapeHtml(phoneHref)}">
+                  <i class="fa-solid fa-phone"></i>
+                  ${escapeHtml(t("phone"))}
+                </a>
+              ` : ""}
+
+              ${item.senderWhatsapp ? `
+                <a class="btn dark" href="${escapeHtml(whatsappHref)}" target="_blank" rel="noopener">
+                  <i class="fa-brands fa-whatsapp"></i>
+                  ${escapeHtml(t("whatsapp"))}
+                </a>
+              ` : ""}
+
+              ${item.listingId ? `
+                <a class="btn" href="details.html?id=${encodeURIComponent(item.listingId)}">
+                  <i class="fa-solid fa-eye"></i>
+                  ${escapeHtml(t("openListing"))}
+                </a>
+              ` : ""}
+
+              <button class="btn" type="button" data-toggle-read="${escapeHtml(item.id)}">
+                <i class="fa-solid ${item.status === "read" ? "fa-envelope" : "fa-envelope-open"}"></i>
+                ${escapeHtml(item.status === "read" ? t("markUnread") : t("markRead"))}
+              </button>
+
+              <button class="btn danger" type="button" data-delete="${escapeHtml(item.id)}">
+                <i class="fa-solid fa-trash"></i>
+                ${escapeHtml(t("delete"))}
+              </button>
+            </div>
+
+            <div class="reply-box">
+              <label for="replyText">${escapeHtml(t("writeReply"))}</label>
+              <textarea id="replyText"></textarea>
+
+              <div class="actions" style="margin-top:12px;">
+                <button class="btn primary" type="button" id="copyReplyBtn">
+                  <i class="fa-solid fa-copy"></i>
+                  ${escapeHtml(t("copyReply"))}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const replyBox = $("#replyText");
+        if (replyBox) {
+          replyBox.value = currentLang() === "ar"
+            ? "مرحباً، شكراً لتواصلك معنا. سأراجع طلبك وأرد عليك قريباً."
+            : "Hello, thank you for contacting us. I will review your request and reply soon.";
+        }
+
+        const copyBtn = $("#copyReplyBtn");
+        if (copyBtn) {
+          copyBtn.addEventListener("click", async () => {
+            try {
+              await navigator.clipboard.writeText($("#replyText").value);
+              showToast(t("copied"));
+            } catch {
+              showToast(t("copied"));
+            }
+          });
+        }
+      }
+
+      function renderMessages() {
+        const all = getMessages();
+        const filtered = getFilteredMessages();
+        const unread = all.filter((item) => item.status !== "read").length;
+
+        $("#totalCount").textContent = all.length;
+        $("#unreadCount").textContent = unread;
+        $("#listCount").textContent = filtered.length;
+
+        $("#clearAllBtn").disabled = all.length === 0;
+
+        if (!filtered.length) {
+          selectedId = null;
+          renderEmptyList();
+          renderEmptyDetail();
+          return;
+        }
+
+        const stillExists = filtered.some((item) => String(item.id) === String(selectedId));
+        if (!selectedId || !stillExists) selectedId = filtered[0].id;
+
+        $("#conversationList").innerHTML = filtered.map(renderConversation).join("");
+
+        const selected = filtered.find((item) => String(item.id) === String(selectedId));
+        renderDetail(selected);
+      }
+
+      function updateMessage(id, updater) {
+        const messages = getMessages().map((item) => {
+          if (String(item.id) !== String(id)) return item;
+          return updater(item);
+        });
+
+        saveMessages(messages);
+        renderMessages();
+      }
+
+      function toggleRead(id) {
+        updateMessage(id, (item) => ({
+          ...item,
+          status: item.status === "read" ? "unread" : "read"
+        }));
+      }
+
+      function deleteMessage(id) {
+        const messages = getMessages().filter((item) => String(item.id) !== String(id));
+        saveMessages(messages);
+
+        if (String(selectedId) === String(id)) selectedId = null;
+
+        showToast(t("deleted"));
+        renderMessages();
+      }
+
+      function clearAllMessages() {
+        saveMessages([]);
+        localStorage.removeItem("amg_messages");
+        localStorage.removeItem("automarket_messages");
+        localStorage.removeItem("hk_global_inbox");
+        localStorage.removeItem("hk_global_contact_requests");
+
+        selectedId = null;
+        showToast(t("cleared"));
+        renderMessages();
+      }
+
+      function showToast(text) {
+        const toast = $("#toast");
+        toast.textContent = text;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      function initMenu() {
+        const toggle = $("#menuToggle");
+        const sidebar = $("#sidebar");
+        const close = $("#sidebarClose");
+        const backdrop = $("#sidebarBackdrop");
+
+        function open() {
+          sidebar.classList.add("open");
+          backdrop.classList.add("open");
+          document.body.classList.add("menu-open");
+        }
+
+        function shut() {
+          sidebar.classList.remove("open");
+          backdrop.classList.remove("open");
+          document.body.classList.remove("menu-open");
+        }
+
+        toggle.addEventListener("click", open);
+        close.addEventListener("click", shut);
+        backdrop.addEventListener("click", shut);
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") shut();
+        });
+      }
+
+      function initEvents() {
+        $("#countrySelect").addEventListener("change", (event) => {
+          localStorage.removeItem(STORAGE.lang);
+          applyCountry(event.target.value);
+        });
+
+        $("#keyword").addEventListener("input", renderMessages);
+        $("#statusFilter").addEventListener("change", renderMessages);
+        $("#clearAllBtn").addEventListener("click", clearAllMessages);
+
+        $("#conversationList").addEventListener("click", (event) => {
+          const item = event.target.closest("[data-message-id]");
+          if (!item) return;
+
+          selectedId = item.dataset.messageId;
+          renderMessages();
+        });
+
+        document.addEventListener("click", (event) => {
+          const toggleBtn = event.target.closest("[data-toggle-read]");
+          if (toggleBtn) {
+            toggleRead(toggleBtn.dataset.toggleRead);
+            return;
+          }
+
+          const deleteBtn = event.target.closest("[data-delete]");
+          if (deleteBtn) {
+            deleteMessage(deleteBtn.dataset.delete);
+          }
+        });
+      }
+
+      function init() {
+        initMenu();
+        fillCountries();
+
+        const countries = getCountries();
+        const startCountry =
+          localStorage.getItem(STORAGE.country) ||
+          $("#countrySelect")?.value ||
+          countryCode(countries[0]);
+
+        applyCountry(startCountry);
+        initEvents();
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
 </body>
 </html>
