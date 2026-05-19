@@ -1,948 +1,1168 @@
-/* =========================================================
-   HK Global Market & Services
-   Shared app logic: publish ads, search, filters, cards
-   ========================================================= */
+/* HK Global Market & Services - Shared App Core */
 
 (function () {
   "use strict";
 
-  const STORAGE_KEYS = {
-    listings: "hk_global_market_listings",
-    countryCode: "amg_country_code",
-    countryLabel: "amg_country_label",
-    countryLang: "amg_country_lang",
-    categoryId: "amg_selected_category",
-    categoryLabel: "amg_category_label",
-    categoryGroup: "amg_category_group",
-    categoryGroupLabel: "amg_category_group_label"
+  const APP = {
+    name: "HK Global Market & Services",
+    version: "1.0.0"
   };
+
+  const STORAGE = {
+    country: "amg_country_code",
+    countryLabel: "amg_country_label",
+    lang: "amg_country_lang",
+    currency: "amg_country_currency",
+    region: "amg_country_region",
+    ads: "hk_global_ads",
+    favorites: "hk_global_favorites",
+    messages: "hk_global_messages",
+    accounts: "hk_global_accounts",
+    currentUser: "hk_global_current_user",
+    session: "hk_global_auth_session",
+    theme: "hk_global_theme"
+  };
+
+  const RTL_LANGS = ["ar", "fa", "ur", "he"];
 
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
-  function escapeHTML(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  const DICT = {
+    en: {
+      home: "Home",
+      search: "Search",
+      postAd: "Post ad",
+      account: "My account",
+      favorites: "Favorites",
+      messages: "Messages",
+      dashboard: "Dashboard",
+      terms: "Terms",
+      login: "Login",
+      register: "Create account",
+      logout: "Logout",
+      menu: "Menu",
+      close: "Close",
+      country: "Country",
+      language: "Language",
+      allCategories: "All categories",
+      vehicles: "Vehicles",
+      cars: "Cars",
+      carRental: "Car rental",
+      motorcycles: "Motorcycles",
+      bicycles: "Bicycles",
+      trucks: "Trucks",
+      realEstate: "Real estate",
+      apartmentsSale: "Apartments for sale",
+      apartmentsRent: "Apartments for rent",
+      housesSale: "Houses for sale",
+      housesRent: "Houses for rent",
+      shops: "Commercial shops",
+      agriculturalLand: "Agricultural land",
+      electronics: "Electronics",
+      phones: "Phones",
+      computers: "Computers",
+      appliances: "Home appliances",
+      homeItems: "Home items",
+      furniture: "Furniture",
+      tools: "Tools",
+      services: "Services",
+      maintenance: "Maintenance",
+      homeMaintenance: "Home maintenance",
+      companyMaintenance: "Company maintenance",
+      serviceCenters: "Service centers",
+      education: "Education",
+      digitalServices: "Digital services",
+      personalServices: "Personal services",
+      beauty: "Beauty",
+      legal: "Legal services",
+      medical: "Medical services",
+      jobs: "Jobs",
+      saved: "Saved",
+      published: "Published",
+      draft: "Draft",
+      active: "Active",
+      inactive: "Inactive",
+      loading: "Loading...",
+      noData: "No data found.",
+      copied: "Copied.",
+      savedSuccess: "Saved successfully.",
+      deletedSuccess: "Deleted successfully.",
+      loginRequired: "Please login first.",
+      confirmDelete: "Are you sure you want to delete this item?",
+      selectedCountryChanged: "Country changed successfully.",
+      appReady: "Application ready."
+    },
+
+    ar: {
+      home: "الرئيسية",
+      search: "البحث",
+      postAd: "نشر إعلان",
+      account: "حسابي",
+      favorites: "المفضلة",
+      messages: "الرسائل",
+      dashboard: "لوحة التحكم",
+      terms: "الشروط",
+      login: "تسجيل الدخول",
+      register: "إنشاء حساب",
+      logout: "تسجيل الخروج",
+      menu: "القائمة",
+      close: "إغلاق",
+      country: "الدولة",
+      language: "اللغة",
+      allCategories: "كل الفئات",
+      vehicles: "المركبات",
+      cars: "سيارات",
+      carRental: "سيارات للإيجار",
+      motorcycles: "دراجات نارية",
+      bicycles: "دراجات هوائية",
+      trucks: "شاحنات",
+      realEstate: "العقارات",
+      apartmentsSale: "شقق للبيع",
+      apartmentsRent: "شقق للإيجار",
+      housesSale: "منازل للبيع",
+      housesRent: "منازل للإيجار",
+      shops: "محلات تجارية",
+      agriculturalLand: "أراضٍ زراعية",
+      electronics: "الإلكترونيات",
+      phones: "هواتف",
+      computers: "كمبيوترات",
+      appliances: "أجهزة منزلية",
+      homeItems: "أدوات منزلية",
+      furniture: "أثاث",
+      tools: "معدات وأدوات",
+      services: "الخدمات",
+      maintenance: "الصيانة",
+      homeMaintenance: "صيانة المنازل",
+      companyMaintenance: "صيانة الشركات",
+      serviceCenters: "مراكز خدمية",
+      education: "التعليم",
+      digitalServices: "الخدمات الرقمية",
+      personalServices: "الخدمات الشخصية",
+      beauty: "التجميل",
+      legal: "خدمات قانونية",
+      medical: "خدمات طبية",
+      jobs: "وظائف",
+      saved: "تم الحفظ",
+      published: "منشور",
+      draft: "مسودة",
+      active: "نشط",
+      inactive: "غير نشط",
+      loading: "جار التحميل...",
+      noData: "لا توجد بيانات.",
+      copied: "تم النسخ.",
+      savedSuccess: "تم الحفظ بنجاح.",
+      deletedSuccess: "تم الحذف بنجاح.",
+      loginRequired: "يرجى تسجيل الدخول أولاً.",
+      confirmDelete: "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+      selectedCountryChanged: "تم تغيير الدولة بنجاح.",
+      appReady: "التطبيق جاهز."
+    },
+
+    sv: {
+      home: "Hem",
+      search: "Sök",
+      postAd: "Lägg upp annons",
+      account: "Mitt konto",
+      favorites: "Favoriter",
+      messages: "Meddelanden",
+      dashboard: "Panel",
+      terms: "Villkor",
+      login: "Logga in",
+      register: "Skapa konto",
+      logout: "Logga ut",
+      menu: "Meny",
+      close: "Stäng",
+      country: "Land",
+      language: "Språk",
+      allCategories: "Alla kategorier",
+      vehicles: "Fordon",
+      cars: "Bilar",
+      carRental: "Biluthyrning",
+      motorcycles: "Motorcyklar",
+      bicycles: "Cyklar",
+      trucks: "Lastbilar",
+      realEstate: "Fastigheter",
+      apartmentsSale: "Lägenheter till salu",
+      apartmentsRent: "Lägenheter att hyra",
+      housesSale: "Hus till salu",
+      housesRent: "Hus att hyra",
+      shops: "Butiker",
+      agriculturalLand: "Jordbruksmark",
+      electronics: "Elektronik",
+      phones: "Telefoner",
+      computers: "Datorer",
+      appliances: "Vitvaror",
+      homeItems: "Hemartiklar",
+      furniture: "Möbler",
+      tools: "Verktyg",
+      services: "Tjänster",
+      maintenance: "Underhåll",
+      homeMaintenance: "Hemunderhåll",
+      companyMaintenance: "Företagsunderhåll",
+      serviceCenters: "Servicecenter",
+      education: "Utbildning",
+      digitalServices: "Digitala tjänster",
+      personalServices: "Personliga tjänster",
+      beauty: "Skönhet",
+      legal: "Juridiska tjänster",
+      medical: "Medicinska tjänster",
+      jobs: "Jobb",
+      saved: "Sparad",
+      published: "Publicerad",
+      draft: "Utkast",
+      active: "Aktiv",
+      inactive: "Inaktiv",
+      loading: "Laddar...",
+      noData: "Ingen data hittades.",
+      copied: "Kopierat.",
+      savedSuccess: "Sparat.",
+      deletedSuccess: "Raderat.",
+      loginRequired: "Logga in först.",
+      confirmDelete: "Är du säker på att du vill radera detta?",
+      selectedCountryChanged: "Land ändrades.",
+      appReady: "Appen är redo."
+    },
+
+    de: {
+      home: "Start",
+      search: "Suche",
+      postAd: "Anzeige erstellen",
+      account: "Mein Konto",
+      favorites: "Favoriten",
+      messages: "Nachrichten",
+      dashboard: "Dashboard",
+      terms: "Bedingungen",
+      login: "Anmelden",
+      register: "Konto erstellen",
+      logout: "Abmelden",
+      menu: "Menü",
+      close: "Schließen",
+      country: "Land",
+      language: "Sprache",
+      allCategories: "Alle Kategorien",
+      vehicles: "Fahrzeuge",
+      cars: "Autos",
+      carRental: "Autovermietung",
+      motorcycles: "Motorräder",
+      bicycles: "Fahrräder",
+      trucks: "LKW",
+      realEstate: "Immobilien",
+      apartmentsSale: "Wohnungen zum Verkauf",
+      apartmentsRent: "Wohnungen zur Miete",
+      housesSale: "Häuser zum Verkauf",
+      housesRent: "Häuser zur Miete",
+      shops: "Gewerbeflächen",
+      agriculturalLand: "Agrarland",
+      electronics: "Elektronik",
+      phones: "Telefone",
+      computers: "Computer",
+      appliances: "Haushaltsgeräte",
+      homeItems: "Haushaltswaren",
+      furniture: "Möbel",
+      tools: "Werkzeuge",
+      services: "Dienstleistungen",
+      maintenance: "Wartung",
+      homeMaintenance: "Hauswartung",
+      companyMaintenance: "Firmenwartung",
+      serviceCenters: "Servicezentren",
+      education: "Bildung",
+      digitalServices: "Digitale Dienste",
+      personalServices: "Persönliche Dienste",
+      beauty: "Beauty",
+      legal: "Rechtsdienste",
+      medical: "Medizinische Dienste",
+      jobs: "Jobs",
+      saved: "Gespeichert",
+      published: "Veröffentlicht",
+      draft: "Entwurf",
+      active: "Aktiv",
+      inactive: "Inaktiv",
+      loading: "Lädt...",
+      noData: "Keine Daten gefunden.",
+      copied: "Kopiert.",
+      savedSuccess: "Erfolgreich gespeichert.",
+      deletedSuccess: "Erfolgreich gelöscht.",
+      loginRequired: "Bitte zuerst anmelden.",
+      confirmDelete: "Möchtest du dieses Element wirklich löschen?",
+      selectedCountryChanged: "Land erfolgreich geändert.",
+      appReady: "App bereit."
+    },
+
+    tr: {
+      home: "Ana sayfa",
+      search: "Ara",
+      postAd: "İlan ver",
+      account: "Hesabım",
+      favorites: "Favoriler",
+      messages: "Mesajlar",
+      dashboard: "Panel",
+      terms: "Şartlar",
+      login: "Giriş",
+      register: "Hesap oluştur",
+      logout: "Çıkış yap",
+      menu: "Menü",
+      close: "Kapat",
+      country: "Ülke",
+      language: "Dil",
+      allCategories: "Tüm kategoriler",
+      vehicles: "Araçlar",
+      cars: "Arabalar",
+      carRental: "Kiralık araba",
+      motorcycles: "Motosikletler",
+      bicycles: "Bisikletler",
+      trucks: "Kamyonlar",
+      realEstate: "Emlak",
+      apartmentsSale: "Satılık daire",
+      apartmentsRent: "Kiralık daire",
+      housesSale: "Satılık ev",
+      housesRent: "Kiralık ev",
+      shops: "Ticari dükkânlar",
+      agriculturalLand: "Tarım arazisi",
+      electronics: "Elektronik",
+      phones: "Telefonlar",
+      computers: "Bilgisayarlar",
+      appliances: "Ev aletleri",
+      homeItems: "Ev eşyaları",
+      furniture: "Mobilya",
+      tools: "Araç gereç",
+      services: "Hizmetler",
+      maintenance: "Bakım",
+      homeMaintenance: "Ev bakımı",
+      companyMaintenance: "Şirket bakımı",
+      serviceCenters: "Servis merkezleri",
+      education: "Eğitim",
+      digitalServices: "Dijital hizmetler",
+      personalServices: "Kişisel hizmetler",
+      beauty: "Güzellik",
+      legal: "Hukuki hizmetler",
+      medical: "Tıbbi hizmetler",
+      jobs: "İşler",
+      saved: "Kaydedildi",
+      published: "Yayınlandı",
+      draft: "Taslak",
+      active: "Aktif",
+      inactive: "Pasif",
+      loading: "Yükleniyor...",
+      noData: "Veri bulunamadı.",
+      copied: "Kopyalandı.",
+      savedSuccess: "Başarıyla kaydedildi.",
+      deletedSuccess: "Başarıyla silindi.",
+      loginRequired: "Lütfen önce giriş yap.",
+      confirmDelete: "Bu öğeyi silmek istediğine emin misin?",
+      selectedCountryChanged: "Ülke değiştirildi.",
+      appReady: "Uygulama hazır."
+    }
+  };
+
+  const CATEGORY_TREE = [
+    {
+      id: "vehicles",
+      icon: "fa-car",
+      children: [
+        { id: "cars", icon: "fa-car-side" },
+        { id: "carRental", icon: "fa-key" },
+        { id: "motorcycles", icon: "fa-motorcycle" },
+        { id: "bicycles", icon: "fa-bicycle" },
+        { id: "trucks", icon: "fa-truck" }
+      ]
+    },
+    {
+      id: "realEstate",
+      icon: "fa-building",
+      children: [
+        { id: "apartmentsSale", icon: "fa-house-circle-check" },
+        { id: "apartmentsRent", icon: "fa-house-user" },
+        { id: "housesSale", icon: "fa-house" },
+        { id: "housesRent", icon: "fa-key" },
+        { id: "shops", icon: "fa-store" },
+        { id: "agriculturalLand", icon: "fa-seedling" }
+      ]
+    },
+    {
+      id: "electronics",
+      icon: "fa-laptop",
+      children: [
+        { id: "phones", icon: "fa-mobile-screen" },
+        { id: "computers", icon: "fa-computer" },
+        { id: "appliances", icon: "fa-blender" }
+      ]
+    },
+    {
+      id: "homeItems",
+      icon: "fa-couch",
+      children: [
+        { id: "furniture", icon: "fa-couch" },
+        { id: "tools", icon: "fa-screwdriver-wrench" }
+      ]
+    },
+    {
+      id: "services",
+      icon: "fa-briefcase",
+      children: [
+        { id: "maintenance", icon: "fa-screwdriver-wrench" },
+        { id: "homeMaintenance", icon: "fa-house-chimney-crack" },
+        { id: "companyMaintenance", icon: "fa-building-circle-check" },
+        { id: "serviceCenters", icon: "fa-headset" },
+        { id: "education", icon: "fa-graduation-cap" },
+        { id: "digitalServices", icon: "fa-code" },
+        { id: "personalServices", icon: "fa-user-gear" },
+        { id: "beauty", icon: "fa-spa" },
+        { id: "legal", icon: "fa-scale-balanced" },
+        { id: "medical", icon: "fa-kit-medical" }
+      ]
+    },
+    {
+      id: "jobs",
+      icon: "fa-user-tie",
+      children: []
+    }
+  ];
+
+  function readJson(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return fallback;
+      const parsed = JSON.parse(raw);
+      return parsed ?? fallback;
+    } catch {
+      return fallback;
+    }
   }
 
-  function normalizeText(value) {
-    return String(value ?? "")
-      .toLowerCase()
-      .trim()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+  function writeJson(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
-  function getLang() {
-    return (
-      document.documentElement.lang ||
-      localStorage.getItem(STORAGE_KEYS.countryLang) ||
-      "en"
-    ).slice(0, 2);
+  function cleanLang(lang) {
+    return String(lang || "en").slice(0, 2).toLowerCase();
+  }
+
+  function currentLang() {
+    return cleanLang(localStorage.getItem(STORAGE.lang) || document.documentElement.lang || "en");
+  }
+
+  function isRtl(lang = currentLang()) {
+    return RTL_LANGS.includes(cleanLang(lang));
+  }
+
+  function t(key) {
+    const lang = currentLang();
+    return (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
+  }
+
+  function getCountriesApi() {
+    return window.HK_GLOBAL_COUNTRIES || window.HK_GLOBAL?.countries || null;
   }
 
   function getCountries() {
-    return (
-      window.AMG_COUNTRIES ||
-      window.COUNTRIES ||
-      window.countries ||
-      []
-    );
-  }
+    const api = getCountriesApi();
 
-  function getCategories() {
-    return (
-      window.AMG_CATEGORIES ||
-      window.CATEGORIES ||
-      window.categories ||
-      []
-    );
-  }
+    if (api && Array.isArray(api.countries)) return api.countries;
 
-  function getCategoryGroups() {
-    return (
-      window.AMG_CATEGORY_GROUPS ||
-      window.CATEGORY_GROUPS ||
-      {}
-    );
-  }
-
-  function readLabel(item, fallback = "") {
-    const lang = getLang();
-
-    if (!item) return fallback;
-
-    if (item.labels) {
-      return item.labels[lang] || item.labels.en || item.labels.ar || fallback;
-    }
-
-    if (item.names) {
-      return item.names[lang] || item.names.en || item.names.ar || fallback;
-    }
-
-    return item.label || item.name || item.title || fallback;
+    const external = window.AMG_COUNTRIES || window.COUNTRIES || window.countries || [];
+    return Array.isArray(external) ? external : [];
   }
 
   function getCountryCode(country) {
-    if (!country) return "";
-    return country.code || country.id || country.iso2 || country.value || "";
+    return country?.code || country?.id || country?.iso2 || country?.value || "";
   }
 
   function getCountryLang(country) {
-    if (!country) return "en";
-    return country.lang || country.language || country.defaultLang || "en";
+    return cleanLang(country?.lang || country?.language || country?.defaultLang || "en");
   }
 
-  function getCountryCurrency(country) {
+  function getCountryLabel(country, lang = currentLang()) {
+    const api = getCountriesApi();
+
+    if (api && typeof api.getCountryLabel === "function") {
+      return api.getCountryLabel(country, lang);
+    }
+
     if (!country) return "";
-    return country.currency || country.currencyCode || "";
+
+    if (country.labels) {
+      return country.labels[lang] || country.labels.en || country.labels.ar || getCountryCode(country);
+    }
+
+    if (country.names) {
+      return country.names[lang] || country.names.en || country.names.ar || getCountryCode(country);
+    }
+
+    return country.name || getCountryCode(country);
   }
 
   function getCountryByCode(code) {
-    const countries = getCountries();
-    const cleanCode = String(code || "").toUpperCase();
+    const wanted = String(code || "").trim().toUpperCase();
+    const api = getCountriesApi();
 
-    return (
-      countries.find((country) => String(getCountryCode(country)).toUpperCase() === cleanCode) ||
-      countries[0] ||
-      null
-    );
+    if (api && typeof api.getCountry === "function") {
+      return api.getCountry(wanted);
+    }
+
+    return getCountries().find((country) => String(getCountryCode(country)).toUpperCase() === wanted) || null;
   }
 
-  function getSelectedCountry() {
-    const selectValue =
-      $("#countrySelect")?.value ||
-      $("[data-country-select]")?.value ||
-      localStorage.getItem(STORAGE_KEYS.countryCode);
-
-    return getCountryByCode(selectValue);
+  function getSavedCountry() {
+    const saved = localStorage.getItem(STORAGE.country);
+    return getCountryByCode(saved) || getCountryByCode("SE") || getCountries()[0] || null;
   }
 
-  function saveSelectedCountry(country) {
-    if (!country) return;
+  function saveCountry(code) {
+    const api = getCountriesApi();
 
-    const code = getCountryCode(country);
-    const label = readLabel(country, code);
+    if (api && typeof api.saveCountry === "function") {
+      return api.saveCountry(code);
+    }
+
+    const country = getCountryByCode(code) || getCountries()[0];
+    if (!country) return null;
+
     const lang = getCountryLang(country);
+    const label = getCountryLabel(country, lang);
+    const dir = isRtl(lang) ? "rtl" : "ltr";
 
-    localStorage.setItem(STORAGE_KEYS.countryCode, code);
-    localStorage.setItem(STORAGE_KEYS.countryLabel, label);
-    localStorage.setItem(STORAGE_KEYS.countryLang, lang);
+    localStorage.setItem(STORAGE.country, getCountryCode(country));
+    localStorage.setItem(STORAGE.countryLabel, label);
+    localStorage.setItem(STORAGE.lang, lang);
+    localStorage.setItem(STORAGE.currency, country.currency || "");
+    localStorage.setItem(STORAGE.region, country.region || "");
 
     document.documentElement.lang = lang;
-    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-    document.body.dataset.country = code;
-  }
+    document.documentElement.dir = dir;
 
-  function applySelectedCountry(country) {
-    if (!country) return;
-
-    saveSelectedCountry(country);
-
-    const code = getCountryCode(country);
-    const label = readLabel(country, code);
-
-    $$("[data-selected-country], #selectedCountryName, #countryName").forEach((el) => {
-      el.textContent = label;
-    });
-
-    $$("[data-country-code]").forEach((el) => {
-      el.textContent = code;
-    });
-
-    $$("select[name='countryCode'], select[name='country'], #countrySelect, [data-country-select]").forEach((select) => {
-      if (select.value !== code) select.value = code;
-    });
-
-    const currencyInput = $("input[name='currency'], select[name='currency']");
-    if (currencyInput && !currencyInput.value) {
-      currencyInput.value = getCountryCurrency(country);
+    if (document.body) {
+      document.body.setAttribute("dir", dir);
     }
 
-    window.dispatchEvent(
-      new CustomEvent("amg:countrychange", {
-        detail: { country }
-      })
-    );
+    return country;
   }
 
-  function getCategoryById(id) {
-    const categories = getCategories();
-    const cleanId = String(id || "");
+  function applyDocumentLanguage() {
+    const lang = currentLang();
+    const dir = isRtl(lang) ? "rtl" : "ltr";
 
-    return (
-      categories.find((category) => category.id === cleanId) ||
-      categories.find((category) => category.id === "cars") ||
-      categories[0] ||
-      null
-    );
+    document.documentElement.lang = lang;
+    document.documentElement.dir = dir;
+
+    if (document.body) {
+      document.body.setAttribute("dir", dir);
+    }
   }
 
-  function getGroupLabel(groupId) {
-    const groups = getCategoryGroups();
-    const group = groups[groupId];
-
-    return readLabel(group, groupId || "");
-  }
-
-  function getSelectedCategory() {
-    const value =
-      $("#categorySelect")?.value ||
-      $("[data-category-select]")?.value ||
-      localStorage.getItem(STORAGE_KEYS.categoryId);
-
-    return getCategoryById(value);
-  }
-
-  function saveSelectedCategory(category) {
-    if (!category) return;
-
-    const label = readLabel(category, category.id);
-    const groupLabel = getGroupLabel(category.group);
-
-    localStorage.setItem(STORAGE_KEYS.categoryId, category.id);
-    localStorage.setItem(STORAGE_KEYS.categoryLabel, label);
-    localStorage.setItem(STORAGE_KEYS.categoryGroup, category.group || "");
-    localStorage.setItem(STORAGE_KEYS.categoryGroupLabel, groupLabel);
-  }
-
-  function applySelectedCategory(category) {
-    if (!category) return;
-
-    saveSelectedCategory(category);
-
-    document.body.dataset.category = category.id;
-    document.body.dataset.categoryGroup = category.group || "";
-
-    $$("[data-selected-category], #selectedCategory, #categoryName").forEach((el) => {
-      el.textContent = readLabel(category, category.id);
+  function translatePage() {
+    $$("[data-i18n]").forEach((el) => {
+      const key = el.dataset.i18n;
+      if (key) el.textContent = t(key);
     });
 
-    $$("[data-selected-category-group], #selectedCategoryGroup").forEach((el) => {
-      el.textContent = getGroupLabel(category.group);
+    $$("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.dataset.i18nPlaceholder;
+      if (key) el.setAttribute("placeholder", t(key));
     });
 
-    $$("[data-category-icon]").forEach((icon) => {
-      icon.className = `fa-solid ${category.icon || "fa-layer-group"}`;
+    $$("[data-i18n-title]").forEach((el) => {
+      const key = el.dataset.i18nTitle;
+      if (key) el.setAttribute("title", t(key));
     });
 
-    $$("select[name='categoryId'], select[name='category'], #categorySelect, [data-category-select]").forEach((select) => {
-      if (select.value !== category.id) select.value = category.id;
+    $$("[data-i18n-aria]").forEach((el) => {
+      const key = el.dataset.i18nAria;
+      if (key) el.setAttribute("aria-label", t(key));
     });
-
-    window.dispatchEvent(
-      new CustomEvent("amg:categorychange", {
-        detail: { category }
-      })
-    );
   }
 
-  function fillCountrySelect(select) {
-    if (!select) return;
-
+  function fillCountrySelects() {
     const countries = getCountries();
-    if (!countries.length) return;
+    const saved = getSavedCountry();
+    const lang = currentLang();
 
-    const current =
-      localStorage.getItem(STORAGE_KEYS.countryCode) ||
-      getCountryCode(countries[0]);
+    $$("select[data-country-select], #countrySelect").forEach((select) => {
+      const currentValue = select.value || (saved && getCountryCode(saved));
 
-    select.innerHTML = "";
+      select.innerHTML = "";
 
-    countries.forEach((country) => {
-      const option = document.createElement("option");
-      const code = getCountryCode(country);
-
-      option.value = code;
-      option.textContent = readLabel(country, code);
-
-      select.appendChild(option);
-    });
-
-    select.value = current;
-
-    select.addEventListener("change", () => {
-      applySelectedCountry(getCountryByCode(select.value));
-      renderCurrentSearch();
-    });
-  }
-
-  function fillCategorySelect(select) {
-    if (!select) return;
-
-    const categories = getCategories();
-    if (!categories.length) return;
-
-    const groups = getCategoryGroups();
-    const current =
-      localStorage.getItem(STORAGE_KEYS.categoryId) ||
-      categories[0].id;
-
-    select.innerHTML = "";
-
-    const groupKeys = Object.keys(groups).sort((a, b) => {
-      return (groups[a].order || 999) - (groups[b].order || 999);
-    });
-
-    if (groupKeys.length) {
-      groupKeys.forEach((groupKey) => {
-        const groupCategories = categories.filter((category) => category.group === groupKey);
-        if (!groupCategories.length) return;
-
-        const optgroup = document.createElement("optgroup");
-        optgroup.label = getGroupLabel(groupKey);
-
-        groupCategories.forEach((category) => {
-          const option = document.createElement("option");
-          option.value = category.id;
-          option.textContent = readLabel(category, category.id);
-          optgroup.appendChild(option);
-        });
-
-        select.appendChild(optgroup);
-      });
-    } else {
-      categories.forEach((category) => {
+      countries.forEach((country) => {
         const option = document.createElement("option");
-        option.value = category.id;
-        option.textContent = readLabel(category, category.id);
+
+        option.value = getCountryCode(country);
+        option.textContent = `${getCountryLabel(country, lang)}${country.currency ? " · " + country.currency : ""}`;
+        option.dataset.lang = getCountryLang(country);
+        option.dataset.currency = country.currency || "";
+        option.dataset.region = country.region || "";
+
         select.appendChild(option);
       });
+
+      select.value = currentValue || (saved && getCountryCode(saved)) || "";
+    });
+  }
+
+  function applyCountry(code, options = {}) {
+    const country = saveCountry(code);
+    if (!country) return null;
+
+    applyDocumentLanguage();
+    fillCountrySelects();
+    translatePage();
+
+    if (options.toast) {
+      toast(t("selectedCountryChanged"));
     }
 
-    select.value = current;
-
-    select.addEventListener("change", () => {
-      applySelectedCategory(getCategoryById(select.value));
-      renderCurrentSearch();
-    });
-  }
-
-  function initSelects() {
-    $$("select[name='countryCode'], select[name='country'], #countrySelect, [data-country-select]").forEach((select) => {
-      if (!select.dataset.amgFilledByApp) {
-        fillCountrySelect(select);
-        select.dataset.amgFilledByApp = "true";
+    window.dispatchEvent(new CustomEvent("hk-app-country-applied", {
+      detail: {
+        country,
+        code: getCountryCode(country),
+        lang: currentLang(),
+        currency: country.currency || "",
+        region: country.region || ""
       }
-    });
+    }));
 
-    $$("select[name='categoryId'], select[name='category'], #categorySelect, [data-category-select]").forEach((select) => {
-      if (!select.dataset.amgFilledByApp) {
-        fillCategorySelect(select);
-        select.dataset.amgFilledByApp = "true";
-      }
-    });
-
-    applySelectedCountry(getSelectedCountry());
-    applySelectedCategory(getSelectedCategory());
+    return country;
   }
 
-  function getListings() {
-    try {
-      const data = JSON.parse(localStorage.getItem(STORAGE_KEYS.listings) || "[]");
-      return Array.isArray(data) ? data : [];
-    } catch {
-      return [];
-    }
-  }
+  function initCountrySelectors() {
+    fillCountrySelects();
 
-  function setListings(listings) {
-    localStorage.setItem(STORAGE_KEYS.listings, JSON.stringify(listings));
-  }
+    $$("select[data-country-select], #countrySelect").forEach((select) => {
+      if (select.dataset.hkBound === "1") return;
 
-  function createListingId() {
-    return `ad_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-  }
+      select.dataset.hkBound = "1";
 
-  function getImageFilesAsBase64(input) {
-    return new Promise((resolve) => {
-      if (!input || !input.files || !input.files.length) {
-        resolve([]);
-        return;
-      }
-
-      const files = Array.from(input.files).slice(0, 5);
-      const results = [];
-      let completed = 0;
-
-      files.forEach((file) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          results.push(reader.result);
-          completed += 1;
-
-          if (completed === files.length) {
-            resolve(results);
-          }
-        };
-
-        reader.onerror = () => {
-          completed += 1;
-
-          if (completed === files.length) {
-            resolve(results);
-          }
-        };
-
-        reader.readAsDataURL(file);
+      select.addEventListener("change", () => {
+        applyCountry(select.value, { toast: true });
       });
     });
   }
 
-  function formatPrice(price, currency) {
-    const value = Number(price);
-
-    if (!value || Number.isNaN(value)) {
-      return "";
-    }
-
-    return `${value.toLocaleString()} ${currency || ""}`.trim();
-  }
-
-  function buildListingFromForm(form, images) {
-    const data = new FormData(form);
-
-    const country =
-      getCountryByCode(data.get("countryCode") || data.get("country")) ||
-      getSelectedCountry();
-
-    const category =
-      getCategoryById(data.get("categoryId") || data.get("category")) ||
-      getSelectedCategory();
-
-    const countryCode = getCountryCode(country);
-    const countryLabel = readLabel(country, countryCode);
-
-    const categoryLabel = readLabel(category, category?.id || "");
-    const categoryGroup = category?.group || "";
-    const categoryGroupLabel = getGroupLabel(categoryGroup);
-
-    return {
-      id: createListingId(),
-      status: "active",
-      title: String(data.get("title") || "").trim(),
-      listingType: String(data.get("listingType") || "sell").trim(),
-      condition: String(data.get("condition") || "").trim(),
-      price: String(data.get("price") || "").trim(),
-      currency: String(data.get("currency") || getCountryCurrency(country) || "").trim(),
-      countryCode,
-      countryLabel,
-      city: String(data.get("city") || "").trim(),
-      address: String(data.get("address") || "").trim(),
-      categoryId: category?.id || "",
-      categoryLabel,
-      categoryGroup,
-      categoryGroupLabel,
-      description: String(data.get("description") || "").trim(),
-      sellerName: String(data.get("sellerName") || data.get("name") || "").trim(),
-      phone: String(data.get("phone") || "").trim(),
-      whatsapp: String(data.get("whatsapp") || "").trim(),
-      email: String(data.get("email") || "").trim(),
-      images: images || [],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-  }
-
-  function validateListing(listing) {
-    const errors = [];
-
-    if (!listing.title || listing.title.length < 3) {
-      errors.push("title");
-    }
-
-    if (!listing.categoryId) {
-      errors.push("category");
-    }
-
-    if (!listing.countryCode) {
-      errors.push("country");
-    }
-
-    if (!listing.city || listing.city.length < 2) {
-      errors.push("city");
-    }
-
-    if (!listing.description || listing.description.length < 10) {
-      errors.push("description");
-    }
-
-    if (!listing.phone && !listing.email && !listing.whatsapp) {
-      errors.push("contact");
-    }
-
-    return errors;
-  }
-
-  function saveListing(listing) {
-    const listings = getListings();
-    listings.unshift(listing);
-    setListings(listings);
-    return listing;
-  }
-
-  function showFormMessage(form, type, text) {
-    let box = $("[data-form-message]", form.parentElement) || $("#formMessage");
-
-    if (!box) {
-      box = document.createElement("div");
-      box.id = "formMessage";
-      box.setAttribute("data-form-message", "");
-      form.prepend(box);
-    }
-
-    box.className = `form-message ${type}`;
-    box.textContent = text;
-  }
-
-  async function handleSellSubmit(event) {
-    event.preventDefault();
-
-    const form = event.currentTarget;
-    const imageInput = $("input[type='file'][name='images']", form);
-
-    const submitButton = $("button[type='submit']", form);
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.dataset.oldText = submitButton.textContent;
-      submitButton.textContent = "Saving...";
-    }
-
-    const images = await getImageFilesAsBase64(imageInput);
-    const listing = buildListingFromForm(form, images);
-    const errors = validateListing(listing);
-
-    if (errors.length) {
-      showFormMessage(
-        form,
-        "error",
-        "Please complete title, country, category, city, description, and at least one contact method."
-      );
-
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.textContent = submitButton.dataset.oldText || "Publish";
-      }
-
-      return;
-    }
-
-    saveListing(listing);
-
-    showFormMessage(form, "success", "Ad published successfully. It will now appear in search results.");
-
-    form.reset();
-
-    applySelectedCountry(getCountryByCode(listing.countryCode));
-    applySelectedCategory(getCategoryById(listing.categoryId));
-
-    setTimeout(() => {
-      window.location.href =
-        `search.html?country=${encodeURIComponent(listing.countryCode)}&category=${encodeURIComponent(listing.categoryId)}&new=${encodeURIComponent(listing.id)}`;
-    }, 700);
-  }
-
-  function initSellPage() {
-    const forms = $$("form[data-sell-form], #sellForm");
-
-    forms.forEach((form) => {
-      if (form.dataset.amgSellReady) return;
-
-      form.dataset.amgSellReady = "true";
-      form.addEventListener("submit", handleSellSubmit);
-    });
-  }
-
-  function listingMatchesFilters(listing, filters) {
-    const query = normalizeText(filters.query);
-    const selectedCountry = filters.country;
-    const selectedCategory = filters.category;
-    const selectedGroup = filters.group;
-    const minPrice = Number(filters.minPrice || 0);
-    const maxPrice = Number(filters.maxPrice || 0);
-
-    if (selectedCountry && selectedCountry !== "all" && listing.countryCode !== selectedCountry) {
-      return false;
-    }
-
-    if (selectedCategory && selectedCategory !== "all" && listing.categoryId !== selectedCategory) {
-      return false;
-    }
-
-    if (selectedGroup && selectedGroup !== "all" && listing.categoryGroup !== selectedGroup) {
-      return false;
-    }
-
-    const price = Number(listing.price || 0);
-
-    if (minPrice && price < minPrice) {
-      return false;
-    }
-
-    if (maxPrice && price > maxPrice) {
-      return false;
-    }
-
-    if (query) {
-      const searchable = normalizeText([
-        listing.title,
-        listing.description,
-        listing.countryLabel,
-        listing.city,
-        listing.categoryLabel,
-        listing.categoryGroupLabel,
-        listing.sellerName
-      ].join(" "));
-
-      if (!searchable.includes(query)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  function getSearchFilters() {
-    const params = new URLSearchParams(window.location.search);
-
-    return {
-      query:
-        $("#searchInput")?.value ||
-        $("[name='q']")?.value ||
-        params.get("q") ||
-        "",
-      country:
-        $("#searchCountry")?.value ||
-        $("[name='countryCode']")?.value ||
-        params.get("country") ||
-        localStorage.getItem(STORAGE_KEYS.countryCode) ||
-        "all",
-      category:
-        $("#searchCategory")?.value ||
-        $("[name='categoryId']")?.value ||
-        params.get("category") ||
-        localStorage.getItem(STORAGE_KEYS.categoryId) ||
-        "all",
-      group:
-        $("#searchGroup")?.value ||
-        $("[name='group']")?.value ||
-        params.get("group") ||
-        "all",
-      minPrice:
-        $("#minPrice")?.value ||
-        $("[name='minPrice']")?.value ||
-        "",
-      maxPrice:
-        $("#maxPrice")?.value ||
-        $("[name='maxPrice']")?.value ||
-        ""
-    };
-  }
-
-  function getFilteredListings() {
-    const filters = getSearchFilters();
-
-    return getListings().filter((listing) => listingMatchesFilters(listing, filters));
-  }
-
-  function listingCardTemplate(listing) {
-    const image = listing.images && listing.images.length
-      ? `<img src="${listing.images[0]}" alt="${escapeHTML(listing.title)}" loading="lazy">`
-      : `<div class="listing-image-placeholder"><i class="fa-solid fa-image"></i></div>`;
-
-    const price = formatPrice(listing.price, listing.currency);
-    const date = listing.createdAt
-      ? new Date(listing.createdAt).toLocaleDateString()
-      : "";
-
-    const phoneButton = listing.phone
-      ? `<a class="mini-btn" href="tel:${escapeHTML(listing.phone)}"><i class="fa-solid fa-phone"></i> Call</a>`
-      : "";
-
-    const emailButton = listing.email
-      ? `<a class="mini-btn" href="mailto:${escapeHTML(listing.email)}"><i class="fa-solid fa-envelope"></i> Email</a>`
-      : "";
-
-    const whatsappNumber = listing.whatsapp || listing.phone;
-    const whatsappButton = whatsappNumber
-      ? `<a class="mini-btn" href="https://wa.me/${escapeHTML(whatsappNumber.replace(/\D/g, ""))}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>`
-      : "";
-
-    return `
-      <article class="listing-card" data-listing-id="${escapeHTML(listing.id)}">
-        <a class="listing-image" href="details.html?id=${encodeURIComponent(listing.id)}">
-          ${image}
-        </a>
-
-        <div class="listing-content">
-          <div class="listing-topline">
-            <span>${escapeHTML(listing.categoryGroupLabel || "")}</span>
-            <span>${escapeHTML(date)}</span>
-          </div>
-
-          <h3>
-            <a href="details.html?id=${encodeURIComponent(listing.id)}">
-              ${escapeHTML(listing.title)}
-            </a>
-          </h3>
-
-          <div class="listing-price">
-            ${price ? escapeHTML(price) : "Price on request"}
-          </div>
-
-          <div class="listing-meta">
-            <span><i class="fa-solid fa-location-dot"></i> ${escapeHTML(listing.city || "")}</span>
-            <span><i class="fa-solid fa-flag"></i> ${escapeHTML(listing.countryLabel || "")}</span>
-            <span><i class="fa-solid fa-layer-group"></i> ${escapeHTML(listing.categoryLabel || "")}</span>
-          </div>
-
-          <p class="listing-description">
-            ${escapeHTML(listing.description || "").slice(0, 180)}
-          </p>
-
-          <div class="listing-actions">
-            <a class="mini-btn primary" href="details.html?id=${encodeURIComponent(listing.id)}">
-              <i class="fa-solid fa-eye"></i> Details
-            </a>
-            ${phoneButton}
-            ${emailButton}
-            ${whatsappButton}
-          </div>
-        </div>
-      </article>
-    `;
-  }
-
-  function renderListings(container, listings) {
-    if (!container) return;
-
-    if (!listings.length) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <h3>No listings found</h3>
-          <p>Try another country, category, or search word.</p>
-          <a class="btn btn-primary" href="sell.html">
-            <i class="fa-solid fa-circle-plus"></i>
-            Post the first ad
-          </a>
-        </div>
-      `;
-      return;
-    }
-
-    container.innerHTML = listings.map(listingCardTemplate).join("");
-  }
-
-  function renderCurrentSearch() {
-    const container =
-      $("#resultsList") ||
-      $("[data-results-list]") ||
-      $(".results-list") ||
-      $(".listings-grid");
-
-    if (!container) return;
-
-    const listings = getFilteredListings();
-
-    renderListings(container, listings);
-
-    $$("[data-results-count], #resultsCount").forEach((el) => {
-      el.textContent = listings.length;
-    });
-  }
-
-  function initSearchPage() {
-    const params = new URLSearchParams(window.location.search);
-
-    const queryInput = $("#searchInput") || $("[name='q']");
-    if (queryInput && params.get("q")) {
-      queryInput.value = params.get("q");
-    }
-
-    const countryInput = $("#searchCountry") || $("[name='countryCode']");
-    if (countryInput && params.get("country")) {
-      countryInput.value = params.get("country");
-    }
-
-    const categoryInput = $("#searchCategory") || $("[name='categoryId']");
-    if (categoryInput && params.get("category")) {
-      categoryInput.value = params.get("category");
-    }
-
-    const searchForm = $("#searchForm") || $("[data-search-form]");
-
-    if (searchForm && !searchForm.dataset.amgSearchReady) {
-      searchForm.dataset.amgSearchReady = "true";
-
-      searchForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        renderCurrentSearch();
-      });
-
-      $$("input, select", searchForm).forEach((input) => {
-        input.addEventListener("input", renderCurrentSearch);
-        input.addEventListener("change", renderCurrentSearch);
-      });
-    }
-
-    renderCurrentSearch();
-  }
-
-  function initListingDetailsPage() {
-    const container =
-      $("#listingDetails") ||
-      $("[data-listing-details]");
-
-    if (!container) return;
-
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
-
-    const listing = getListings().find((item) => item.id === id);
-
-    if (!listing) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <i class="fa-solid fa-circle-exclamation"></i>
-          <h3>Listing not found</h3>
-          <p>The ad may have been removed or the link is incorrect.</p>
-          <a class="btn btn-primary" href="search.html">Back to search</a>
-        </div>
-      `;
-      return;
-    }
-
-    const images = listing.images && listing.images.length
-      ? listing.images.map((src) => `<img src="${src}" alt="${escapeHTML(listing.title)}">`).join("")
-      : `<div class="listing-image-placeholder big"><i class="fa-solid fa-image"></i></div>`;
-
-    container.innerHTML = `
-      <article class="details-card">
-        <div class="details-gallery">
-          ${images}
-        </div>
-
-        <div class="details-content">
-          <span class="details-badge">${escapeHTML(listing.categoryGroupLabel || "")}</span>
-
-          <h1>${escapeHTML(listing.title)}</h1>
-
-          <div class="details-price">
-            ${escapeHTML(formatPrice(listing.price, listing.currency) || "Price on request")}
-          </div>
-
-          <div class="details-meta">
-            <span><i class="fa-solid fa-location-dot"></i> ${escapeHTML(listing.city || "")}</span>
-            <span><i class="fa-solid fa-flag"></i> ${escapeHTML(listing.countryLabel || "")}</span>
-            <span><i class="fa-solid fa-layer-group"></i> ${escapeHTML(listing.categoryLabel || "")}</span>
-          </div>
-
-          <p>${escapeHTML(listing.description || "")}</p>
-
-          <div class="seller-box">
-            <h3>Seller / Service provider</h3>
-            <p>${escapeHTML(listing.sellerName || "Not provided")}</p>
-
-            <div class="listing-actions">
-              ${listing.phone ? `<a class="mini-btn" href="tel:${escapeHTML(listing.phone)}"><i class="fa-solid fa-phone"></i> Call</a>` : ""}
-              ${listing.email ? `<a class="mini-btn" href="mailto:${escapeHTML(listing.email)}"><i class="fa-solid fa-envelope"></i> Email</a>` : ""}
-              ${(listing.whatsapp || listing.phone) ? `<a class="mini-btn" href="https://wa.me/${escapeHTML((listing.whatsapp || listing.phone).replace(/\D/g, ""))}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ""}
-            </div>
-          </div>
-        </div>
-      </article>
-    `;
-  }
-
-  function initSidebar() {
-    const menuToggle = $("#menuToggle");
+  function initMenu() {
     const sidebar = $("#sidebar");
-    const sidebarClose = $("#sidebarClose");
     const backdrop = $("#sidebarBackdrop");
+    const openButtons = $$("#menuToggle, [data-menu-open]");
+    const closeButtons = $$("#sidebarClose, [data-menu-close]");
 
-    if (!menuToggle || !sidebar) return;
+    if (!sidebar) return;
 
     function openMenu() {
       sidebar.classList.add("open");
-      backdrop?.classList.add("open");
+      if (backdrop) backdrop.classList.add("open");
       document.body.classList.add("menu-open");
-      menuToggle.setAttribute("aria-expanded", "true");
     }
 
     function closeMenu() {
       sidebar.classList.remove("open");
-      backdrop?.classList.remove("open");
+      if (backdrop) backdrop.classList.remove("open");
       document.body.classList.remove("menu-open");
-      menuToggle.setAttribute("aria-expanded", "false");
     }
 
-    if (!menuToggle.dataset.amgMenuReady) {
-      menuToggle.dataset.amgMenuReady = "true";
-      menuToggle.addEventListener("click", openMenu);
-      sidebarClose?.addEventListener("click", closeMenu);
-      backdrop?.addEventListener("click", closeMenu);
+    openButtons.forEach((btn) => {
+      if (btn.dataset.hkBound === "1") return;
+      btn.dataset.hkBound = "1";
+      btn.addEventListener("click", openMenu);
+    });
 
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeMenu();
+    closeButtons.forEach((btn) => {
+      if (btn.dataset.hkBound === "1") return;
+      btn.dataset.hkBound = "1";
+      btn.addEventListener("click", closeMenu);
+    });
+
+    if (backdrop && backdrop.dataset.hkBound !== "1") {
+      backdrop.dataset.hkBound = "1";
+      backdrop.addEventListener("click", closeMenu);
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+
+    $$(".sidebar-link, [data-close-menu-on-click]").forEach((link) => {
+      if (link.dataset.hkLinkBound === "1") return;
+      link.dataset.hkLinkBound = "1";
+      link.addEventListener("click", () => {
+        if (window.innerWidth <= 980) closeMenu();
       });
-    }
+    });
   }
 
-  function initQuickCategoryCards() {
-    $$("[data-category-card]").forEach((card) => {
-      if (card.dataset.amgCategoryCardReady) return;
+  function setActiveNavigation() {
+    const currentFile = window.location.pathname.split("/").pop() || "index.html";
 
-      card.dataset.amgCategoryCardReady = "true";
+    $$("a[href]").forEach((link) => {
+      const href = link.getAttribute("href") || "";
+      const linkFile = href.split("?")[0].split("#")[0].split("/").pop();
 
-      card.addEventListener("click", () => {
-        const categoryId = card.dataset.categoryCard;
-        const category = getCategoryById(categoryId);
+      if (!linkFile) return;
 
-        if (category) {
-          applySelectedCategory(category);
+      if (linkFile === currentFile) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+      }
+    });
+  }
+
+  function toast(message, duration = 2400) {
+    let el = $("#hkToast");
+
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "hkToast";
+      el.style.position = "fixed";
+      el.style.left = "50%";
+      el.style.bottom = "26px";
+      el.style.transform = "translateX(-50%) translateY(20px)";
+      el.style.opacity = "0";
+      el.style.pointerEvents = "none";
+      el.style.zIndex = "9999";
+      el.style.background = "#101828";
+      el.style.color = "#fff";
+      el.style.borderRadius = "999px";
+      el.style.padding = "13px 18px";
+      el.style.fontWeight = "900";
+      el.style.fontFamily = "Arial, Helvetica, sans-serif";
+      el.style.boxShadow = "0 18px 55px rgba(16, 24, 40, 0.22)";
+      el.style.transition = "0.25s ease";
+      document.body.appendChild(el);
+    }
+
+    el.textContent = message;
+    el.style.opacity = "1";
+    el.style.transform = "translateX(-50%) translateY(0)";
+
+    window.clearTimeout(el._timer);
+
+    el._timer = window.setTimeout(() => {
+      el.style.opacity = "0";
+      el.style.transform = "translateX(-50%) translateY(20px)";
+    }, duration);
+  }
+
+  function uid(prefix = "id") {
+    return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  }
+
+  function normalizeText(value) {
+    return String(value || "").trim();
+  }
+
+  function getSession() {
+    return readJson(STORAGE.session, null);
+  }
+
+  function getCurrentUser() {
+    return readJson(STORAGE.currentUser, null);
+  }
+
+  function isLoggedIn() {
+    const session = getSession();
+    const user = getCurrentUser();
+    return Boolean(session?.loggedIn && user?.email);
+  }
+
+  function requireLogin(redirect = true) {
+    if (isLoggedIn()) return true;
+
+    toast(t("loginRequired"));
+
+    if (redirect) {
+      const next = encodeURIComponent(window.location.pathname.split("/").pop() || "index.html");
+      window.setTimeout(() => {
+        window.location.href = `login.html?next=${next}`;
+      }, 500);
+    }
+
+    return false;
+  }
+
+  function logout() {
+    localStorage.removeItem(STORAGE.session);
+    localStorage.removeItem(STORAGE.currentUser);
+    localStorage.removeItem("amg_user");
+    localStorage.removeItem("hk_global_user");
+
+    toast(t("logout"));
+
+    window.setTimeout(() => {
+      window.location.href = "login.html";
+    }, 500);
+  }
+
+  function initLogoutButtons() {
+    $$("[data-logout], #logoutBtn").forEach((btn) => {
+      if (btn.dataset.hkLogoutBound === "1") return;
+      btn.dataset.hkLogoutBound = "1";
+      btn.addEventListener("click", logout);
+    });
+  }
+
+  function getAds() {
+    return readJson(STORAGE.ads, []);
+  }
+
+  function saveAds(ads) {
+    writeJson(STORAGE.ads, Array.isArray(ads) ? ads : []);
+  }
+
+  function addAd(ad) {
+    const ads = getAds();
+
+    const country = getSavedCountry();
+    const user = getCurrentUser();
+
+    const item = {
+      id: ad.id || uid("ad"),
+      title: normalizeText(ad.title),
+      category: normalizeText(ad.category),
+      subcategory: normalizeText(ad.subcategory),
+      type: normalizeText(ad.type),
+      price: ad.price || "",
+      currency: ad.currency || localStorage.getItem(STORAGE.currency) || "",
+      countryCode: ad.countryCode || localStorage.getItem(STORAGE.country) || "",
+      countryLabel: ad.countryLabel || localStorage.getItem(STORAGE.countryLabel) || "",
+      city: normalizeText(ad.city),
+      description: normalizeText(ad.description),
+      images: Array.isArray(ad.images) ? ad.images : [],
+      details: ad.details || {},
+      status: ad.status || "active",
+      userId: ad.userId || user?.id || "",
+      userEmail: ad.userEmail || user?.email || "",
+      createdAt: ad.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      region: country?.region || localStorage.getItem(STORAGE.region) || ""
+    };
+
+    ads.unshift(item);
+    saveAds(ads);
+
+    return item;
+  }
+
+  function updateAd(id, updates) {
+    const ads = getAds();
+    const index = ads.findIndex((ad) => ad.id === id);
+
+    if (index === -1) return null;
+
+    ads[index] = {
+      ...ads[index],
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+
+    saveAds(ads);
+    return ads[index];
+  }
+
+  function deleteAd(id) {
+    const ads = getAds().filter((ad) => ad.id !== id);
+    saveAds(ads);
+  }
+
+  function getFavorites() {
+    return readJson(STORAGE.favorites, []);
+  }
+
+  function saveFavorites(favorites) {
+    writeJson(STORAGE.favorites, Array.isArray(favorites) ? favorites : []);
+  }
+
+  function isFavorite(adId) {
+    return getFavorites().includes(adId);
+  }
+
+  function toggleFavorite(adId) {
+    const favorites = getFavorites();
+    const exists = favorites.includes(adId);
+
+    const updated = exists
+      ? favorites.filter((id) => id !== adId)
+      : favorites.concat(adId);
+
+    saveFavorites(updated);
+
+    return !exists;
+  }
+
+  function getMessages() {
+    return readJson(STORAGE.messages, []);
+  }
+
+  function saveMessages(messages) {
+    writeJson(STORAGE.messages, Array.isArray(messages) ? messages : []);
+  }
+
+  function addMessage(message) {
+    const messages = getMessages();
+
+    const item = {
+      id: message.id || uid("msg"),
+      adId: message.adId || "",
+      fromName: normalizeText(message.fromName),
+      fromEmail: normalizeText(message.fromEmail),
+      toEmail: normalizeText(message.toEmail),
+      subject: normalizeText(message.subject),
+      body: normalizeText(message.body),
+      read: false,
+      createdAt: new Date().toISOString()
+    };
+
+    messages.unshift(item);
+    saveMessages(messages);
+
+    return item;
+  }
+
+  function getCategoryTree() {
+    return CATEGORY_TREE.map((category) => ({
+      ...category,
+      label: t(category.id),
+      children: category.children.map((child) => ({
+        ...child,
+        label: t(child.id)
+      }))
+    }));
+  }
+
+  function fillCategorySelect(select, options = {}) {
+    if (!select) return;
+
+    const includeAll = options.includeAll !== false;
+    const selected = options.selected || select.value || "";
+
+    select.innerHTML = "";
+
+    if (includeAll) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = t("allCategories");
+      select.appendChild(option);
+    }
+
+    CATEGORY_TREE.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.textContent = t(category.id);
+      select.appendChild(option);
+    });
+
+    select.value = selected;
+  }
+
+  function fillSubcategorySelect(select, categoryId, options = {}) {
+    if (!select) return;
+
+    const category = CATEGORY_TREE.find((item) => item.id === categoryId);
+    const selected = options.selected || select.value || "";
+
+    select.innerHTML = "";
+
+    const first = document.createElement("option");
+    first.value = "";
+    first.textContent = t("allCategories");
+    select.appendChild(first);
+
+    if (category) {
+      category.children.forEach((child) => {
+        const option = document.createElement("option");
+        option.value = child.id;
+        option.textContent = t(child.id);
+        select.appendChild(option);
+      });
+    }
+
+    select.value = selected;
+  }
+
+  function initCategorySelects() {
+    $$("select[data-category-select]").forEach((select) => {
+      fillCategorySelect(select);
+
+      if (select.dataset.hkCategoryBound === "1") return;
+      select.dataset.hkCategoryBound = "1";
+
+      select.addEventListener("change", () => {
+        const targetSelector = select.dataset.subcategoryTarget;
+        if (!targetSelector) return;
+
+        const subSelect = $(targetSelector);
+        fillSubcategorySelect(subSelect, select.value);
+      });
+    });
+
+    $$("select[data-subcategory-select]").forEach((select) => {
+      const categorySelector = select.dataset.categorySource;
+      const categorySelect = categorySelector ? $(categorySelector) : null;
+      fillSubcategorySelect(select, categorySelect?.value || "");
+    });
+  }
+
+  function bindCopyButtons() {
+    $$("[data-copy]").forEach((btn) => {
+      if (btn.dataset.hkCopyBound === "1") return;
+      btn.dataset.hkCopyBound = "1";
+
+      btn.addEventListener("click", async () => {
+        const text = btn.dataset.copy || "";
+
+        try {
+          await navigator.clipboard.writeText(text);
+          toast(t("copied"));
+        } catch {
+          const temp = document.createElement("textarea");
+          temp.value = text;
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand("copy");
+          temp.remove();
+          toast(t("copied"));
         }
       });
     });
   }
 
-  function initApp() {
-    initSidebar();
-    initSelects();
-    initQuickCategoryCards();
-    initSellPage();
-    initSearchPage();
-    initListingDetailsPage();
+  function initTheme() {
+    const savedTheme = localStorage.getItem(STORAGE.theme);
+
+    if (savedTheme) {
+      document.documentElement.dataset.theme = savedTheme;
+    }
+
+    $$("[data-theme-toggle]").forEach((btn) => {
+      if (btn.dataset.hkThemeBound === "1") return;
+      btn.dataset.hkThemeBound = "1";
+
+      btn.addEventListener("click", () => {
+        const current = document.documentElement.dataset.theme || "light";
+        const next = current === "dark" ? "light" : "dark";
+
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem(STORAGE.theme, next);
+      });
+    });
   }
 
-  window.AMG_APP = {
-    getListings,
-    setListings,
-    saveListing,
-    getFilteredListings,
-    renderCurrentSearch,
-    getSelectedCountry,
-    applySelectedCountry,
-    getSelectedCategory,
-    applySelectedCategory
+  function initFormsPreventDoubleSubmit() {
+    $$("form[data-safe-submit]").forEach((form) => {
+      if (form.dataset.hkSafeBound === "1") return;
+      form.dataset.hkSafeBound = "1";
+
+      form.addEventListener("submit", () => {
+        const btn = form.querySelector("button[type='submit']");
+        if (!btn) return;
+
+        btn.disabled = true;
+
+        window.setTimeout(() => {
+          btn.disabled = false;
+        }, 1600);
+      });
+    });
+  }
+
+  function initGlobalEvents() {
+    window.addEventListener("hk-country-change", () => {
+      applyDocumentLanguage();
+      fillCountrySelects();
+      translatePage();
+      initCategorySelects();
+    });
+
+    window.addEventListener("storage", (event) => {
+      if ([STORAGE.country, STORAGE.lang, STORAGE.currency].includes(event.key)) {
+        applyDocumentLanguage();
+        fillCountrySelects();
+        translatePage();
+        initCategorySelects();
+      }
+    });
+  }
+
+  function init() {
+    const savedCountry = getSavedCountry();
+
+    if (savedCountry) {
+      applyCountry(getCountryCode(savedCountry));
+    } else {
+      applyDocumentLanguage();
+      translatePage();
+    }
+
+    initCountrySelectors();
+    initMenu();
+    setActiveNavigation();
+    initLogoutButtons();
+    initCategorySelects();
+    bindCopyButtons();
+    initTheme();
+    initFormsPreventDoubleSubmit();
+    initGlobalEvents();
+
+    document.documentElement.dataset.hkReady = "true";
+  }
+
+  window.HK_GLOBAL_APP = {
+    app: APP,
+    storage: STORAGE,
+    dict: DICT,
+    categoryTree: CATEGORY_TREE,
+
+    $,
+    $$,
+    t,
+    toast,
+    uid,
+
+    readJson,
+    writeJson,
+
+    currentLang,
+    isRtl,
+    translatePage,
+    applyCountry,
+    fillCountrySelects,
+
+    getCountries,
+    getSavedCountry,
+    getCountryByCode,
+    getCountryLabel,
+
+    getSession,
+    getCurrentUser,
+    isLoggedIn,
+    requireLogin,
+    logout,
+
+    getAds,
+    saveAds,
+    addAd,
+    updateAd,
+    deleteAd,
+
+    getFavorites,
+    saveFavorites,
+    isFavorite,
+    toggleFavorite,
+
+    getMessages,
+    saveMessages,
+    addMessage,
+
+    getCategoryTree,
+    fillCategorySelect,
+    fillSubcategorySelect,
+    initCategorySelects,
+
+    init
   };
 
+  window.HK_GLOBAL = window.HK_GLOBAL || {};
+  window.HK_GLOBAL.app = window.HK_GLOBAL_APP;
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initApp);
+    document.addEventListener("DOMContentLoaded", init);
   } else {
-    initApp();
+    init();
   }
-
-  window.addEventListener("amg:countrychange", () => {
-    renderCurrentSearch();
-  });
-
-  window.addEventListener("amg:categorychange", () => {
-    renderCurrentSearch();
-  });
 })();
